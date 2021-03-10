@@ -15,7 +15,7 @@ export class AboutPage extends React.Component {
   render() {
     return (
       <>
-        <div className={classes.title}>About</div>
+        <div className={classes.title}>About Us</div>
         <Button onClick={this.service.handleJump}>To Home</Button>
         <Counter
           name="Global Count"

@@ -29,7 +29,7 @@
     "format": "prettier --write .",
     "lint:style": "prettier --check .",
     "lint:types": "tsc --noEmit",
-    "feishu:message": "ts-node --files ./scripts/message.ts"
+    "feishu:message": "tsc ./scripts/message.ts && node ./scripts/message.js"
   },
   "eslintConfig": {
     "extends": [

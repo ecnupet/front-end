@@ -1,7 +1,7 @@
 import axios from "axios";
-import crypto from "crypto";
+import * as crypto from "crypto";
 import * as git from "isomorphic-git";
-import fs from "fs";
+import * as fs from "fs";
 
 const feishuWebhook =
   "https://open.feishu.cn/open-apis/bot/v2/hook/99cb553f-b5ca-409e-a743-f08d07913929";
