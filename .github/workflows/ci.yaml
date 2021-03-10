@@ -13,4 +13,8 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: feishu:message # Send Feishu message
-
+      - name: upload
+        env:
+          AK: ${{ secrets.AK }}
+          SK: ${{ secrets.SK }}
+        run: chmod +x uploadoss.sh && ./uploadoss.sh
