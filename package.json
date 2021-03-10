@@ -25,10 +25,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api": "ts-node script/get-apis.ts",
+    "api": "ts-node --files ./script/get-apis.ts",
     "format": "prettier --write .",
     "lint:style": "prettier --check .",
-    "lint:types": "tsc --noEmit"
+    "lint:types": "tsc --noEmit",
+    "feishu:message": "ts-node --files ./scripts/message.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +55,7 @@
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
+    "isomorphic-git": "^1.8.1",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "ts-node": "^9.1.1",

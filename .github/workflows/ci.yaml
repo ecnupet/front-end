@@ -1,35 +1,16 @@
 name: CI
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-
+on: [push]
 jobs:
-  prepublish:
+  build:
+    name: Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        deno: ["v1.x", "nightly"]
-        os: [macOS-latest, windows-latest, ubuntu-latest]
-
     steps:
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: 14.15.4
-          # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN
-          registry-url: metrics-registry = "https://registry.npm.taobao.org/
-      - name: Install dependencies via yarn
-        uses: borales/actions-yarn@v2.0.0
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install # will run `yarn install` command
-      - name: Build via yarn
-        uses: borales/actions-yarn@v2.0.0
+          registry-url: https://registry.npm.taobao.org
+      - uses: borales/actions-yarn@v2.0.0
         with:
-          cmd: build # will run `yarn build` command
-      - name: Send commit message
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: feishu:message ${{github.events.before}}
+          cmd: feishu:message # Send Feishu message
+
