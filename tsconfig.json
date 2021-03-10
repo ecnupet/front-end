@@ -18,7 +18,7 @@
     "noImplicitUseStrict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "module": "CommonJS",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
