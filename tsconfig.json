@@ -18,7 +18,7 @@
     "noImplicitUseStrict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "module": "CommonJS",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -28,6 +28,9 @@
   "include": ["src"],
   "ts-node": {
     "logError": true,
-    "files": true
+    "files": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
   }
 }
