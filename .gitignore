@@ -1,8 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# build script from scripts
-/scripts/*.js
-
 # dev settings
 .env
 

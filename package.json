@@ -25,11 +25,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api": "ts-node --files ./script/get-apis.ts",
+    "api": "ts-node --files ./scripts/get-apis.ts",
     "format": "prettier --write .",
     "lint:style": "prettier --check .",
     "lint:types": "tsc --noEmit",
-    "feishu:message": "tsc ./scripts/message.ts && node ./scripts/message.js"
+    "feishu:message": "ts-node ./scripts/message.ts"
   },
   "eslintConfig": {
     "extends": [
