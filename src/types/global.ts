@@ -1,6 +1,5 @@
 declare global {
-  function fn(): void;
-  type A = 1;
+  var __init_hash__: string;
 }
 
 export {};

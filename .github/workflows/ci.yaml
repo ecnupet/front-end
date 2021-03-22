@@ -2,19 +2,16 @@ name: CI
 on: [push]
 jobs:
   build:
-    name: Test
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Python messager
-        run: ls -al && chmod +x ./scripts/git-message.sh && ./scripts/git-message.sh
+      - name: Commit messager
+        run: chmod +x ./scripts/git-message.sh && ./scripts/git-message.sh
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install # will run `yarn install` command
           registry-url: https://registry.npm.taobao.org
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: feishu:message # Send Feishu message
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: build # Build product
@@ -23,3 +20,5 @@ jobs:
           AK: ${{ secrets.AK }}
           SK: ${{ secrets.SK }}
         run: ls -al && chmod +x uploadoss.sh && ./uploadoss.sh
+      - name: Complete notification
+        run: echo "front-end构建+上传CDN完成" | ./scripts/python/message.py

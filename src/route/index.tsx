@@ -1,9 +1,9 @@
 import React from "react";
 import { createHashHistory, History } from "history";
-import { Redirect } from "react-router";
 import { AboutPage } from "../pages/about";
 import { HomePage } from "../pages/home";
 import { PickKey } from "../utils/types";
+import { LoginPage } from "../pages/login";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -14,9 +14,9 @@ function defineRouteMapping<T extends Routes>(mapping: T) {
  * 在这里定义路由
  */
 export const routeMapping = defineRouteMapping({
-  "/": () => <Redirect to="/home"></Redirect>,
   "/home": HomePage,
   "/about": AboutPage,
+  "/login": LoginPage,
 } as const);
 
 export const routes = Object.entries(routeMapping);
@@ -35,3 +35,5 @@ type HistoryProxy<
  * 本质就是react-router的history，但有路由的类型约束
  */
 export const router: HistoryProxy = routerHistory;
+const initPath = window.location.hash.replace("#", "");
+router.replace(initPath as never);
