@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Python messager
+        run: ls -al && chmod +x ./scripts/git-message.sh && ./scripts/git-message.sh
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install # will run `yarn install` command
