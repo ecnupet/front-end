@@ -9,4 +9,4 @@ ls -al
 
 #cdn 刷新
 wget http://cdn.ecnu.space/cdnflush
-./cdnflush
+chmod +x cdnflush && ./cdnflush
