@@ -1,5 +1,4 @@
 #! bin/bash
-set -e
 
 wget https://devtools.qiniu.com/qshell-v2.4.3-linux-amd64.tar.gz
 tar -zxvf qshell-v2.4.3-linux-amd64.tar.gz

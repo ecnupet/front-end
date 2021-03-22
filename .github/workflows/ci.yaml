@@ -20,4 +20,4 @@ jobs:
         env:
           AK: ${{ secrets.AK }}
           SK: ${{ secrets.SK }}
-        run: chmod +x uploadoss.sh && ./uploadoss.sh
+        run: ls -al && chmod +x uploadoss.sh && ./uploadoss.sh
