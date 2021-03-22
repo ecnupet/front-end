@@ -8,5 +8,5 @@ ls -al
 ./qshell qupload2 --src-dir=build --bucket=frontendecnupet
 
 #cdn 刷新
-wget http://cdn.ecnu.space/cdnflush
-chmod +x cdnflush && ./cdnflush
+wget http://cdn.ecnu.space/cdnflush-linux
+chmod +x cdnflush-linux && ./cdnflush-linux
