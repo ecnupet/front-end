@@ -4,6 +4,7 @@ import { AboutPage } from "../pages/about";
 import { HomePage } from "../pages/home";
 import { PickKey } from "../utils/types";
 import { LoginPage } from "../pages/login";
+import { Redirect } from "react-router";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -17,6 +18,7 @@ export const routeMapping = defineRouteMapping({
   "/home": HomePage,
   "/about": AboutPage,
   "/login": LoginPage,
+  "/": () => <Redirect to="/login"></Redirect>,
 } as const);
 
 export const routes = Object.entries(routeMapping);
