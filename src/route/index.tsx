@@ -5,6 +5,7 @@ import { HomePage } from "../pages/home";
 import { PickKey } from "../utils/types";
 import { LoginPage } from "../pages/login";
 import { Redirect } from "react-router";
+import { DevelopingPage } from "../pages/developing";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -15,6 +16,7 @@ function defineRouteMapping<T extends Routes>(mapping: T) {
  * 在这里定义路由
  */
 export const routeMapping = defineRouteMapping({
+  "/developing": DevelopingPage,
   "/home": HomePage,
   "/about": AboutPage,
   "/login": LoginPage,

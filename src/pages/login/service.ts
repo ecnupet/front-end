@@ -1,5 +1,5 @@
-import { FormInstance } from "antd";
 import { makeAutoObservable } from "mobx";
+import { router } from "../../route";
 
 export interface LoginForm {
   uid: string;
@@ -11,22 +11,15 @@ export class LoginService {
     makeAutoObservable(this);
   }
 
-  formInstance!: FormInstance<LoginForm>;
+  isLogin = true;
 
-  getDefaultLoginForm(): LoginForm {
-    return {
-      uid: "999",
-      password: "123456",
-    };
-  }
-
-  useForm(formInstance: FormInstance<LoginForm>) {
-    this.formInstance = formInstance;
-  }
-
-  onSubmit(form: LoginForm) {
-    console.log(this);
-    //   console.log(this.formInstance.getFieldsValue());
+  handleSubmit(form: LoginForm) {
+    // TODO
+    router.push("/developing");
     console.log(form);
+  }
+
+  handleChangeFormType() {
+    this.isLogin = !this.isLogin;
   }
 }

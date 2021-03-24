@@ -1,5 +1,66 @@
 /* @type */
 
+.page {
+  flex-direction: column;
+}
+
+.page-title {
+  width: 100%;
+  padding: 10px 30px;
+  font-size: 24px;
+  color: white;
+  font: bold;
+  text-align: left;
+  background: #24292e;
+}
+
+.pet-background {
+  width: 90%;
+  background-image: url("../../assets/banner.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+  animation-name: switch;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation-duration: 10s;
+  animation-delay: 0s;
+  animation-fill-mode: forwards;
+  animation-direction: initial;
+  animation-play-state: running;
+  animation-iteration-count: infinite;
+}
+
+@keyframes switch {
+  0% {
+    background-image: url("../../assets/banner.jpg");
+  }
+  20% {
+    background-image: url("../../assets/banner2.jpg");
+  }
+  50% {
+    background-image: url("../../assets/banner2.jpg");
+  }
+  70% {
+    background-image: url("../../assets/banner.jpg");
+  }
+  100% {
+    background-image: url("../../assets/banner.jpg");
+  }
+}
+
+.form-block {
+  width: 400px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.6);
+  position: absolute;
+  right: 10%;
+}
+
 .login-form {
-  background-color: lavender;
+  width: 200px;
+}
+
+.login-title {
+  padding: 10px;
+  color: black;
 }
