@@ -1,3 +1,4 @@
+import { InteractFactory } from "../../../services/interact/factory";
 import { ConstructorOf } from "../../types";
 
 export function createService<Constructor extends ConstructorOf<object>>(
@@ -9,7 +10,17 @@ export function createService<Constructor extends ConstructorOf<object>>(
     get(target, key, reciever) {
       const result: unknown = Reflect.get(target, key, reciever);
       if (typeof result === "function") {
-        return result.bind(target);
+        const wrapped = result.bind(target);
+        return function () {
+          const callResult = wrapped(...arguments);
+          if (callResult instanceof Promise) {
+            return callResult.catch((e) => {
+              console.error(e);
+              InteractFactory.getMessager().internalError("系统错误");
+            });
+          }
+          return callResult;
+        };
       }
       return result;
     },

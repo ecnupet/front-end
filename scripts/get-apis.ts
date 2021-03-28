@@ -14,7 +14,7 @@ async function main(...args: string[]) {
   const generator = new ApiBundleGenerator(json);
   const declarationContent = generator.generateApiInterfaceBundle();
   await fs.writeFile(
-    path.resolve(process.cwd(), "src/api/index.ts"),
+    path.resolve(process.cwd(), "src/api/schema.ts"),
     declarationContent
   );
 }
