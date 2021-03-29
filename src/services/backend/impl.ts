@@ -23,4 +23,11 @@ export class RealBackendService implements BackendService {
     });
     return result;
   }
+  async logout() {
+    const result = await apiCaller.post(
+      "/api/pm/user/logout",
+      undefined as never
+    );
+    return result;
+  }
 }

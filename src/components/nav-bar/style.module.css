@@ -1,0 +1,19 @@
+/* @type */
+.header {
+  padding: 10px 20px;
+  background: #24292e;
+  color: aliceblue;
+  width: 100%;
+}
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  padding: 10px 20px;
+  line-height: 24px;
+  font-size: 24px;
+  min-width: 200px;
+}

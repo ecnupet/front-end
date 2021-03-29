@@ -25,4 +25,5 @@ export interface BackendService {
     uid: string;
     password: string;
   }): Promise<ResponseResultModel<any>>;
+  logout(): Promise<ResponseResultModel<any>>;
 }

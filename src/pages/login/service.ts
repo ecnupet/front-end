@@ -41,8 +41,7 @@ export class LoginService {
     const result = await BackendServiceFactory.getBackendService().login(form);
     if (result.state === ResponseResultEnum.Success) {
       InteractFactory.getMessager().success(result.detail ?? "登录成功");
-      // TODO
-      router.push("/developing");
+      router.push("/test-center");
     } else {
       InteractFactory.getMessager().fail(result.detail ?? "登录失败");
     }

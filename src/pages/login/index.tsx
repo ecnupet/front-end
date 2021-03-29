@@ -8,13 +8,14 @@ import styles from "./style.module.css";
 import { mergeClassName } from "../../utils/ui/class-name";
 import { globalCss } from "../../utils/ui/global-css";
 import { Observer } from "mobx-react-lite";
+import { NavBar } from "../../components/nav-bar";
 export const LoginPage: React.FC = () => {
   const service = useService(LoginService);
   const [form] = Form.useForm<LoginForm>();
   return (
     <Center className={styles.page}>
-      <div className={styles["page-title"]}>宠物医院学习系统</div>
-      <div
+      <NavBar title="宠物医院学习系统"></NavBar>
+      <main
         className={mergeClassName(
           styles["pet-background"],
           globalCss("center-column")
@@ -23,7 +24,7 @@ export const LoginPage: React.FC = () => {
         <Center className={styles["form-block"]}>
           {renderForm(form, service)}
         </Center>
-      </div>
+      </main>
     </Center>
   );
 };

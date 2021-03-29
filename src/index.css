@@ -27,3 +27,26 @@ code {
   justify-content: center;
   align-items: center;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.full-height {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.rest {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+}

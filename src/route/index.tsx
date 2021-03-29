@@ -6,9 +6,10 @@ import { PickKey } from "../utils/types";
 import { LoginPage } from "../pages/login";
 import { Redirect } from "react-router";
 import { DevelopingPage } from "../pages/developing";
-import { TestCenterPageLayout } from "../components/layout";
-import { Question } from "../pages/question";
-import { TestCenter } from "../pages/test-center";
+import { TestCenterPage } from "../pages/test-center";
+import { NewTestPage } from "../pages/test-center/new-test";
+import { MyTestsPage } from "../pages/test-center/my-tests";
+import { StatisticsPage } from "../pages/test-center/statistics";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -19,19 +20,31 @@ function defineRouteMapping<T extends Routes>(mapping: T) {
  * 在这里定义路由
  */
 export const routeMapping = defineRouteMapping({
+  "/": () => <Redirect to="/login"></Redirect>,
   "/developing": DevelopingPage,
   "/home": HomePage,
   "/about": AboutPage,
   "/login": LoginPage,
-  "/question": () => <TestCenterPageLayout children={<Question></Question>} />,
-  "/test-center": () => (
-    <TestCenterPageLayout children={<TestCenter></TestCenter>} />
+  "/test-center": () => <TestCenterPage />,
+  "/test-center/new-test": () => (
+    <TestCenterPage>
+      <NewTestPage></NewTestPage>
+    </TestCenterPage>
   ),
-  "/": () => <Redirect to="/login"></Redirect>,
+  "/test-center/my-tests": () => (
+    <TestCenterPage>
+      <MyTestsPage></MyTestsPage>
+    </TestCenterPage>
+  ),
+  "/test-center/statistics": () => (
+    <TestCenterPage>
+      <StatisticsPage></StatisticsPage>
+    </TestCenterPage>
+  ),
 } as const);
 
 export const routes = Object.entries(routeMapping);
-
+export type RoutePaths = keyof typeof routeMapping;
 type HistoryProxy<
   TRoutes extends Routes = typeof routeMapping,
   TState = State
@@ -48,3 +61,4 @@ type HistoryProxy<
 export const router: HistoryProxy = routerHistory;
 const initPath = window.location.hash.replace("#", "");
 router.replace(initPath as never);
+if (process.env.NODE_ENV === "development") (window as any).__router__ = router;
