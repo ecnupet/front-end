@@ -6,6 +6,9 @@ import { PickKey } from "../utils/types";
 import { LoginPage } from "../pages/login";
 import { Redirect } from "react-router";
 import { DevelopingPage } from "../pages/developing";
+import { TestCenterPageLayout } from "../components/layout";
+import { Question } from "../pages/question";
+import { TestCenter } from "../pages/test-center";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -20,6 +23,10 @@ export const routeMapping = defineRouteMapping({
   "/home": HomePage,
   "/about": AboutPage,
   "/login": LoginPage,
+  "/question": () => <TestCenterPageLayout children={<Question></Question>} />,
+  "/test-center": () => (
+    <TestCenterPageLayout children={<TestCenter></TestCenter>} />
+  ),
   "/": () => <Redirect to="/login"></Redirect>,
 } as const);
 
