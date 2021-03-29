@@ -7,7 +7,7 @@ export class RealBackendService implements BackendService {
     uid: string;
     password: string;
   }): Promise<ResponseResultModel<any>> {
-    const result = await apiCaller.post("/api/user/logon", {
+    const result = await apiCaller.post("/api/pm/user/logon", {
       name: form.uid,
       password: getPasswordNumberArray(form.password),
     });
@@ -17,7 +17,7 @@ export class RealBackendService implements BackendService {
     uid: string;
     password: string;
   }): Promise<ResponseResultModel<any>> {
-    const result = await apiCaller.post("/api/user/login", {
+    const result = await apiCaller.post("/api/pm/user/login", {
       name: form.uid,
       password: getPasswordNumberArray(form.password),
     });

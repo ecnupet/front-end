@@ -75,19 +75,19 @@ export interface APIInfo<
   responseType: Response;
 }
 export interface APIMapping {
-  ["/api/user/logon"](): APIInfo<
+  ["/api/pm/user/logon"](): APIInfo<
     "PersonLogon",
     "post",
     [ParameterInfo<"personLogonForm", "body", PersonLogonForm>],
     ActionResult<ResponseResultModel<any>>
   >;
-  ["/api/user/login"](): APIInfo<
+  ["/api/pm/user/login"](): APIInfo<
     "PersonLogin",
     "post",
     [ParameterInfo<"personLogin", "body", PersonLoginForm>],
     ActionResult<ResponseResultModel<any>>
   >;
-  ["/api/admin/userinfo"](): APIInfo<
+  ["/api/pm/admin/userinfo"](): APIInfo<
     "PersonChangeSerect",
     "post",
     [
@@ -99,13 +99,13 @@ export interface APIMapping {
     ],
     ActionResult<ResponseResultModel<any>>
   >;
-  ["/api/admin/user"](): APIInfo<
+  ["/api/pm/admin/user"](): APIInfo<
     "DeleteUser",
     "delete",
     [ParameterInfo<"personDeleteForm", "body", PersonDeleteForm>],
     ActionResult<ResponseResultModel<any>>
   >;
-  ["/api/user/logout"](): APIInfo<
+  ["/api/pm/user/logout"](): APIInfo<
     "PersonLogout",
     "post",
     [],

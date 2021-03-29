@@ -7,7 +7,7 @@ async function main(...args: string[]) {
   console.log(args);
   const response = await axios.get<WebAPIInspectResult>(
     // If you follow the example, you can get the definition json by the following request.
-    args[2] || "http://localhost:5000/typewags"
+    args[2] || "http://localhost:5000/secret/apis"
   );
   const json = response.data;
   // Generate all of the definitions by a simple API.

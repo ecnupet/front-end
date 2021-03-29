@@ -3,6 +3,7 @@ import { Button, Spin } from "antd";
 import { Center } from "../../components/center";
 import axios from "axios";
 import { apiCaller } from "../../api";
+import { router } from "../../route";
 // import { router } from "../../route";
 
 export const DevelopingPage: React.FC = () => (
@@ -11,10 +12,11 @@ export const DevelopingPage: React.FC = () => (
       onClick={async () => {
         try {
           const result = await apiCaller.post(
-            "/api/user/logout",
+            "/api/pm/user/logout",
             undefined as never
           );
           console.log(result);
+          router.replace("/login");
         } catch (error) {
           (window as any).err = error;
           console.log(error);
