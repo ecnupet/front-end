@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { router } from "../../routes";
-import { BackendServiceFactory } from "../../services/backend";
-import { InteractFactory } from "../../services/interact/factory";
+import { BackendServiceFactory } from "../../services";
+import { InteractFactory } from "../../services";
 
 export class AccessManageService {
   constructor() {

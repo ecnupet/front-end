@@ -5,7 +5,7 @@ import classes from "./style.module.css";
 import { globalStore } from "../../store";
 import { observer } from "mobx-react";
 import { handleAddGlobalCount } from "../home/service";
-import { createService } from "../../utils/services/factory";
+import { createService } from "../../utils/services";
 import { Counter } from "../../components/counter";
 
 @observer

@@ -1,10 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { router } from "../../routes";
-import {
-  BackendServiceFactory,
-  ResponseResultEnum,
-} from "../../services/backend";
-import { InteractFactory } from "../../services/interact/factory";
+import { BackendServiceFactory, ResponseResultEnum } from "../../services";
+import { InteractFactory } from "../../services";
 
 export interface LoginForm {
   uid: string;

@@ -1,4 +1,4 @@
-import { InteractFactory } from "../../../services/interact/factory";
+import { InteractFactory } from "../../../services";
 import { ConstructorOf } from "../../types";
 
 export function createService<Constructor extends ConstructorOf<object>>(

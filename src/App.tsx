@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Router, Route, Switch } from "react-router";
 import { routerHistory, routes } from "./routes";
-import { routeGuard } from "./services/route-guard";
+import { routeGuard } from "./services";
 import { changeTitle } from "./utils/ui/title";
 
 const App: React.FC = () => {
