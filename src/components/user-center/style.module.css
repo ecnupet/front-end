@@ -1,0 +1,9 @@
+/* @type */
+
+.logged-in {
+  color: wheat;
+}
+
+.not-logged-in {
+  color: red;
+}

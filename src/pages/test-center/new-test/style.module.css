@@ -1,0 +1,14 @@
+/* @type */
+
+.header {
+  font-size: large;
+  font-weight: 900;
+}
+
+.main {
+  padding: 30px 0;
+}
+
+.footer {
+  color: #282c34;
+}

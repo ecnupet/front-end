@@ -3,6 +3,7 @@ import { Observer } from "mobx-react-lite";
 import React from "react";
 import { AccessManage } from "../../components/access-manage";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
+import { UserCenter } from "../../components/user-center";
 import { RoutePaths } from "../../routes";
 import { globalStore } from "../../store";
 import { useService } from "../../utils/hooks";
@@ -32,7 +33,8 @@ const subRoutes: Array<{
 function renderHeader() {
   return (
     <div className={styles["rest-header"]}>
-      <AccessManage></AccessManage>
+      <AccessManage />
+      <UserCenter />
     </div>
   );
 }

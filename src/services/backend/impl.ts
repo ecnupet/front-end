@@ -1,8 +1,25 @@
-import { apiCaller } from "../../api";
+import { apiCaller, axiosInstance, PersonInfoResponse } from "../../api";
+import { SingleSelectQuestion } from "../../models";
 import { getPasswordNumberArray } from "../../utils/common";
-import { BackendService, ResponseResultModel } from "./schema";
+import {
+  BackendService,
+  CheckQuestionParams,
+  CheckQuestionResult,
+  NewQuizParams,
+  NewQuizResult,
+  QuestionDetailParams,
+  QuizService,
+  ResponseResultModel,
+} from "./schema";
 
 export class RealBackendService implements BackendService {
+  async userInfo(): Promise<ResponseResultModel<PersonInfoResponse>> {
+    const result = await apiCaller.get(
+      "/api/pm/user/userinfo",
+      undefined as never
+    );
+    return result;
+  }
   async register(form: {
     uid: string;
     password: string;
@@ -29,5 +46,31 @@ export class RealBackendService implements BackendService {
       undefined as never
     );
     return result;
+  }
+}
+
+export class RealQuizService implements QuizService {
+  async questionDetail(
+    params: QuestionDetailParams
+  ): Promise<ResponseResultModel<SingleSelectQuestion>> {
+    const result = await axiosInstance.get("/api/tl/quiz/detail", { params });
+    return result.data;
+  }
+  async newQuiz(
+    params: NewQuizParams
+  ): Promise<ResponseResultModel<NewQuizResult>> {
+    const result = await axiosInstance.get("/api/tl/quiz/new", {
+      params,
+    });
+    return result.data;
+  }
+
+  async checkQuestion(
+    params: CheckQuestionParams
+  ): Promise<ResponseResultModel<CheckQuestionResult>> {
+    const result = await axiosInstance.get("/api/tl/quiz/correct", {
+      params,
+    });
+    return result.data;
   }
 }

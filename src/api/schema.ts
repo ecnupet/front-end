@@ -36,6 +36,11 @@ export enum ResponseResultEnum {
   Unauthorized = 7,
   TimedOut = 8,
 }
+export interface PersonInfoResponse {
+  name: string;
+  isAdmin: number;
+}
+
 export type RequestMethodVerbs =
   | "get"
   | "post"
@@ -86,6 +91,12 @@ export interface APIMapping {
     "post",
     [ParameterInfo<"personLogin", "body", PersonLoginForm>],
     ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/pm/user/userinfo"](): APIInfo<
+    "PersonInfoGet",
+    "get",
+    [],
+    ActionResult<ResponseResultModel<PersonInfoResponse>>
   >;
   ["/api/pm/admin/userinfo"](): APIInfo<
     "PersonChangeSerect",
