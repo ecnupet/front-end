@@ -1,3 +1,5 @@
+import { getCurrentPath } from "../route";
+import { globalStore } from "../store";
 import { changeTitle } from "../utils/ui/title";
 
 export const routeGuard = {
@@ -11,4 +13,5 @@ export const routeGuard = {
 
 function onRouteChange() {
   changeTitle();
+  globalStore.route.setPath(getCurrentPath());
 }

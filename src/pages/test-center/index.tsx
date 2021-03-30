@@ -1,10 +1,14 @@
 import { Menu } from "antd";
+import { Observer } from "mobx-react-lite";
 import React from "react";
 import { AccessManage } from "../../components/access-manage";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
-import { RoutePaths, router } from "../../route";
+import { RoutePaths } from "../../route";
+import { globalStore } from "../../store";
+import { useService } from "../../utils/hooks";
 import { mergeClassName } from "../../utils/ui/class-name";
 import { globalCss } from "../../utils/ui/global-css";
+import { TestCenterService } from "./service";
 import styles from "./style.module.css";
 
 const subRoutes: Array<{
@@ -34,22 +38,30 @@ function renderHeader() {
 }
 
 export const TestCenterPage: React.FC = (prop) => {
+  const service = useService(TestCenterService);
   return (
     <ManageStyleLayout title="试题中心" headerChildren={renderHeader()}>
       <section className={mergeClassName(styles.section, globalCss("rest"))}>
         <aside
           className={mergeClassName(styles.aside, globalCss("full-height"))}
         >
-          <Menu className={styles.menu}>
-            {subRoutes.map((route) => (
-              <Menu.Item
-                key={route.path}
-                onClick={() => router.push(route.path)}
+          <Observer>
+            {() => (
+              <Menu
+                className={styles.menu}
+                selectedKeys={[globalStore.route.path]}
               >
-                {route.title}
-              </Menu.Item>
-            ))}
-          </Menu>
+                {subRoutes.map((route) => (
+                  <Menu.Item
+                    key={route.path}
+                    onClick={() => service.switchTo(route.path)}
+                  >
+                    {route.title}
+                  </Menu.Item>
+                ))}
+              </Menu>
+            )}
+          </Observer>
         </aside>
         <main className={mergeClassName(styles.main, globalCss("rest"))}>
           {prop.children}

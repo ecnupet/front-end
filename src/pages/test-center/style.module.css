@@ -15,12 +15,11 @@
   height: 100%;
   border-right: 2px dashed #f0f2f5;
   overflow-x: hidden;
-  padding: 20px;
+  min-width: min-content;
 }
 
 .menu {
   width: 200px;
-  min-height: 300px;
 }
 
 .main {

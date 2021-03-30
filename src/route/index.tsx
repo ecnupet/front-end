@@ -59,6 +59,9 @@ type HistoryProxy<
  * 本质就是react-router的history，但有路由的类型约束
  */
 export const router: HistoryProxy = routerHistory;
+export function getCurrentPath() {
+  return router.location.pathname as RoutePaths;
+}
 const initPath = window.location.hash.replace("#", "");
 router.replace(initPath as never);
 if (process.env.NODE_ENV === "development") (window as any).__router__ = router;
