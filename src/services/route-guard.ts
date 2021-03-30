@@ -1,4 +1,4 @@
-import { getCurrentPath } from "../route";
+import { getCurrentPath } from "../routes";
 import { globalStore } from "../store";
 import { changeTitle } from "../utils/ui/title";
 

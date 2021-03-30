@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { router } from "../../route";
+import { router } from "../../routes";
 
 export class AboutService {
   constructor() {

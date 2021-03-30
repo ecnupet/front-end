@@ -3,7 +3,7 @@ import { Observer } from "mobx-react-lite";
 import React from "react";
 import { AccessManage } from "../../components/access-manage";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
-import { RoutePaths } from "../../route";
+import { RoutePaths } from "../../routes";
 import { globalStore } from "../../store";
 import { useService } from "../../utils/hooks";
 import { mergeClassName } from "../../utils/ui/class-name";

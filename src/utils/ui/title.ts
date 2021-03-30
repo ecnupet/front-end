@@ -1,4 +1,4 @@
-import { RoutePaths, router } from "../../route";
+import { RoutePaths, router } from "../../routes";
 
 const PROJECT = "宠物医院学习系统";
 

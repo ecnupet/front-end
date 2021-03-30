@@ -3,7 +3,7 @@ import { Button, Spin } from "antd";
 import { Center } from "../../components/center";
 import axios from "axios";
 import { apiCaller } from "../../api";
-import { router } from "../../route";
+import { router } from "../../routes";
 // import { router } from "../../route";
 
 export const DevelopingPage: React.FC = () => (

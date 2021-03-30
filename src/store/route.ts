@@ -1,4 +1,4 @@
-import { RoutePaths } from "../route";
+import { RoutePaths } from "../routes";
 import { createStoreWithClass } from "./factory";
 
 class RouteStore {

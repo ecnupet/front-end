@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { RoutePaths, router } from "../../route";
+import { RoutePaths, router } from "../../routes";
 
 export class TestCenterService {
   constructor() {

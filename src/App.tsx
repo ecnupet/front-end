@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import { Router, Route, Switch } from "react-router";
-import { routerHistory, routes } from "./route";
+import { routerHistory, routes } from "./routes";
 import { routeGuard } from "./services/route-guard";
 import { changeTitle } from "./utils/ui/title";
 

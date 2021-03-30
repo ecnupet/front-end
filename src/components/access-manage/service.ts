@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { router } from "../../route";
+import { router } from "../../routes";
 import { BackendServiceFactory } from "../../services/backend";
 import { InteractFactory } from "../../services/interact/factory";
 

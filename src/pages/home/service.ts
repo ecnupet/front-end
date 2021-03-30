@@ -1,5 +1,5 @@
 import { action, makeAutoObservable } from "mobx";
-import { router } from "../../route";
+import { router } from "../../routes";
 import { globalStore } from "../../store";
 
 export const handleJump = () => {
