@@ -1,24 +1,55 @@
 import { Spin } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Center } from "../center";
 
 interface PromiseBuilderProp<T> {
   promise: Promise<T>;
-  renderPending?(): JSX.Element;
-  render(result: T): JSX.Element;
+  renderPending?(): React.ReactNode;
+  render(result: T): React.ReactNode;
+  renderError?(err?: any): React.ReactNode;
+  onDone?(result: T): void;
+  onError?(err?: any): void;
 }
 
-export function PromiseBuilder<T>(props: PromiseBuilderProp<T>) {
-  const [added, setAdded] = useState(false);
-  const [done, setDone] = useState(false);
+export function PromiseBuilder<T>(props: PromiseBuilderProp<T>): JSX.Element {
+  const [promiseState, setPromiseState] = useState<
+    "pending" | "fulfilled" | "rejected"
+  >("pending");
   const [data, setData] = useState<T | null>(null);
-  if (!added) {
-    setAdded(true);
-    props.promise.then((result) => {
-      setData(result);
-      setDone(true);
-    });
-  }
-  return done
-    ? props.render(data!)
-    : props.renderPending?.() ?? <Spin>加载中</Spin>;
+  const [error, setError] = useState<any>(null);
+  useEffect(() => {
+    setPromiseState("pending");
+    props.promise
+      .then((result) => {
+        setData(result);
+        setPromiseState("fulfilled");
+        setTimeout(() => {
+          props.onDone?.(result);
+        }, 0);
+      })
+      .catch((err) => {
+        setError(err);
+        setPromiseState("rejected");
+        setTimeout(() => {
+          props.onError?.(err);
+        }, 0);
+      });
+  }, [props]);
+  return (
+    <>
+      {promiseState === "fulfilled"
+        ? props.render(data!)
+        : promiseState === "pending"
+        ? props.renderPending?.() ?? (
+            <Center
+              style={{ width: "100%", height: "100%", position: "absolute" }}
+            >
+              <Spin></Spin>
+            </Center>
+          )
+        : promiseState === "rejected"
+        ? props.renderError?.(error)
+        : null}
+    </>
+  );
 }

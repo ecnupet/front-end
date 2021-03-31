@@ -7,17 +7,23 @@ const mockService: PersonManageService = new MockBackendService();
 const realQuizService: QuizService = new RealQuizService();
 type ServiceType = "real" | "mock";
 
+let defaultServiceType: ServiceType = "real";
+
+export function setDefaultServiceType(type: ServiceType) {
+  defaultServiceType = type ?? defaultServiceType;
+}
+
 export const BackendServiceFactory = {
-  getBackendService(type: ServiceType = "real") {
+  getPersionManageService(type?: ServiceType) {
     return {
       real: realService,
       mock: mockService,
-    }[type];
+    }[type ?? defaultServiceType];
   },
-  getQuizService(type: ServiceType = "real") {
+  getQuizService(type?: ServiceType) {
     return {
       real: realQuizService,
       mock: mockQuizService,
-    }[type];
+    }[type ?? defaultServiceType];
   },
 };

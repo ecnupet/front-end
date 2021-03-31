@@ -1,6 +1,8 @@
 import { PersonInfoResponse } from "../../api";
 import { QuestionType, SingleSelectQuestion } from "../../models";
 import { withType } from "../../utils/common";
+import { callHook } from "../../utils/common/decorators";
+import { wait } from "../../utils/common/time";
 import { RealBackendService, RealQuizService } from "./impl";
 import {
   NewQuizParams,
@@ -101,7 +103,7 @@ const mockOptions = {
   C: "Confusing",
   D: "xxx",
 };
-export const mockQuizService: QuizService = {
+export const mockQuizService: QuizService = callHook({
   async checkQuestion() {
     return success({
       correct: true,
@@ -114,8 +116,9 @@ export const mockQuizService: QuizService = {
     });
   },
   async questionDetail(params) {
+    await wait(2);
     return success({
-      description: "",
+      description: `This is question ${params.questionId}`,
       duration: 10,
       type: QuestionType.InfectiousDisease,
       questionId: params.questionId,
@@ -178,4 +181,4 @@ export const mockQuizService: QuizService = {
       startTime: "2021-3-31",
     });
   },
-};
+});

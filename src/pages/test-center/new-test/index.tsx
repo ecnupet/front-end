@@ -25,6 +25,7 @@ export const NewTestPage: React.FC = () => {
             <Select
               size="large"
               showSearch={true}
+              mode="tags"
               options={service.allTypes.map((type) => ({
                 label: NameOfQuestionType[type],
                 value: type.toString(),

@@ -9,7 +9,7 @@ export class AccessManageService {
   }
 
   async handleLogout() {
-    await BackendServiceFactory.getBackendService().logout();
+    await BackendServiceFactory.getPersionManageService().logout();
     InteractFactory.getMessager().success("退出登录成功");
     router.replace("/login");
   }

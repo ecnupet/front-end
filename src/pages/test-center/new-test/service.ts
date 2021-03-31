@@ -24,11 +24,10 @@ export class NewTestService {
   }
 
   async handleCreateNewTest(form: NewTestForm) {
-    console.log(form);
     const username = globalStore.user.userName;
     const {
       data: { questionId, quizId },
-    } = await BackendServiceFactory.getQuizService("mock").newQuiz({
+    } = await BackendServiceFactory.getQuizService().newQuiz({
       types: form.types,
       userName: username,
     });

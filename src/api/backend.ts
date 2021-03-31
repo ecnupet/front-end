@@ -5,7 +5,7 @@ axios.defaults.headers = {
   "X-Requested-With": "XMLHttpRequest",
 };
 axios.defaults.baseURL =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV !== "development"
     ? "https://localhost:5001"
     : "https://backend.ecnu.space";
 axios.defaults.withCredentials = true;

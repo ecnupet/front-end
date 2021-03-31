@@ -13,9 +13,7 @@ class UserStore {
   async fetch() {
     const {
       data: { isAdmin, name },
-    } = await BackendServiceFactory.getBackendService(
-      /* TODO real */ "mock"
-    ).userInfo();
+    } = await BackendServiceFactory.getPersionManageService().userInfo();
     this.userName = name;
     this.isAdmin = isAdmin === 1;
   }

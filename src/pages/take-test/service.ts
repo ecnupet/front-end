@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { TakeTestParameters } from ".";
 import { QuestionType, SingleSelectQuestion } from "../../models";
 import { BackendServiceFactory, InteractFactory } from "../../services";
@@ -7,35 +7,42 @@ import { parseQueryParameter } from "../../utils/common";
 export class TakeTestService {
   constructor() {
     const params = parseQueryParameter(TakeTestService.getDefault());
-    const { questionIds } = params;
-    this.setQuestionIds(questionIds);
+    const { questionIds, quizId } = params;
+    this.questionIds = questionIds;
+    this.quizId = quizId;
     makeAutoObservable(this);
   }
-  questionIds: number[] = [];
-  setQuestionIds(ids: number[]) {
-    this.questionIds = ids;
-  }
-  question: SingleSelectQuestion = TakeTestService.getDefaultQuestion();
+  private questionIds: number[] = [];
+  private quizId: number;
   index: number = 0;
-  selectedAnswer = "";
+  get count() {
+    return this.questionIds.length;
+  }
+  get questionId() {
+    return this.questionIds[this.index]!;
+  }
+  selectedAnswer: string | null = null;
   get no() {
     return this.index + 1;
   }
   get done() {
     return this.index === this.questionIds.length;
   }
-  setQuestion(question: SingleSelectQuestion) {
-    this.question = question;
-  }
-  async fetchQuestionDetail() {
-    const detail = await BackendServiceFactory.getQuizService(
-      /* TODO real */ "mock"
-    ).questionDetail({ questionId: this.questionIds[this.index]! });
-    this.setQuestion(detail.data);
+  private enterTime: Date | null = null;
+
+  async fetchQuestionDetail(questionId: number) {
+    const detail = await BackendServiceFactory.getQuizService().questionDetail({
+      questionId,
+    });
+    return detail.data;
   }
 
-  nextQuestion() {
-    this.submitAnswer();
+  handleEnter() {
+    this.enterTime = new Date();
+  }
+
+  handleToNextQuestion() {
+    this.handleSubmitAnswer();
     if (this.index < this.questionIds.length - 1) {
       this.index++;
     } else {
@@ -54,11 +61,18 @@ export class TakeTestService {
 
   handleTimeout() {
     InteractFactory.getMessager().warning("本题时间已用完！");
-    this.nextQuestion();
+    this.handleToNextQuestion();
   }
 
-  submitAnswer() {
-    console.log(this.selectedAnswer, toJS(this.question));
+  async handleSubmitAnswer() {
+    const now = Date.now();
+    const result = await BackendServiceFactory.getQuizService().checkQuestion({
+      answer: this.selectedAnswer,
+      questionId: this.questionIds[this.index]!,
+      quizId: this.quizId,
+      timeSpent: ~~((now - +this.enterTime!) / 1000),
+    });
+    console.log(result);
   }
 
   static getDefaultQuestion(): SingleSelectQuestion {

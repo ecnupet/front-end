@@ -33,6 +33,7 @@ export interface QuestionDetailParams {
 }
 
 export interface CheckQuestionParams {
+  userName?: string;
   quizId: number;
   questionId: number;
   answer: string | null;
@@ -42,9 +43,7 @@ export interface CheckQuestionParams {
   timeSpent: number;
 }
 
-export interface CheckQuestionResult {
-  correct: boolean;
-}
+export interface CheckQuestionResult {}
 
 export interface PageQueryParams {
   page: number;
