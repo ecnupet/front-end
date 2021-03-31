@@ -35,12 +35,81 @@ export interface QuestionDetailParams {
 export interface CheckQuestionParams {
   quizId: number;
   questionId: number;
-  answer: string;
+  answer: string | null;
+  /**
+   * 答题花费时间，单位秒，整数
+   */
   timeSpent: number;
 }
 
 export interface CheckQuestionResult {
   correct: boolean;
+}
+
+export interface PageQueryParams {
+  page: number;
+  pageSize: number;
+}
+
+/**
+ * 查询考试历史记录（分页查询）参数
+ */
+export interface QuizHistoryParams extends PageQueryParams {
+  userName?: string;
+}
+
+/**
+ * 考试历史记录（单条的JSON格式）查询结果
+ */
+export interface QuizHistoryResult {
+  quizId: number;
+  type: QuestionType;
+  historyId: number;
+  /**
+   * 开始考试的时间
+   */
+  startTime: string;
+  /**
+   * 考试花费的时间
+   */
+  costTime: string;
+  /**
+   * 分数
+   */
+  point: number;
+}
+
+/**
+ * 单次考试记录详情
+ */
+export interface QuizHistoryDetailParams {
+  userName?: string;
+  quizId: number;
+}
+
+export interface QuizHistoryDetailResult {
+  /**
+   * 开始考试的时间
+   */
+  startTime: string;
+  /**
+   * 考试花费的时间
+   */
+  costTime: string;
+  /**
+   * 各道考题评判结果
+   */
+  results: Array<
+    SingleSelectQuestion & {
+      answer: string;
+      choice: string;
+      spend: number;
+    }
+  >;
+}
+
+export interface QuetionCorrectRateParams {
+  userName?: string;
 }
 
 export interface BackendService {
@@ -64,4 +133,18 @@ export interface QuizService {
   questionDetail(
     params: QuestionDetailParams
   ): Promise<ResponseResultModel<SingleSelectQuestion>>;
+  /**
+   * 考试记录分页查询
+   * @param params 查询参数
+   */
+  quizHistory(
+    params: QuizHistoryParams
+  ): Promise<ResponseResultModel<QuizHistoryResult[]>>;
+  /**
+   * 单个考试记录详情查询
+   * @param params 查询参数
+   */
+  quizHistoryDetail(
+    params: QuizHistoryDetailParams
+  ): Promise<ResponseResultModel<QuizHistoryDetailResult>>;
 }

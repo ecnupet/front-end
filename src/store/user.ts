@@ -13,7 +13,9 @@ class UserStore {
   async fetch() {
     const {
       data: { isAdmin, name },
-    } = await BackendServiceFactory.getBackendService().userInfo();
+    } = await BackendServiceFactory.getBackendService(
+      /* TODO real */ "mock"
+    ).userInfo();
     this.userName = name;
     this.isAdmin = isAdmin === 1;
   }

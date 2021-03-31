@@ -10,5 +10,5 @@ export function openPage(path: RoutePaths, params?: object) {
   if (params) {
     updateQueryParameter(url.searchParams, serializeQueryParameter(params));
   }
-  window.open(url.toString(), "");
+  return window.open(url.toString(), "");
 }

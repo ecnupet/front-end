@@ -8,6 +8,10 @@ import {
   NewQuizParams,
   NewQuizResult,
   QuestionDetailParams,
+  QuizHistoryDetailParams,
+  QuizHistoryDetailResult,
+  QuizHistoryParams,
+  QuizHistoryResult,
   QuizService,
   ResponseResultModel,
 } from "./schema";
@@ -69,6 +73,24 @@ export class RealQuizService implements QuizService {
     params: CheckQuestionParams
   ): Promise<ResponseResultModel<CheckQuestionResult>> {
     const result = await axiosInstance.get("/api/tl/quiz/correct", {
+      params,
+    });
+    return result.data;
+  }
+
+  async quizHistory(
+    params: QuizHistoryParams
+  ): Promise<ResponseResultModel<QuizHistoryResult[]>> {
+    const result = await axiosInstance.get("/api/tl/quiz/history", {
+      params,
+    });
+    return result.data;
+  }
+
+  async quizHistoryDetail(
+    params: QuizHistoryDetailParams
+  ): Promise<ResponseResultModel<QuizHistoryDetailResult>> {
+    const result = await axiosInstance.get("/api/tl/quiz/history/detail", {
       params,
     });
     return result.data;

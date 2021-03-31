@@ -35,7 +35,9 @@ export class LoginService {
   }
 
   private async handleLogin(form: LoginForm) {
-    const result = await BackendServiceFactory.getBackendService().login(form);
+    const result = await BackendServiceFactory.getBackendService(
+      /* TODO real */ "mock"
+    ).login(form);
     if (result.state === ResponseResultEnum.Success) {
       InteractFactory.getMessager().success(result.detail ?? "登录成功");
       router.push("/test-center");
