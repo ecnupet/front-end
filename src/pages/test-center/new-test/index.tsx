@@ -1,7 +1,7 @@
 import { Button, Form, Select } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React from "react";
-import { QuestionType } from "../../../models";
+import { NameOfQuestionType } from "../../../models";
 import { useService } from "../../../utils/hooks";
 import { NewTestForm, NewTestService } from "./service";
 import styles from "./style.module.css";
@@ -24,10 +24,9 @@ export const NewTestPage: React.FC = () => {
           <Form.Item label="选择分类" name="types" required>
             <Select
               size="large"
-              mode="tags"
               showSearch={true}
               options={service.allTypes.map((type) => ({
-                label: QuestionType[type],
+                label: NameOfQuestionType[type],
                 value: type.toString(),
               }))}
             />
@@ -40,7 +39,8 @@ export const NewTestPage: React.FC = () => {
         </Form>
       </main>
       <footer className={styles.footer}>
-        选择题目分类和后点击开始考试，系统将会生成一份试卷，并开始计时。
+        选择题目分类和后点击开始考试，系统将会生成一份试卷。
+        <b>每道题目都有限定时间</b>，在题目加载后，计时将开始。
       </footer>
     </section>
   );

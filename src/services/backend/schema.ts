@@ -21,7 +21,7 @@ export interface ResponseResultModel<TResult> {
 
 export interface NewQuizParams {
   userName: string;
-  type: QuestionType;
+  types: QuestionType[];
 }
 export interface NewQuizResult {
   questionId: number[];
@@ -64,7 +64,6 @@ export interface QuizHistoryParams extends PageQueryParams {
 export interface QuizHistoryResult {
   quizId: number;
   type: QuestionType;
-  historyId: number;
   /**
    * 开始考试的时间
    */
@@ -112,7 +111,7 @@ export interface QuetionCorrectRateParams {
   userName?: string;
 }
 
-export interface BackendService {
+export interface PersonManageService {
   register(form: {
     uid: string;
     password: string;

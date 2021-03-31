@@ -1,13 +1,18 @@
 name: CI
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Commit messager
-        run: chmod +x ./scripts/git-message.sh && ./scripts/git-message.sh
+      - name: Prepare Messager
+        run: chmod +x ./scripts/python/message.py
+      - name: Send build notification
+        run: echo "front-end 开始构建和上传" | ./scripts/python/message.py
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install # will run `yarn install` command

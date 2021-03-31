@@ -29,7 +29,7 @@ export class NewTestService {
     const {
       data: { questionId, quizId },
     } = await BackendServiceFactory.getQuizService("mock").newQuiz({
-      type: form.types.find(() => true)!,
+      types: form.types,
       userName: username,
     });
     openPage(

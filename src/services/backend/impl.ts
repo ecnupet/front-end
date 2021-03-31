@@ -2,7 +2,7 @@ import { apiCaller, axiosInstance, PersonInfoResponse } from "../../api";
 import { SingleSelectQuestion } from "../../models";
 import { getPasswordNumberArray } from "../../utils/common";
 import {
-  BackendService,
+  PersonManageService,
   CheckQuestionParams,
   CheckQuestionResult,
   NewQuizParams,
@@ -16,7 +16,7 @@ import {
   ResponseResultModel,
 } from "./schema";
 
-export class RealBackendService implements BackendService {
+export class RealBackendService implements PersonManageService {
   async userInfo(): Promise<ResponseResultModel<PersonInfoResponse>> {
     const result = await apiCaller.get(
       "/api/pm/user/userinfo",
@@ -63,18 +63,14 @@ export class RealQuizService implements QuizService {
   async newQuiz(
     params: NewQuizParams
   ): Promise<ResponseResultModel<NewQuizResult>> {
-    const result = await axiosInstance.get("/api/tl/quiz/new", {
-      params,
-    });
+    const result = await axiosInstance.post("/api/tl/quiz/new", params);
     return result.data;
   }
 
   async checkQuestion(
     params: CheckQuestionParams
   ): Promise<ResponseResultModel<CheckQuestionResult>> {
-    const result = await axiosInstance.get("/api/tl/quiz/correct", {
-      params,
-    });
+    const result = await axiosInstance.post("/api/tl/quiz/correct", params);
     return result.data;
   }
 

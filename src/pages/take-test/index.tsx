@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import React, { useEffect } from "react";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
 import { SingleSelectQuestionComponent } from "../../components/single-select-question";
-import { QuestionType } from "../../models";
+import { NameOfQuestionType } from "../../models";
 import { useService } from "../../utils/hooks";
 import { TakeTestService } from "./service";
 import styles from "./style.module.css";
@@ -38,7 +38,7 @@ export const TakeTestPage: React.FC = observer(() => {
           <h2>第{no}题</h2>
           <span>分类： </span>
           <span className={styles.category}>
-            #{QuestionType[question.type]}
+            #{NameOfQuestionType[question.type]}
           </span>
           <Countdown
             value={+new Date() + 1000 * question.duration}

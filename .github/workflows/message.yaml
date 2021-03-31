@@ -1,0 +1,10 @@
+name: Message
+on: [push]
+jobs:
+  build:
+    name: Send Commit Message
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Commit messager
+        run: chmod +x ./scripts/git-message.sh && ./scripts/git-message.sh

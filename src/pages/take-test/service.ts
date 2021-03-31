@@ -70,7 +70,7 @@ export class TakeTestService {
         B: "Option B",
       },
       questionId: 0,
-      type: QuestionType.Cat,
+      type: QuestionType.InfectiousDisease,
     };
   }
   static getDefault(): TakeTestParameters {
