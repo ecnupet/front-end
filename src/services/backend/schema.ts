@@ -62,7 +62,7 @@ export interface QuizHistoryParams extends PageQueryParams {
  */
 export interface QuizHistoryResult {
   quizId: number;
-  type: QuestionType;
+  types: QuestionType[];
   /**
    * 开始考试的时间
    */

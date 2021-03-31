@@ -1,9 +1,12 @@
 import { Observer } from "mobx-react-lite";
-import React from "react";
+import React, { useEffect } from "react";
 import { globalStore } from "../../store";
 import styles from "./style.module.css";
 
 export const UserCenter: React.FC = () => {
+  useEffect(() => {
+    !globalStore.user.userName && globalStore.user.fetch();
+  });
   return (
     <Observer>
       {() => {

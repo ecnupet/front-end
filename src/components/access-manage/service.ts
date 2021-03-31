@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { router } from "../../routes";
 import { BackendServiceFactory } from "../../services";
 import { InteractFactory } from "../../services";
+import { globalStore } from "../../store";
 
 export class AccessManageService {
   constructor() {
@@ -11,6 +12,7 @@ export class AccessManageService {
   async handleLogout() {
     await BackendServiceFactory.getPersionManageService().logout();
     InteractFactory.getMessager().success("退出登录成功");
+    globalStore.user.logout();
     router.replace("/login");
   }
 }

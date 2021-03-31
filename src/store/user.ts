@@ -8,14 +8,28 @@ class UserStore {
   }
 
   userName = "";
+
+  setUserName(name: string) {
+    this.userName = name;
+  }
+
   isAdmin = false;
+
+  setIsAdmin(isAdmin: boolean) {
+    this.isAdmin = isAdmin;
+  }
 
   async fetch() {
     const {
       data: { isAdmin, name },
     } = await BackendServiceFactory.getPersionManageService().userInfo();
-    this.userName = name;
-    this.isAdmin = isAdmin === 1;
+
+    this.setUserName(name);
+    this.setIsAdmin(isAdmin === 1);
+  }
+
+  logout() {
+    this.userName = "";
   }
 }
 

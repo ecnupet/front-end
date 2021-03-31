@@ -1,6 +1,6 @@
 import { Button, Form, FormInstance, Input } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { Center } from "../../components/center";
 import { useService } from "../../utils/hooks";
 import { LoginForm, LoginService } from "./service";
@@ -9,9 +9,15 @@ import { mergeClassName } from "../../utils/ui/class-name";
 import { globalCss } from "../../utils/ui/global-css";
 import { Observer } from "mobx-react-lite";
 import { NavBar } from "../../components/nav-bar";
+import { router } from "../../routes";
 export const LoginPage: React.FC = () => {
   const service = useService(LoginService);
   const [form] = Form.useForm<LoginForm>();
+  useEffect(() => {
+    if (service.hasLoggedIn) {
+      router.replace("/test-center");
+    }
+  }, [service]);
   return (
     <Center className={styles.page}>
       <NavBar title="宠物医院学习系统"></NavBar>

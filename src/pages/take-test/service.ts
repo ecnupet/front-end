@@ -29,7 +29,7 @@ export class TakeTestService {
     return this.index === this.questionIds.length;
   }
   private enterTime: Date | null = null;
-
+  currentQuestion: SingleSelectQuestion | null = null;
   async fetchQuestionDetail(questionId: number) {
     const detail = await BackendServiceFactory.getQuizService().questionDetail({
       questionId,
@@ -37,8 +37,9 @@ export class TakeTestService {
     return detail.data;
   }
 
-  handleEnter() {
+  handleEnter(question: SingleSelectQuestion) {
     this.enterTime = new Date();
+    this.currentQuestion = question;
   }
 
   handleToNextQuestion() {
@@ -66,13 +67,12 @@ export class TakeTestService {
 
   async handleSubmitAnswer() {
     const now = Date.now();
-    const result = await BackendServiceFactory.getQuizService().checkQuestion({
+    await BackendServiceFactory.getQuizService().checkQuestion({
       answer: this.selectedAnswer,
       questionId: this.questionIds[this.index]!,
       quizId: this.quizId,
       timeSpent: ~~((now - +this.enterTime!) / 1000),
     });
-    console.log(result);
   }
 
   static getDefaultQuestion(): SingleSelectQuestion {
@@ -89,7 +89,7 @@ export class TakeTestService {
   }
   static getDefault(): TakeTestParameters {
     return {
-      questionIds: [0, 1, 2],
+      questionIds: [],
       quizId: -1,
     };
   }

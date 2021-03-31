@@ -1,9 +1,9 @@
 import { PersonInfoResponse } from "../../api";
 import { QuestionType, SingleSelectQuestion } from "../../models";
+import { configStore } from "../../store/config";
 import { withType } from "../../utils/common";
-import { callHook } from "../../utils/common/decorators";
-import { wait } from "../../utils/common/time";
-import { RealBackendService, RealQuizService } from "./impl";
+import { callHook } from "../../utils/common";
+import { RealQuizService } from "./impl";
 import {
   NewQuizParams,
   ResponseResultModel,
@@ -11,16 +11,17 @@ import {
   QuestionDetailParams,
   QuizService,
   QuizHistoryResult,
+  PersonManageService,
 } from "./schema";
 
-export class MockBackendService extends RealBackendService {
+export const mockBackendService: PersonManageService = callHook({
   async login(): Promise<ResponseResultModel<any>> {
     return {
       state: 0,
       data: {},
       detail: "登录成功",
     };
-  }
+  },
 
   async userInfo(): Promise<ResponseResultModel<PersonInfoResponse>> {
     return {
@@ -28,10 +29,10 @@ export class MockBackendService extends RealBackendService {
       state: 0,
       data: {
         isAdmin: 0,
-        name: "Darren",
+        name: configStore.getConfig("mockUserName") || "Darren",
       },
     };
-  }
+  },
 
   async logout(): Promise<ResponseResultModel<any>> {
     return {
@@ -39,7 +40,7 @@ export class MockBackendService extends RealBackendService {
       detail: "",
       state: 0,
     };
-  }
+  },
 
   async register(): Promise<ResponseResultModel<any>> {
     return {
@@ -47,19 +48,18 @@ export class MockBackendService extends RealBackendService {
       detail: "",
       state: 0,
     };
-  }
-}
+  },
+});
 export class MockQuizService extends RealQuizService {
   async newQuiz(
     params: NewQuizParams
   ): Promise<ResponseResultModel<NewQuizResult>> {
-    console.log(params);
     return {
       data: {
         questionId: [1, 2, 3],
         quizId: 0,
       },
-      detail: "xxx",
+      detail: params.userName,
       state: 0,
     };
   }
@@ -116,7 +116,6 @@ export const mockQuizService: QuizService = callHook({
     });
   },
   async questionDetail(params) {
-    await wait(2);
     return success({
       description: `This is question ${params.questionId}`,
       duration: 10,
@@ -132,14 +131,14 @@ export const mockQuizService: QuizService = callHook({
         costTime: "7s",
         point: 100,
         startTime: "2021-3-31",
-        type: QuestionType.InfectiousDisease,
+        types: [QuestionType.InfectiousDisease],
       }),
       withType<QuizHistoryResult>({
         quizId: 2,
         costTime: "19s",
         point: 100,
         startTime: "2021-3-31",
-        type: QuestionType.InfectiousDisease,
+        types: [QuestionType.InfectiousDisease, QuestionType.ObstetricDisease],
       }),
     ]);
   },
@@ -158,7 +157,7 @@ export const mockQuizService: QuizService = callHook({
           type: QuestionType.InfectiousDisease,
         },
         {
-          questionId: 1,
+          questionId: 2,
           answer: "A",
           choice: "B",
           description: "Desc",
@@ -168,7 +167,7 @@ export const mockQuizService: QuizService = callHook({
           type: QuestionType.InfectiousDisease,
         },
         {
-          questionId: 1,
+          questionId: 3,
           answer: "A",
           choice: "B",
           description: "Desc",

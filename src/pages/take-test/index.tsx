@@ -45,6 +45,7 @@ function render(service: TakeTestService, length: number): JSX.Element {
             children={() => (
               <PromiseBuilder
                 promise={service.fetchQuestionDetail(service.questionId)}
+                onDone={service.handleEnter}
                 render={(question) => (
                   <>
                     <Countdown
