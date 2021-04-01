@@ -1,6 +1,9 @@
+import { isDev } from "../services";
 import { createStoreWithClass } from "./factory";
 
 interface DevToolsConfig {
+  enableGlobalMock: boolean;
+  baseURL: string;
   mockUserName: string;
   mockRequestDuration: number;
   logDetails: boolean;
@@ -8,14 +11,20 @@ interface DevToolsConfig {
 
 export class ConfigStore {
   static readonly CONFIG_KEY = "dev-config";
-  config: DevToolsConfig = {
-    logDetails: true,
-    mockRequestDuration: 0.5,
-    mockUserName: "Darren",
-  };
+  config: DevToolsConfig = this.getDefaultConfig();
   constructor() {
     this.load();
   }
+  getDefaultConfig(): DevToolsConfig {
+    return {
+      logDetails: true,
+      mockRequestDuration: 0.5,
+      mockUserName: "Darren",
+      baseURL: "https://backend.ecnu.space",
+      enableGlobalMock: false,
+    };
+  }
+
   load() {
     const loadConfig = JSON.parse(
       localStorage.getItem(ConfigStore.CONFIG_KEY) ?? "{}"
@@ -37,15 +46,21 @@ export class ConfigStore {
     return this.config[key];
   }
 
-  setConfig<K extends keyof DevToolsConfig>(key: K, value: DevToolsConfig[K]) {
-    this.config[key] = value;
+  updateConfig(patch: Partial<DevToolsConfig>) {
+    for (const key in patch) {
+      if (key in this.config) {
+        // @ts-ignore
+        this.config[key] = patch[key];
+      }
+    }
     this.save();
   }
 
-  updateConfig(patch: Partial<DevToolsConfig>) {
-    Object.assign(this.config, patch);
-    this.save();
+  cleanUp() {
+    localStorage.removeItem(ConfigStore.CONFIG_KEY);
+    this.updateConfig(this.getDefaultConfig());
   }
 }
 
 export const configStore = createStoreWithClass(ConfigStore);
+if (isDev) (window as any).__config__ = configStore;

@@ -11,6 +11,7 @@ import { NewTestPage } from "../pages/test-center/new-test";
 import { MyTestsPage } from "../pages/test-center/my-tests";
 import { StatisticsPage } from "../pages/test-center/statistics";
 import { TakeTestPage } from "../pages/take-test";
+import { isDev } from "../services";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -66,4 +67,4 @@ export function getCurrentPath() {
 }
 const initPath = window.location.hash.replace("#", "");
 router.replace(initPath as never);
-if (process.env.NODE_ENV === "development") (window as any).__router__ = router;
+if (isDev) (window as any).__router__ = router;

@@ -1,8 +1,8 @@
+import { isDev } from "../../services";
 import { configStore } from "../../store/config";
 import { wait } from "./time";
-
 export function callHook<T extends object>(target: T): T {
-  if (process.env.NODE_ENV !== "production")
+  if (isDev)
     return new Proxy(target, {
       get(target, key, receiver) {
         const result = Reflect.get(target, key, receiver);
@@ -12,16 +12,13 @@ export function callHook<T extends object>(target: T): T {
               console.log(`call method <${result.name}>`, arguments);
             const callResult = (result as Function).apply(this, arguments);
             if (callResult instanceof Promise) {
-              callResult.then((callResult) => {
+              return (async () => {
+                await wait(configStore.getConfig("mockRequestDuration"));
+                const unwrapped = await callResult;
                 configStore.getConfig("logDetails") &&
-                  console.log(
-                    `call method <${result.name}> result`,
-                    callResult
-                  );
-              });
-              return wait(configStore.getConfig("mockRequestDuration")).then(
-                () => callResult
-              );
+                  console.log(`call method <${result.name}> result`, unwrapped);
+                return unwrapped;
+              })();
             }
             configStore.getConfig("logDetails") &&
               console.log("call method result", callResult);

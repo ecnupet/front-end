@@ -1,103 +1,33 @@
-import { Button, AutoComplete, Switch } from "antd";
+import { Button } from "antd";
 import React, { useState } from "react";
-import { axiosInstance } from "../../api";
+import { axiosInstance, baseURLs } from "../../api";
 import { Center } from "../../components/center";
-import { router } from "../../routes";
 import * as qiniu from "qiniu-js";
-import { getGlobalServiceType, setGlobalServiceType } from "../../services";
 import { ConfigForm } from "../../components/config-form";
 import { configStore } from "../../store/config";
+import { Observer } from "mobx-react-lite";
+import { router } from "../../routes";
 export const DevelopingPage: React.FC = () => {
-  const [baseURL, setBaseURL] = useState(axiosInstance.defaults.baseURL);
-  const [baseURLInput, setBaseURLInput] = useState("");
-  const [globalMock, setGlobalMock] = useState(
-    getGlobalServiceType() === "mock"
-  );
-  const [globalBackend, setGlobalBackend] = useState(
-    getGlobalServiceType() === "real"
-  );
   const [file, setFile] = useState("");
   return (
     <Center style={{ flexDirection: "column" }}>
       <h1>开发者专用页面</h1>
       <div>
-        <Button
-          onClick={() => {
-            router.goBack();
-          }}
-        >
-          回到前一页
-        </Button>
-        <Button
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          首页
-        </Button>
-      </div>
-      <div>
-        <p>BaseURL</p>
         <div>
-          当前的baseURL:<span style={{ color: "red" }}>{baseURL || "空"}</span>
-        </div>
-        <Button
-          onClick={() => {
-            setBaseURL(baseURLInput);
-            axiosInstance.defaults.baseURL = baseURLInput;
-          }}
-        >
-          切换BaseURL
-        </Button>
-        <AutoComplete
-          style={{ width: 200 }}
-          value={baseURLInput}
-          onChange={(value) => {
-            setBaseURLInput(value);
-          }}
-          onSelect={(value) => {
-            setBaseURLInput(value);
-          }}
-          options={[
-            {
-              value: "https://backend.ecnu.space",
-            },
-            {
-              value: "http://localhost:5000",
-            },
-            {
-              value: "https://localhost:5001",
-            },
-          ]}
-        ></AutoComplete>
-      </div>
-      <div>
-        <p>数据mock</p>
-        <div>
-          开启全局mock
-          <Switch
-            checked={globalMock}
-            onChange={(e) => {
-              setGlobalMock(e);
-              if (e) {
-                setGlobalServiceType("mock");
-                setGlobalBackend(false);
-              }
+          <Button
+            onClick={() => {
+              router.goBack();
             }}
-          ></Switch>
-        </div>
-        <div>
-          开启全局接入服务端
-          <Switch
-            checked={globalBackend}
-            onChange={(e) => {
-              setGlobalBackend(e);
-              if (e) {
-                setGlobalServiceType("real");
-                setGlobalMock(false);
-              }
+          >
+            返回上页
+          </Button>
+          <Button
+            onClick={() => {
+              router.replace("/");
             }}
-          ></Switch>
+          >
+            回首页
+          </Button>
         </div>
         <div>
           <input
@@ -153,13 +83,44 @@ export const DevelopingPage: React.FC = () => {
         </div>
       </div>
       <div>
-        <p>其他配置</p>
-        <ConfigForm
-          config={configStore.config}
-          onChange={(config) => {
-            configStore.updateConfig(config);
+        <p>配置选项</p>
+        <Button
+          onClick={() => {
+            console.log(configStore);
+            configStore.cleanUp();
           }}
-        ></ConfigForm>
+        >
+          重置配置
+        </Button>
+        <Observer>
+          {() => (
+            <ConfigForm
+              config={configStore.config}
+              onChange={(config) => {
+                configStore.updateConfig(config);
+              }}
+              configOptions={{
+                baseURL: {
+                  displayName: "请求基路径",
+                  stringEnums: baseURLs,
+                },
+                mockUserName: {
+                  displayName: "临时接入的用户名（请求参数）",
+                  stringEnums: ["Darren"],
+                },
+                enableGlobalMock: {
+                  displayName: "使用Mock数据",
+                },
+                logDetails: {
+                  displayName: "输出Mock调用API的日志",
+                },
+                mockRequestDuration: {
+                  displayName: "Mock请求模拟延迟（秒）",
+                },
+              }}
+            ></ConfigForm>
+          )}
+        </Observer>
       </div>
     </Center>
   );

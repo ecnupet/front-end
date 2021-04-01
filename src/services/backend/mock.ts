@@ -2,7 +2,6 @@ import { PersonInfoResponse } from "../../api";
 import { QuestionType, SingleSelectQuestion } from "../../models";
 import { configStore } from "../../store/config";
 import { withType } from "../../utils/common";
-import { callHook } from "../../utils/common";
 import { RealQuizService } from "./impl";
 import {
   NewQuizParams,
@@ -14,7 +13,7 @@ import {
   PersonManageService,
 } from "./schema";
 
-export const mockBackendService: PersonManageService = callHook({
+export const mockBackendService: PersonManageService = {
   async login(): Promise<ResponseResultModel<any>> {
     return {
       state: 0,
@@ -49,7 +48,7 @@ export const mockBackendService: PersonManageService = callHook({
       state: 0,
     };
   },
-});
+};
 export class MockQuizService extends RealQuizService {
   async newQuiz(
     params: NewQuizParams
@@ -103,7 +102,7 @@ const mockOptions = {
   C: "Confusing",
   D: "xxx",
 };
-export const mockQuizService: QuizService = callHook({
+export const mockQuizService: QuizService = {
   async checkQuestion() {
     return success({
       correct: true,
@@ -180,4 +179,4 @@ export const mockQuizService: QuizService = callHook({
       startTime: "2021-3-31",
     });
   },
-});
+};

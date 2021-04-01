@@ -1,14 +1,21 @@
 import axios from "axios";
+import { autorun } from "mobx";
+import { configStore } from "../store/config";
 import { APIMapping, ParameterInfo, RequestMethodVerbs } from "./schema";
 axios.defaults.headers = {
   "content-type": "application/json; charset=utf-8",
   "X-Requested-With": "XMLHttpRequest",
 };
-axios.defaults.baseURL =
-  process.env.NODE_ENV !== "development"
-    ? "https://localhost:5001"
-    : "https://backend.ecnu.space";
 axios.defaults.withCredentials = true;
+autorun(() => {
+  axios.defaults.baseURL = configStore.config.baseURL;
+});
+
+export const baseURLs: string[] = [
+  "https://backend.ecnu.space",
+  "http://localhost:5000",
+  "https://localhost:5001",
+];
 export const axiosInstance = axios;
 
 type ExtractMethod<

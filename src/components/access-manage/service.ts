@@ -10,9 +10,14 @@ export class AccessManageService {
   }
 
   async handleLogout() {
-    await BackendServiceFactory.getPersionManageService().logout();
-    InteractFactory.getMessager().success("退出登录成功");
-    globalStore.user.logout();
-    router.replace("/login");
+    try {
+      await BackendServiceFactory.getPersionManageService().logout();
+      InteractFactory.getMessager().success("退出登录成功");
+    } catch (e) {
+      throw e;
+    } finally {
+      globalStore.user.logout();
+      router.replace("/login");
+    }
   }
 }

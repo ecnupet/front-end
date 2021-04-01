@@ -4,6 +4,7 @@ import React from "react";
 import { PromiseBuilder } from "../../../components/promise-builder";
 import { NameOfQuestionType } from "../../../models";
 import { QuizHistoryResult } from "../../../services";
+import { isDev } from "../../../services";
 import { pickKeyOf } from "../../../utils/common";
 import { useService } from "../../../utils/hooks";
 import { MyTestsService } from "./service";
@@ -28,7 +29,7 @@ export const MyTestsPage: React.FC = () => {
                   onChange: service.handleChangePage,
                 }}
                 columns={[
-                  ...(process.env.NODE_ENV === "development"
+                  ...(isDev
                     ? [
                         {
                           dataIndex: pickKeyOf<QuizHistoryResult>("quizId"),
