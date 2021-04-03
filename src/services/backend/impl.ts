@@ -1,6 +1,7 @@
 import { apiCaller, axiosInstance, PersonInfoResponse } from "../../api";
 import { SingleSelectQuestion } from "../../models";
-import { getPasswordNumberArray } from "../../utils/common";
+import { globalStore } from "../../store";
+import { getPasswordNumberArray, RequestHook } from "../../utils/common";
 import {
   PersonManageService,
   CheckQuestionParams,
@@ -16,6 +17,7 @@ import {
   ResponseResultModel,
   QuizHistoryCountParams,
   QuizHistoryCountResult,
+  CommonParams,
 } from "./schema";
 
 export class RealBackendService implements PersonManageService {
@@ -56,6 +58,12 @@ export class RealBackendService implements PersonManageService {
 }
 
 export class RealQuizService implements QuizService {
+  @RequestHook<CommonParams>({
+    paramRewrite: (params) => ({
+      ...params,
+      userName: globalStore.user.userName,
+    }),
+  })
   async quizHistoryCount(
     params: QuizHistoryCountParams
   ): Promise<ResponseResultModel<QuizHistoryCountResult>> {
@@ -64,6 +72,12 @@ export class RealQuizService implements QuizService {
     });
     return result.data;
   }
+  @RequestHook<CommonParams>({
+    paramRewrite: (params) => ({
+      ...params,
+      userName: globalStore.user.userName,
+    }),
+  })
   async questionDetail(
     params: QuestionDetailParams
   ): Promise<ResponseResultModel<SingleSelectQuestion>> {
@@ -72,20 +86,36 @@ export class RealQuizService implements QuizService {
     });
     return result.data;
   }
+  @RequestHook<CommonParams>({
+    paramRewrite: (params) => ({
+      ...params,
+      userName: globalStore.user.userName,
+    }),
+  })
   async newQuiz(
     params: NewQuizParams
   ): Promise<ResponseResultModel<NewQuizResult>> {
     const result = await axiosInstance.post("/api/tl/quiz/new", params);
     return result.data;
   }
-
+  @RequestHook<CommonParams>({
+    paramRewrite: (params) => ({
+      ...params,
+      userName: globalStore.user.userName,
+    }),
+  })
   async checkQuestion(
     params: CheckQuestionParams
   ): Promise<ResponseResultModel<CheckQuestionResult>> {
     const result = await axiosInstance.post("/api/tl/quiz/correct", params);
     return result.data;
   }
-
+  @RequestHook<CommonParams>({
+    paramRewrite: (params) => ({
+      ...params,
+      userName: globalStore.user.userName,
+    }),
+  })
   async quizHistory(
     params: QuizHistoryParams
   ): Promise<ResponseResultModel<QuizHistoryResult[]>> {
@@ -94,7 +124,12 @@ export class RealQuizService implements QuizService {
     });
     return result.data;
   }
-
+  @RequestHook<CommonParams>({
+    paramRewrite: (params) => ({
+      ...params,
+      userName: globalStore.user.userName,
+    }),
+  })
   async quizHistoryDetail(
     params: QuizHistoryDetailParams
   ): Promise<ResponseResultModel<QuizHistoryDetailResult>> {

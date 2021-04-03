@@ -1,16 +1,15 @@
 import { PersonInfoResponse } from "../../api";
 import { QuestionType, SingleSelectQuestion } from "../../models";
 import { configStore } from "../../store/config";
-import { withType } from "../../utils/common";
 import { RealQuizService } from "./impl";
 import {
-  NewQuizParams,
   ResponseResultModel,
   NewQuizResult,
   QuestionDetailParams,
   QuizService,
   QuizHistoryResult,
   PersonManageService,
+  PageQueryParams,
 } from "./schema";
 
 export const mockBackendService: PersonManageService = {
@@ -50,17 +49,11 @@ export const mockBackendService: PersonManageService = {
   },
 };
 export class MockQuizService extends RealQuizService {
-  async newQuiz(
-    params: NewQuizParams
-  ): Promise<ResponseResultModel<NewQuizResult>> {
-    return {
-      data: {
-        questionId: [1, 2, 3],
-        quizId: 0,
-      },
-      detail: params.userName,
-      state: 0,
-    };
+  async newQuiz(): Promise<ResponseResultModel<NewQuizResult>> {
+    return success({
+      questionId: [1, 2, 3],
+      quizId: 0,
+    });
   }
 
   async questionDetail(
@@ -102,6 +95,46 @@ const mockOptions = {
   C: "Confusing",
   D: "xxx",
 };
+function mockList<T extends object>(
+  model: T,
+  idKey: keyof T,
+  count: number,
+  idType: "string" | "number" = "number"
+): T[] {
+  const result: T[] = [];
+  for (let i = 0; i < count; i++) {
+    result.push(
+      Object.assign({}, model, {
+        [idKey]: idType === "number" ? i : i.toString(),
+      })
+    );
+  }
+  return result;
+}
+/**
+ * 分页查询mock，页号从1开始
+ * @param source 数据源
+ * @param param1 分页查询参数
+ * @returns 分页切片
+ */
+function pageQuery<T extends object>(
+  source: T[],
+  { page, pageSize }: PageQueryParams
+) {
+  const start = (page - 1) * pageSize;
+  return source.slice(start, start + pageSize);
+}
+const histories = mockList<QuizHistoryResult>(
+  {
+    quizId: 1,
+    costTime: "7s",
+    point: 100,
+    startTime: "2021-3-31",
+    types: [QuestionType.InfectiousDisease],
+  },
+  "quizId",
+  20
+);
 export const mockQuizService: QuizService = {
   async checkQuestion() {
     return success({
@@ -123,23 +156,8 @@ export const mockQuizService: QuizService = {
       options: mockOptions,
     });
   },
-  async quizHistory() {
-    return success([
-      withType<QuizHistoryResult>({
-        quizId: 1,
-        costTime: "7s",
-        point: 100,
-        startTime: "2021-3-31",
-        types: [QuestionType.InfectiousDisease],
-      }),
-      withType<QuizHistoryResult>({
-        quizId: 2,
-        costTime: "19s",
-        point: 100,
-        startTime: "2021-3-31",
-        types: [QuestionType.InfectiousDisease, QuestionType.ObstetricDisease],
-      }),
-    ]);
+  async quizHistory(param) {
+    return success(pageQuery(histories, param));
   },
   async quizHistoryCount() {
     return success({
@@ -149,7 +167,7 @@ export const mockQuizService: QuizService = {
   async quizHistoryDetail() {
     return success({
       costTime: "",
-      results: [
+      results: mockList(
         {
           questionId: 1,
           answer: "A",
@@ -160,27 +178,12 @@ export const mockQuizService: QuizService = {
           spend: 7,
           type: QuestionType.InfectiousDisease,
         },
-        {
-          questionId: 2,
-          answer: "A",
-          choice: "B",
-          description: "Desc",
-          duration: 10,
-          options: mockOptions,
-          spend: 7,
-          type: QuestionType.InfectiousDisease,
-        },
-        {
-          questionId: 3,
-          answer: "A",
-          choice: "B",
-          description: "Desc",
-          duration: 10,
-          options: mockOptions,
-          spend: 7,
-          type: QuestionType.InfectiousDisease,
-        },
-      ],
+        "questionId",
+        100
+      ).map((result) => ({
+        ...result,
+        choice: ["A", "B", "C", "D", null][~~(Math.random() * 5)]!,
+      })),
       startTime: "2021-3-31",
     });
   },

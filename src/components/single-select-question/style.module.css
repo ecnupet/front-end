@@ -4,6 +4,20 @@
   display: block;
 }
 
+.category {
+  color: cadetblue;
+}
+
 .description {
   color: #000;
+}
+
+.wrong {
+  font-size: large;
+  color: red;
+}
+
+.correct {
+  font-size: large;
+  color: green;
 }

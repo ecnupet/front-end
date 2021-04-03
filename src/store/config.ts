@@ -1,5 +1,6 @@
 import { isDev } from "../env";
 import { createStoreWithClass } from "./factory";
+import { CONFIG_KEY } from "./keys";
 
 interface DevToolsConfig {
   enableGlobalMock: boolean;
@@ -10,7 +11,7 @@ interface DevToolsConfig {
 }
 
 export class ConfigStore {
-  static readonly CONFIG_KEY = "dev-config";
+  static readonly CONFIG_KEY = CONFIG_KEY;
   config: DevToolsConfig = this.getDefaultConfig();
   constructor() {
     this.load();

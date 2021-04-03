@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { BackendServiceFactory } from "../services";
+import { USERNAME } from "./keys";
 
 class UserStore {
   constructor() {
@@ -7,10 +8,11 @@ class UserStore {
     this.fetch();
   }
 
-  userName = "";
+  userName = localStorage.getItem(USERNAME) ?? "";
 
   setUserName(name: string) {
     this.userName = name;
+    localStorage.setItem(USERNAME, name);
   }
 
   isAdmin = false;
@@ -30,6 +32,7 @@ class UserStore {
 
   logout() {
     this.userName = "";
+    document.cookie = "";
   }
 }
 

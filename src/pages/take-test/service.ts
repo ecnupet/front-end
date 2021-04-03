@@ -34,6 +34,7 @@ export class TakeTestService {
     const detail = await BackendServiceFactory.getQuizService().questionDetail({
       questionId,
     });
+    this.handleEnter(detail.data);
     return detail.data;
   }
 
@@ -41,9 +42,14 @@ export class TakeTestService {
     this.enterTime = new Date();
     this.currentQuestion = question;
   }
+  handleLeave() {
+    this.enterTime = null;
+  }
 
-  handleToNextQuestion() {
-    this.handleSubmitAnswer();
+  async handleToNextQuestion() {
+    await this.handleSubmitAnswer();
+    this.selectedAnswer = null;
+    this.handleLeave();
     if (this.index < this.questionIds.length - 1) {
       this.index++;
     } else {
@@ -51,7 +57,7 @@ export class TakeTestService {
         "您已完成所有题目！三秒后窗口自动关闭"
       );
       setTimeout(() => {
-        // window.close();
+        window.close();
       }, 3000);
     }
   }
@@ -61,6 +67,7 @@ export class TakeTestService {
   }
 
   handleTimeout() {
+    if (this.enterTime === null) return;
     InteractFactory.getMessager().warning("本题时间已用完！");
     this.handleToNextQuestion();
   }
@@ -71,7 +78,7 @@ export class TakeTestService {
       answer: this.selectedAnswer,
       questionId: this.questionIds[this.index]!,
       quizId: this.quizId,
-      timeSpent: ~~((now - +this.enterTime!) / 1000),
+      timeSpent: Math.round((now - +this.enterTime!) / 1000),
     });
   }
 

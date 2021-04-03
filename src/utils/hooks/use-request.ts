@@ -1,23 +1,37 @@
-import { useEffect, useState } from "react";
+/* eslint-disable */
+import { useEffect, useReducer, useRef, useState } from "react";
+import { globalErrorHandle } from "../services/global-error-handler";
 
+export type PromiseState = "pending" | "fulfilled" | "rejected";
 export function useRequest<T, Params extends readonly unknown[]>(
   requester: (...args: Params) => Promise<T>,
   params: Params
 ) {
   const [data, setData] = useState<T | null>(null);
-  const [state, setState] = useState<"pending" | "fulfilled" | "rejected">(
-    "pending"
-  );
+  const [tryCount, retry] = useReducer((count) => count + 1, 0);
+  const [state, setState] = useState<PromiseState>("pending");
+  const active = useRef(true);
   useEffect(() => {
+    active.current = true;
+    setState("pending");
     requester(...params)
       .then((result) => {
+        if (!active.current) {
+          return;
+        }
         setData(result);
         setState("fulfilled");
       })
       .catch((e) => {
-        console.error(e);
+        if (!active.current) {
+          return;
+        }
+        globalErrorHandle(e);
         setState("rejected");
       });
-  }, params);
-  return [data, state] as const;
+    return () => {
+      active.current = false;
+    };
+  }, [...params, tryCount]);
+  return [data, state, retry] as const;
 }

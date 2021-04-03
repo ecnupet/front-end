@@ -1,5 +1,5 @@
-import { InteractFactory } from "../../../services";
 import { ConstructorOf } from "../../types";
+import { globalErrorHandle } from "../global-error-handler";
 
 export function createService<Constructor extends ConstructorOf<object>>(
   constructor: Constructor,
@@ -15,9 +15,7 @@ export function createService<Constructor extends ConstructorOf<object>>(
           const callResult = wrapped(...arguments);
           if (callResult instanceof Promise) {
             return callResult.catch((e) => {
-              console.error(e);
-              InteractFactory.getMessager().internalError("系统错误");
-              // throw e;
+              globalErrorHandle(e);
             });
           }
           return callResult;

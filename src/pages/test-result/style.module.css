@@ -1,0 +1,50 @@
+/* @type */
+
+.section {
+  display: flex;
+}
+
+.aside {
+  width: 350px;
+  max-height: 640px;
+  margin: 32px;
+  overflow: auto;
+}
+.main {
+  width: 100%;
+  padding: 16px 32px 0 0;
+}
+.card {
+  width: 240px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.selected {
+  border: 5px solid #008cff;
+}
+
+.correct {
+  background-color: #52c41a;
+}
+
+.error {
+  background-color: #ff4d4f;
+}
+
+.missed {
+  background-color: gray;
+}

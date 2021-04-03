@@ -19,8 +19,7 @@ export interface ResponseResultModel<TResult> {
   data: TResult;
 }
 
-export interface NewQuizParams {
-  userName: string;
+export interface NewQuizParams extends CommonParams {
   types: QuestionType[];
 }
 export interface NewQuizResult {
@@ -45,8 +44,17 @@ export interface CheckQuestionParams {
 
 export interface CheckQuestionResult {}
 
+/**
+ * 分页查询通用参数
+ */
 export interface PageQueryParams {
+  /**
+   * 页号，从1开始
+   */
   page: number;
+  /**
+   * 页大小
+   */
   pageSize: number;
 }
 
@@ -89,6 +97,12 @@ export interface QuizHistoryDetailParams extends CommonParams {
   quizId: number;
 }
 
+export interface CorrectResult extends SingleSelectQuestion {
+  answer: string;
+  choice: string | null;
+  spend: number;
+}
+
 export interface QuizHistoryDetailResult {
   /**
    * 开始考试的时间
@@ -101,13 +115,7 @@ export interface QuizHistoryDetailResult {
   /**
    * 各道考题评判结果
    */
-  results: Array<
-    SingleSelectQuestion & {
-      answer: string;
-      choice: string;
-      spend: number;
-    }
-  >;
+  results: Array<CorrectResult>;
 }
 
 export interface QuetionCorrectRateParams extends CommonParams {}

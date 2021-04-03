@@ -5,6 +5,7 @@ import {
   QuizHistoryResult,
 } from "../../../services";
 import { globalStore } from "../../../store";
+import { openPage } from "../../../utils/common";
 
 export class MyTestsService {
   constructor() {
@@ -13,7 +14,12 @@ export class MyTestsService {
 
   page = 1;
   pageSize = 5;
+  totalCount = 0;
+  setTotalCount(count: number) {
+    this.totalCount = count;
+  }
   modalVisable = false;
+
   historyDetail: QuizHistoryDetailResult | null = null;
 
   pendingRequest: Promise<QuizHistoryResult[]> = Promise.resolve([]);
@@ -22,7 +28,15 @@ export class MyTestsService {
     this.pendingRequest = this.requestQuizHistory(page, pageSize);
   }
 
-  private async requestQuizHistory(page: number, pageSize: number) {
+  async fetchQuisHistoryCount() {
+    const result = await BackendServiceFactory.getQuizService().quizHistoryCount(
+      {}
+    );
+    this.setTotalCount(result.data.number);
+    return result.data;
+  }
+
+  async requestQuizHistory(page: number, pageSize: number) {
     const result = await BackendServiceFactory.getQuizService().quizHistory({
       userName: globalStore.user.userName,
       page,
@@ -38,15 +52,7 @@ export class MyTestsService {
   }
 
   async handleOpenDetail(quizId: number) {
-    const result = await BackendServiceFactory.getQuizService().quizHistoryDetail(
-      { quizId }
-    );
-    this.handleShowDetail(result.data);
-  }
-
-  handleShowDetail(detail: QuizHistoryDetailResult) {
-    this.historyDetail = detail;
-    this.modalVisable = true;
+    openPage("/test-result", { quizId });
   }
 
   handleCloseModal() {
