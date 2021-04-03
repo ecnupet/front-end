@@ -78,7 +78,7 @@ export class TakeTestService {
       answer: this.selectedAnswer,
       questionId: this.questionIds[this.index]!,
       quizId: this.quizId,
-      timeSpent: Math.round((now - +this.enterTime!) / 1000),
+      timeSpend: Math.round((now - +this.enterTime!) / 1000),
     });
   }
 

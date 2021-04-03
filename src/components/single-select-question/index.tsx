@@ -35,6 +35,7 @@ export const SingleSelectQuestionComponent: React.FC<QuestionItemProp> = (
       <Divider></Divider>
       {isShowAnswer ? (
         <>
+          <Divider></Divider>
           {Object.entries(options).map(([option, desc]) => (
             <p key={option}>
               {option} {desc}

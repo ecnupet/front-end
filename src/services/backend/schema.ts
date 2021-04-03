@@ -39,7 +39,7 @@ export interface CheckQuestionParams {
   /**
    * 答题花费时间，单位秒，整数
    */
-  timeSpent: number;
+  timeSpend: number;
 }
 
 export interface CheckQuestionResult {}
