@@ -50,12 +50,17 @@ export interface PageQueryParams {
   pageSize: number;
 }
 
+export interface CommonParams {
+  /**
+   * 未来将被移除
+   */
+  userName?: string;
+}
+
 /**
  * 查询考试历史记录（分页查询）参数
  */
-export interface QuizHistoryParams extends PageQueryParams {
-  userName?: string;
-}
+export interface QuizHistoryParams extends PageQueryParams, CommonParams {}
 
 /**
  * 考试历史记录（单条的JSON格式）查询结果
@@ -80,8 +85,7 @@ export interface QuizHistoryResult {
 /**
  * 单次考试记录详情
  */
-export interface QuizHistoryDetailParams {
-  userName?: string;
+export interface QuizHistoryDetailParams extends CommonParams {
   quizId: number;
 }
 
@@ -106,8 +110,12 @@ export interface QuizHistoryDetailResult {
   >;
 }
 
-export interface QuetionCorrectRateParams {
-  userName?: string;
+export interface QuetionCorrectRateParams extends CommonParams {}
+
+export interface QuizHistoryCountParams extends CommonParams {}
+
+export interface QuizHistoryCountResult {
+  number: number;
 }
 
 export interface PersonManageService {
@@ -124,10 +132,22 @@ export interface PersonManageService {
 }
 
 export interface QuizService {
+  /**
+   * 创建新的考试
+   * @param param 创建参数
+   */
   newQuiz(param: NewQuizParams): Promise<ResponseResultModel<NewQuizResult>>;
+  /**
+   * 提交做题的答案
+   * @param params 校验参数
+   */
   checkQuestion(
     params: CheckQuestionParams
   ): Promise<ResponseResultModel<CheckQuestionResult>>;
+  /**
+   * 查询问题详细信息
+   * @param params 查询参数
+   */
   questionDetail(
     params: QuestionDetailParams
   ): Promise<ResponseResultModel<SingleSelectQuestion>>;
@@ -138,6 +158,13 @@ export interface QuizService {
   quizHistory(
     params: QuizHistoryParams
   ): Promise<ResponseResultModel<QuizHistoryResult[]>>;
+  /**
+   * 考试记录数量查询
+   * @param params 查询参数
+   */
+  quizHistoryCount(
+    params: QuizHistoryCountParams
+  ): Promise<ResponseResultModel<QuizHistoryCountResult>>;
   /**
    * 单个考试记录详情查询
    * @param params 查询参数

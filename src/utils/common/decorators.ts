@@ -1,4 +1,4 @@
-import { isDev } from "../../services";
+import { isDev } from "../../env";
 import { configStore } from "../../store/config";
 import { wait } from "./time";
 export function callHook<T extends object>(target: T): T {

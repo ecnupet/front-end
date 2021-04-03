@@ -141,6 +141,11 @@ export const mockQuizService: QuizService = {
       }),
     ]);
   },
+  async quizHistoryCount() {
+    return success({
+      number: 20,
+    });
+  },
   async quizHistoryDetail() {
     return success({
       costTime: "",

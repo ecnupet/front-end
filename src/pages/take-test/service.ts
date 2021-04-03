@@ -51,7 +51,7 @@ export class TakeTestService {
         "您已完成所有题目！三秒后窗口自动关闭"
       );
       setTimeout(() => {
-        window.close();
+        // window.close();
       }, 3000);
     }
   }

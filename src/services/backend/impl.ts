@@ -14,6 +14,8 @@ import {
   QuizHistoryResult,
   QuizService,
   ResponseResultModel,
+  QuizHistoryCountParams,
+  QuizHistoryCountResult,
 } from "./schema";
 
 export class RealBackendService implements PersonManageService {
@@ -54,10 +56,20 @@ export class RealBackendService implements PersonManageService {
 }
 
 export class RealQuizService implements QuizService {
+  async quizHistoryCount(
+    params: QuizHistoryCountParams
+  ): Promise<ResponseResultModel<QuizHistoryCountResult>> {
+    const result = await axiosInstance.get("/api/tl/quiz/history/num", {
+      params,
+    });
+    return result.data;
+  }
   async questionDetail(
     params: QuestionDetailParams
   ): Promise<ResponseResultModel<SingleSelectQuestion>> {
-    const result = await axiosInstance.get("/api/tl/quiz/detail", { params });
+    const result = await axiosInstance.get("/api/tl/question/detail", {
+      params,
+    });
     return result.data;
   }
   async newQuiz(

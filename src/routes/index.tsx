@@ -11,7 +11,7 @@ import { NewTestPage } from "../pages/test-center/new-test";
 import { MyTestsPage } from "../pages/test-center/my-tests";
 import { StatisticsPage } from "../pages/test-center/statistics";
 import { TakeTestPage } from "../pages/take-test";
-import { isDev } from "../services";
+import { isDev } from "../env";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;

@@ -18,9 +18,11 @@ export function PromiseBuilder<T>(props: PromiseBuilderProp<T>): JSX.Element {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<any>(null);
   useEffect(() => {
+    let available = true;
     setPromiseState("pending");
     props.promise
       .then((result) => {
+        if (!available) return;
         setData(result);
         setPromiseState("fulfilled");
         setTimeout(() => {
@@ -28,12 +30,16 @@ export function PromiseBuilder<T>(props: PromiseBuilderProp<T>): JSX.Element {
         }, 0);
       })
       .catch((err) => {
+        if (!available) return;
         setError(err);
         setPromiseState("rejected");
         setTimeout(() => {
           props.onError?.(err);
         }, 0);
       });
+    return () => {
+      available = false;
+    };
   }, [props]);
   return (
     <>

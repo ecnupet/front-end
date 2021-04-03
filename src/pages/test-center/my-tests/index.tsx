@@ -1,22 +1,25 @@
 import { Button, Modal, Table, Tag } from "antd";
 import { Observer } from "mobx-react-lite";
-import React from "react";
+import React, { useEffect } from "react";
 import { PromiseBuilder } from "../../../components/promise-builder";
 import { NameOfQuestionType } from "../../../models";
 import { QuizHistoryResult } from "../../../services";
-import { isDev } from "../../../services";
+import { isDev } from "../../../env";
 import { pickKeyOf } from "../../../utils/common";
 import { useService } from "../../../utils/hooks";
 import { MyTestsService } from "./service";
 
 export const MyTestsPage: React.FC = () => {
   const service = useService(MyTestsService);
+  useEffect(() => {
+    service.fetchQuizHistory(service.page, service.pageSize);
+  }, [service.page, service.pageSize, service]);
   return (
     <>
       <Observer>
         {() => (
           <PromiseBuilder
-            promise={service.fetchQuizHistory(service.page, service.pageSize)}
+            promise={service.pendingRequest}
             render={(histories) => (
               <Table
                 dataSource={histories}

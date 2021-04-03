@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import {
   BackendServiceFactory,
   QuizHistoryDetailResult,
+  QuizHistoryResult,
 } from "../../../services";
 import { globalStore } from "../../../store";
 
@@ -10,12 +11,18 @@ export class MyTestsService {
     makeAutoObservable(this);
   }
 
-  page = 0;
+  page = 1;
   pageSize = 5;
   modalVisable = false;
   historyDetail: QuizHistoryDetailResult | null = null;
 
-  async fetchQuizHistory(page: number, pageSize: number) {
+  pendingRequest: Promise<QuizHistoryResult[]> = Promise.resolve([]);
+
+  fetchQuizHistory(page: number, pageSize: number) {
+    this.pendingRequest = this.requestQuizHistory(page, pageSize);
+  }
+
+  private async requestQuizHistory(page: number, pageSize: number) {
     const result = await BackendServiceFactory.getQuizService().quizHistory({
       userName: globalStore.user.userName,
       page,

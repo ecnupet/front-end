@@ -1,4 +1,4 @@
-import { isDev } from "../services";
+import { isDev } from "../env";
 import { createStoreWithClass } from "./factory";
 
 interface DevToolsConfig {
@@ -62,5 +62,9 @@ export class ConfigStore {
   }
 }
 
-export const configStore = createStoreWithClass(ConfigStore);
-if (isDev) (window as any).__config__ = configStore;
+const configStore = createStoreWithClass(ConfigStore);
+if (isDev) {
+  console.log("mount config!");
+  (window as any).__config__ = configStore;
+}
+export { configStore };

@@ -17,7 +17,7 @@ export function createService<Constructor extends ConstructorOf<object>>(
             return callResult.catch((e) => {
               console.error(e);
               InteractFactory.getMessager().internalError("系统错误");
-              throw e;
+              // throw e;
             });
           }
           return callResult;
