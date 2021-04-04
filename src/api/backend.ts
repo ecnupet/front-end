@@ -10,11 +10,6 @@ axios.defaults.withCredentials = true;
 
 autorun(() => {
   axios.defaults.baseURL = configStore.config.baseURL;
-  axios.interceptors.request.use((v) => {
-    // v.params = {...v.params, userName: configStore.config.mockUserName}
-    // v.data = {...v.data, userName: configStore.config.mockUserName}
-    return v;
-  });
 });
 
 export const baseURLs: string[] = [

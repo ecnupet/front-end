@@ -4,7 +4,6 @@ import {
   QuizHistoryDetailResult,
   QuizHistoryResult,
 } from "../../../services";
-import { globalStore } from "../../../store";
 import { openPage } from "../../../utils/common";
 
 export class MyTestsService {
@@ -38,7 +37,6 @@ export class MyTestsService {
 
   async requestQuizHistory(page: number, pageSize: number) {
     const result = await BackendServiceFactory.getQuizService().quizHistory({
-      userName: globalStore.user.userName,
       page,
       pageSize,
     });
