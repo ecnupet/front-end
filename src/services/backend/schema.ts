@@ -126,6 +126,31 @@ export interface QuizHistoryCountResult {
   number: number;
 }
 
+export interface QuestionCorrectRateParams extends CommonParams {}
+
+export interface QuetionStatisticsResult {
+  /**
+   * 提交问题次数
+   */
+  totalCommitCount: number;
+  /**
+   * 正确提交次数
+   */
+  totalCorrectCount: number;
+  /**
+   * 错误提交次数
+   */
+  totalWrongCount: number;
+  /**
+   * 未作答提交次数
+   */
+  totalNoAnswerCount: number;
+  /**
+   * 平均答题时间（小数点后两位）
+   */
+  averageAnswerTime: number;
+}
+
 export interface PersonManageService {
   register(form: {
     uid: string;
@@ -180,4 +205,8 @@ export interface QuizService {
   quizHistoryDetail(
     params: QuizHistoryDetailParams
   ): Promise<ResponseResultModel<QuizHistoryDetailResult>>;
+
+  questionGeneralStatistics(): Promise<
+    ResponseResultModel<QuetionStatisticsResult>
+  >;
 }

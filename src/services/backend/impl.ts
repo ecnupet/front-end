@@ -16,6 +16,7 @@ import {
   ResponseResultModel,
   QuizHistoryCountParams,
   QuizHistoryCountResult,
+  QuetionStatisticsResult,
 } from "./schema";
 
 export class RealBackendService implements PersonManageService {
@@ -56,6 +57,11 @@ export class RealBackendService implements PersonManageService {
 }
 
 export class RealQuizService implements QuizService {
+  async questionGeneralStatistics(): Promise<
+    ResponseResultModel<QuetionStatisticsResult>
+  > {
+    throw new Error("Method not implemented.");
+  }
   async quizHistoryCount(
     params: QuizHistoryCountParams
   ): Promise<ResponseResultModel<QuizHistoryCountResult>> {

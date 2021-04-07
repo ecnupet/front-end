@@ -136,6 +136,15 @@ const histories = mockList<QuizHistoryResult>(
   20
 );
 export const mockQuizService: QuizService = {
+  async questionGeneralStatistics() {
+    return success({
+      averageAnswerTime: 15.67,
+      totalCommitCount: 300,
+      totalCorrectCount: 250,
+      totalNoAnswerCount: 20,
+      totalWrongCount: 30,
+    });
+  },
   async checkQuestion() {
     return success({
       correct: true,
