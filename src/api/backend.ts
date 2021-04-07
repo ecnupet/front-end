@@ -1,7 +1,13 @@
 import axios from "axios";
 import { autorun } from "mobx";
 import { configStore } from "../store/config";
-import { APIMapping, ParameterInfo, RequestMethodVerbs } from "./schema";
+import {
+  APIMapping as PersonManage,
+  ParameterInfo,
+  RequestMethodVerbs,
+} from "./person-manage";
+import { APIMapping as InfoManage } from "./info-manage";
+type APIMapping = PersonManage & InfoManage;
 axios.defaults.headers = {
   "content-type": "application/json; charset=utf-8",
   "X-Requested-With": "XMLHttpRequest",
@@ -58,7 +64,7 @@ interface APICaller {
 }
 
 class RealAPICaller implements APICaller {
-  async get<K extends "/api/pm/user/userinfo">(
+  async get<K extends ExtractMethod<keyof APIMapping, "get">>(
     key: K,
     params: {
       [Key in Extract<

@@ -1,2 +1,2 @@
 export * from "./backend";
-export * from "./schema";
+export * from "./person-manage";
