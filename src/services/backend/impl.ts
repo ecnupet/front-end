@@ -60,7 +60,8 @@ export class RealQuizService implements QuizService {
   async questionGeneralStatistics(): Promise<
     ResponseResultModel<QuetionStatisticsResult>
   > {
-    throw new Error("Method not implemented.");
+    const result = await axiosInstance.get("/api/tl/statistics");
+    return result.data;
   }
   async quizHistoryCount(
     params: QuizHistoryCountParams
