@@ -18,7 +18,7 @@ export function callHook<T extends object>(target: T): T {
                   const unwrapped = await callResult;
                   configStore.getConfig("logDetails") &&
                     console.log(
-                      `call method <${result.name}> result`,
+                      `call method <${key.toString()}> result`,
                       unwrapped
                     );
                   return unwrapped;
@@ -26,10 +26,14 @@ export function callHook<T extends object>(target: T): T {
                   return Promise.reject(error);
                 }
               })();
+            } else {
+              configStore.getConfig("logDetails") &&
+                console.log(
+                  `call method <${key.toString()}> result`,
+                  callResult
+                );
+              return callResult;
             }
-            configStore.getConfig("logDetails") &&
-              console.log("call method result", callResult);
-            return callResult;
           };
         }
         return result;

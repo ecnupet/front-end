@@ -44,7 +44,6 @@ export class MyTestsService {
   }
 
   handleChangePage(page: number, pageSize?: number) {
-    console.log("page change");
     this.pageSize = pageSize ?? this.pageSize;
     this.page = page;
   }

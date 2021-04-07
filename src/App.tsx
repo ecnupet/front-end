@@ -3,11 +3,10 @@ import "./App.css";
 import { Router, Route, Switch } from "react-router";
 import { routerHistory, routes } from "./routes";
 import { routeGuard } from "./services";
-import { changeTitle } from "./utils/ui/title";
 
 const App: React.FC = () => {
   useEffect(() => {
-    changeTitle();
+    routeGuard.apply();
     routeGuard.on();
     return routeGuard.off;
   });

@@ -32,7 +32,8 @@ class UserStore {
 
   logout() {
     this.userName = "";
-    document.cookie = "";
+    // document.cookie = "";
+    localStorage.removeItem(USERNAME);
   }
 }
 

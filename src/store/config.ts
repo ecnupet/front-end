@@ -65,7 +65,6 @@ export class ConfigStore {
 
 const configStore = createStoreWithClass(ConfigStore);
 if (isDev) {
-  console.log("mount config!");
   (window as any).__config__ = configStore;
 }
 export { configStore };

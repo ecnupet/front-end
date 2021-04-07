@@ -43,7 +43,7 @@ export class LoginService {
     );
     if (result.state === ResponseResultEnum.Success) {
       InteractFactory.getMessager().success(result.detail ?? "登录成功");
-      router.push("/test-center");
+      router.push("/home");
     } else {
       InteractFactory.getMessager().fail(result.detail ?? "登录失败");
     }
