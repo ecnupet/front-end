@@ -1,0 +1,47 @@
+/* @type */
+.page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  min-width: 900px;
+  min-height: 600px;
+  background-image: url("../../assets/banner.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.module-button {
+  margin: 50px;
+  cursor: pointer;
+  color: white;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.hospital {
+  background-color: #83d65a;
+}
+.hospital:hover {
+  background-color: #52c41a;
+}
+
+.test-center {
+  background-color: #3b9ffd;
+}
+.test-center:hover {
+  background-color: #0083fd;
+}
+.case-center {
+  background-color: #bec8c8;
+}
+
+.center {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  font-size: 20px;
+}

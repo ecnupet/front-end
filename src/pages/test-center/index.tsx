@@ -30,7 +30,7 @@ const subRoutes: Array<{
   },
 ];
 
-function renderHeader() {
+export function renderHeader() {
   return (
     <div className={styles["rest-header"]}>
       <AccessManage />

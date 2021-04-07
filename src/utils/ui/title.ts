@@ -14,6 +14,7 @@ const titles: Record<RoutePaths, string> = {
   "/test-center/statistics": `${PROJECT} - 数据统计`,
   "/take-test": `${PROJECT} - 测试`,
   "/test-result": `${PROJECT} - 测试结果详情`,
+  "/vtour": `${PROJECT} - 医院导览`,
 };
 
 export function getDocumentTitle(path: RoutePaths) {
@@ -22,5 +23,5 @@ export function getDocumentTitle(path: RoutePaths) {
 
 export function changeTitle() {
   const key = router.location.pathname as RoutePaths;
-  document.title = getDocumentTitle(key);
+  document.title = getDocumentTitle(key) ?? "404 Not Found";
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import { createHashHistory, History } from "history";
 import { AboutPage } from "../pages/about";
-import { HomePage } from "../pages/home";
 import { PickKey } from "../utils/types";
 import { LoginPage } from "../pages/login";
 import { Redirect } from "react-router";
@@ -13,6 +12,8 @@ import { StatisticsPage } from "../pages/test-center/statistics";
 import { TakeTestPage } from "../pages/take-test";
 import { isDev } from "../env";
 import { TestResultPage } from "../pages/test-result";
+import { GuidePage } from "../pages/guide";
+import { MainPage } from "../pages/main";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -25,7 +26,7 @@ function defineRouteMapping<T extends Routes>(mapping: T) {
 export const routeMapping = defineRouteMapping({
   "/": () => <Redirect to="/login"></Redirect>,
   "/developing": DevelopingPage,
-  "/home": HomePage,
+  "/home": MainPage,
   "/about": AboutPage,
   "/login": LoginPage,
   "/test-center": () => <TestCenterPage />,
@@ -46,6 +47,7 @@ export const routeMapping = defineRouteMapping({
   ),
   "/take-test": TakeTestPage,
   "/test-result": TestResultPage,
+  "/vtour": GuidePage,
 } as const);
 
 export const routes = Object.entries(routeMapping);

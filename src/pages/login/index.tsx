@@ -15,7 +15,7 @@ export const LoginPage: React.FC = () => {
   const [form] = Form.useForm<LoginForm>();
   useEffect(() => {
     if (service.hasLoggedIn) {
-      router.replace("/test-center");
+      router.replace("/home");
     }
   }, [service]);
   return (
