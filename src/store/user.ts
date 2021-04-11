@@ -1,11 +1,11 @@
 import { makeAutoObservable } from "mobx";
+import { router } from "../routes";
 import { BackendServiceFactory } from "../services";
 import { USERNAME } from "./keys";
 
 class UserStore {
   constructor() {
     makeAutoObservable(this);
-    this.fetch();
   }
 
   userName = localStorage.getItem(USERNAME) ?? "";
@@ -22,18 +22,22 @@ class UserStore {
   }
 
   async fetch() {
-    const {
-      data: { isAdmin, name },
-    } = await BackendServiceFactory.getPersionManageService().userInfo();
-
-    this.setUserName(name);
-    this.setIsAdmin(isAdmin === 1);
+    try {
+      const {
+        data: { isAdmin, name },
+      } = await BackendServiceFactory.getPersionManageService().userInfo();
+      this.setUserName(name);
+      this.setIsAdmin(isAdmin === 1);
+    } catch (error) {
+      this.logout();
+    }
   }
 
   logout() {
     this.userName = "";
-    // document.cookie = "";
+    document.cookie = "";
     localStorage.removeItem(USERNAME);
+    router.push("/login");
   }
 }
 

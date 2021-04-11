@@ -1,5 +1,4 @@
 import { makeAutoObservable } from "mobx";
-import { router } from "../../routes";
 import { BackendServiceFactory } from "../../services";
 import { InteractFactory } from "../../services";
 import { globalStore } from "../../store";
@@ -17,7 +16,6 @@ export class AccessManageService {
       throw e;
     } finally {
       globalStore.user.logout();
-      router.replace("/login");
     }
   }
 }
