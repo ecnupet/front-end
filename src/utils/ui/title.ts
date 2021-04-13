@@ -15,6 +15,7 @@ const titles: Record<RoutePaths, string> = {
   "/take-test": `${PROJECT} - 测试`,
   "/test-result": `${PROJECT} - 测试结果详情`,
   "/vtour": `${PROJECT} - 医院导览`,
+  "/test-page": `${PROJECT} - 测试页面`,
 };
 
 export function getDocumentTitle(path: RoutePaths) {

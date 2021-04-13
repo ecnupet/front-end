@@ -28,6 +28,14 @@ export const DevelopingPage: React.FC = () => {
           >
             回首页
           </Button>
+          <Button
+            danger={true}
+            onClick={() => {
+              router.push("/test-page");
+            }}
+          >
+            组件测试页面
+          </Button>
         </div>
         <div>
           <input
