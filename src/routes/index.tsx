@@ -14,6 +14,7 @@ import { isDev } from "../env";
 import { TestResultPage } from "../pages/test-result";
 import { GuidePage } from "../pages/guide";
 import { MainPage } from "../pages/main";
+import { TestPage } from "../pages/test-page";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -48,6 +49,7 @@ export const routeMapping = defineRouteMapping({
   "/take-test": TakeTestPage,
   "/test-result": TestResultPage,
   "/vtour": GuidePage,
+  "/test-page": TestPage,
 } as const);
 
 export const routes = Object.entries(routeMapping);
