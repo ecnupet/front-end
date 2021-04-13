@@ -2,6 +2,7 @@ import { Menu } from "antd";
 import { Observer } from "mobx-react-lite";
 import React from "react";
 import { AccessManage } from "../../components/access-manage";
+import { BackToHome } from "../../components/back-to-home";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
 import { UserCenter } from "../../components/user-center";
 import { RoutePaths } from "../../routes";
@@ -69,6 +70,7 @@ export const TestCenterPage: React.FC = (prop) => {
           {prop.children}
         </main>
       </section>
+      <BackToHome></BackToHome>
     </ManageStyleLayout>
   );
 };
