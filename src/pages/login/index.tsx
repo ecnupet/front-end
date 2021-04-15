@@ -20,7 +20,25 @@ export const LoginPage: React.FC = () => {
   }, [service]);
   return (
     <Center className={styles.page}>
-      <NavBar title="宠物医院学习系统"></NavBar>
+      <NavBar title="宠物医院学习系统">
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row-reverse",
+          }}
+        >
+          <Button
+            type="text"
+            style={{ color: "#3b9ffd" }}
+            onClick={() => {
+              router.replace("/admin/login");
+            }}
+          >
+            管理后台
+          </Button>
+        </div>
+      </NavBar>
       <main
         className={mergeClassName(
           styles["pet-background"],

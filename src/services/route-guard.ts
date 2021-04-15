@@ -18,6 +18,7 @@ const routesNeedAuth: RoutePaths[] = [
   "/take-test",
   "/test-center",
   "/test-result",
+  "/admin/home",
 ];
 function onRouteChange() {
   changeTitle();

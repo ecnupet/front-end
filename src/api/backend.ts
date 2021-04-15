@@ -54,12 +54,14 @@ interface APICaller {
       [Key in Extract<
         keyof ReturnType<APIMapping[K]>["parameters"],
         number
-      >]: ReturnType<APIMapping[K]>["parameters"][Key] extends infer T
-        ? T extends ParameterInfo<any, any, any>
+      > as ReturnType<APIMapping[K]>["parameters"][Key]["name"]]: ReturnType<
+        APIMapping[K]
+      >["parameters"][Key] extends infer T
+        ? T extends ParameterInfo<any, "query", any>
           ? T["type"]
           : never
         : never;
-    }[0]
+    }
   ): Promise<ReturnType<APIMapping[K]>["responseType"]["value"]>;
 }
 

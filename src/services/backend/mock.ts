@@ -26,7 +26,7 @@ export const mockBackendService: PersonManageService = {
       detail: "",
       state: 0,
       data: {
-        isAdmin: 0,
+        isAdmin: 1,
         name: configStore.getConfig("mockUserName") || "Darren",
       },
     };
