@@ -1,4 +1,5 @@
 import { apiCaller, axiosInstance, PersonInfoResponse } from "../../api";
+import { Drug } from "../../api/info-manage";
 import { SingleSelectQuestion } from "../../models";
 import { getPasswordNumberArray } from "../../utils/common";
 import {
@@ -17,6 +18,9 @@ import {
   QuizHistoryCountParams,
   QuizHistoryCountResult,
   QuetionStatisticsResult,
+  CRUDService,
+  PageQueryParams,
+  PageQueryResult,
 } from "./schema";
 
 export class RealBackendService implements PersonManageService {
@@ -106,5 +110,30 @@ export class RealQuizService implements QuizService {
       params,
     });
     return result.data;
+  }
+}
+
+export class RealDrugCRUDService implements CRUDService<Drug> {
+  query(
+    params: PageQueryParams
+  ): Promise<ResponseResultModel<PageQueryResult<Drug>>> {
+    console.log(params);
+    throw new Error("Method not implemented.");
+  }
+  create(model: Partial<Drug>): Promise<ResponseResultModel<any>> {
+    console.log(model);
+    throw new Error("Method not implemented.");
+  }
+  retrieve(id: number): Promise<ResponseResultModel<Drug>> {
+    console.log(id);
+    throw new Error("Method not implemented.");
+  }
+  update(model: Partial<Drug>): Promise<ResponseResultModel<any>> {
+    console.log(model);
+    throw new Error("Method not implemented.");
+  }
+  delete(id: number): Promise<ResponseResultModel<any>> {
+    console.log(id);
+    throw new Error("Method not implemented.");
   }
 }

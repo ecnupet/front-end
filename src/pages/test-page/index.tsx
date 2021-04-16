@@ -27,6 +27,7 @@ export const TestPage: React.FC = () => {
       {CRUDModal(
         { a: 1, b: "22", c: QuestionType.InfectiousDisease, d: true },
         {
+          primaryKey: "a",
           type: "create",
           modalName: "实例",
           fields: [

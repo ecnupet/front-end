@@ -32,7 +32,7 @@ export const AdminPage: React.FC = () => {
             ))}
           </Menu>
         </aside>
-        <main>
+        <main className={styles.main}>
           <route.component />
         </main>
       </section>

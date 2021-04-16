@@ -1,26 +1,45 @@
-import { Button, Form, Input, Modal, Select, Switch } from "antd";
-import React from "react";
+import {
+  Button,
+  Form,
+  FormItemProps,
+  Input,
+  InputProps,
+  Modal,
+  Select,
+  SelectProps,
+  Switch,
+  SwitchProps,
+} from "antd";
+import React, { useEffect } from "react";
 import { capitalize, concat, ObjectKeys } from "../../utils/common";
 
-type CRUD = "create" | "update" | "retrieve" | "delete";
+export type CRUD = "create" | "update" | "retrieve" | "delete";
 const TranslateCRUD: Record<CRUD, string> = {
   create: "创建",
   delete: "删除",
   retrieve: "查询",
   update: "更新",
 };
-type CommonFieldItem<T extends object> = (
+export type CommonFieldItem<T extends object> = (
   initVal: T,
-  form: Partial<T>
+  props: {
+    key?: React.Key;
+    disabled?: boolean;
+    disableKey?: boolean;
+    primaryKey: string;
+  }
 ) => React.ReactNode;
-interface CommonFieldDetailedItem<V> {
-  render: (init: V, current?: V) => React.ReactNode;
+export interface CommonFieldDetailedItem<V> {
+  render: (init: V, props?: { disabled?: boolean }) => React.ReactNode;
   valuePropName?: string;
 }
 export interface ICommonFormProp<T extends object> {
   onFinish?: (form: T) => void;
   fields: Array<CommonFieldItem<T>>;
   costom?: Array<React.ReactNode>;
+  readonly?: boolean;
+  disableKey?: boolean;
+  primaryKey: string;
 }
 
 export interface ICRUDFormProp<T extends object> extends ICommonFormProp<T> {
@@ -36,21 +55,26 @@ export function Labeled<T extends object, K extends Extract<keyof T, string>>({
   field,
   fieldKey,
   label,
+  formItemProps,
 }: {
   fieldKey: K;
   field: CommonFieldDetailedItem<T[K]>;
   label?: string;
+  formItemProps?: FormItemProps;
 }): CommonFieldItem<T> {
-  return (init, form) => {
+  return (init, { key, disabled, disableKey, primaryKey }) => {
     const initValue = init[fieldKey];
-    const formValue = form[fieldKey];
     return (
       <Form.Item
+        {...formItemProps}
         name={fieldKey}
         label={label}
-        valuePropName={field.valuePropName}
+        valuePropName={field.valuePropName ?? "value"}
+        key={key}
       >
-        {field.render(initValue, formValue)}
+        {field.render(initValue, {
+          disabled: disabled || (disableKey && fieldKey === primaryKey),
+        })}
       </Form.Item>
     );
   };
@@ -58,15 +82,18 @@ export function Labeled<T extends object, K extends Extract<keyof T, string>>({
 
 export function Text({
   placeholder,
+  inputProps,
 }: {
   placeholder?: string;
+  inputProps?: InputProps;
 }): CommonFieldDetailedItem<string> {
   return {
-    render: (init, current) => (
+    render: (_, prop) => (
       <Input
+        {...inputProps}
         placeholder={placeholder}
-        value={current ?? init}
         type="text"
+        disabled={prop?.disabled ?? false}
       ></Input>
     ),
   };
@@ -74,35 +101,52 @@ export function Text({
 
 export function Digital({
   placeholder,
+  inputProps,
 }: {
   placeholder?: string;
+  inputProps?: InputProps;
 }): CommonFieldDetailedItem<number> {
   return {
-    render: (init, current) => (
+    render: (_, prop) => (
       <Input
+        {...inputProps}
         placeholder={placeholder}
-        value={current ?? init}
         type="number"
+        disabled={prop?.disabled ?? false}
       ></Input>
     ),
   };
 }
 
+export function TextOrDigital({
+  init,
+  ...others
+}: {
+  placeholder?: string;
+  init: string | number;
+}): CommonFieldDetailedItem<string | number> {
+  if (typeof init === "string") return Text(others) as never;
+  if (typeof init === "number") return Digital(others) as never;
+  throw new Error("Invalid usage with TextOrDigital");
+}
+
 export function Enum<Enum extends Record<string | number, string | number>>({
   enumObj,
   nameMapping,
+  selectProps,
 }: {
   enumObj: Enum;
   nameMapping?: Record<Enum[keyof Enum], string>;
+  selectProps?: SelectProps<number>;
 }): CommonFieldDetailedItem<Enum[keyof Enum]> {
   return {
-    render: (initVal, form) => (
-      <Select value={initVal}>
+    render: (_, prop) => (
+      <Select {...selectProps} disabled={prop?.disabled ?? false}>
         {ObjectKeys(enumObj)
           /* eslint-disable-next-line */
           .filter((e): e is Enum[keyof Enum] => +e == e)
           .map((e) => {
-            const enumValue = +(form ?? e);
+            const enumValue = +e;
             return (
               <Select.Option key={enumValue} value={enumValue}>
                 {nameMapping?.[e] ?? enumObj[e]}
@@ -114,24 +158,50 @@ export function Enum<Enum extends Record<string | number, string | number>>({
   };
 }
 
-export function SingleSwitch(): CommonFieldDetailedItem<boolean> {
+export function SingleSwitch(
+  props?: SwitchProps
+): CommonFieldDetailedItem<boolean> {
   return {
-    render: (initVal, form) => <Switch checked={form ?? initVal}></Switch>,
+    render: (_, prop) => (
+      <Switch {...props} disabled={prop?.disabled ?? false}></Switch>
+    ),
     valuePropName: "checked",
   };
 }
 
 export function CommonForm<T extends object>(
   initVal: T,
-  { fields, onFinish, costom }: ICommonFormProp<T>
+  {
+    fields,
+    onFinish,
+    costom,
+    readonly,
+    disableKey,
+    primaryKey,
+  }: ICommonFormProp<T>
 ): React.ReactNode {
   const [form] = Form.useForm<T>();
-  const formValues = form.getFieldsValue();
+  useEffect(() => {
+    form.setFieldsValue(initVal as never);
+  }, [initVal, form]);
   return (
-    <Form form={form} onFinish={onFinish} labelCol={{ span: 4 }}>
-      {fields.map((field, i) => (
-        <div key={i}>{field(initVal, formValues)}</div>
-      ))}
+    <Form
+      form={form}
+      onFinish={(values) => {
+        // Ant Design 的类型体操做的不行，Form的数字输入得自己转
+        for (const key in values) {
+          if (typeof initVal[key] === "number") {
+            values[key] = +values[key] as never;
+          }
+        }
+        onFinish?.call(undefined, values);
+      }}
+      labelCol={{ span: 4 }}
+      initialValues={initVal}
+    >
+      {fields.map((field, i) =>
+        field(initVal, { key: i, disabled: readonly, disableKey, primaryKey })
+      )}
       {costom}
       <Form.Item>
         <Button type="primary" htmlType="submit" style={{ float: "right" }}>
@@ -153,12 +223,14 @@ export function CRUDModal<T extends object>(
       onCancel={onClose}
       footer={false}
       title={`${TranslateCRUD[type]}${modalName}`}
+      forceRender
     >
       {CommonForm(initVal, {
         ...others,
         onFinish(form) {
           handlers?.[concat("on", capitalize(type))]?.(form);
         },
+        readonly: type === "delete" || type === "retrieve",
       })}
     </Modal>
   );

@@ -58,6 +58,11 @@ export interface PageQueryParams {
   pageSize: number;
 }
 
+export interface PageQueryResult<T> {
+  count: number;
+  records: T[];
+}
+
 export interface CommonParams {
   /**
    * 未来将被移除
@@ -209,4 +214,14 @@ export interface QuizService {
   questionGeneralStatistics(): Promise<
     ResponseResultModel<QuetionStatisticsResult>
   >;
+}
+
+export interface CRUDService<T extends object, IDType = number> {
+  create(model: Partial<T>): Promise<ResponseResultModel<any>>;
+  retrieve(id: IDType): Promise<ResponseResultModel<T>>;
+  query(
+    params: PageQueryParams
+  ): Promise<ResponseResultModel<PageQueryResult<T>>>;
+  update(model: Partial<T>): Promise<ResponseResultModel<any>>;
+  delete(id: IDType): Promise<ResponseResultModel<any>>;
 }
