@@ -30,9 +30,9 @@ interface FormItemRenderer<T extends object, K extends KeyOf<T>> {
 }
 
 interface CustomFormInputItemProps {
-  switchProps?: SwitchProps;
-  inputProps?: InputProps;
-  selectProps?: SelectProps<number>;
+  switchProps?: Omit<SwitchProps, "onChange" | "checked">;
+  inputProps?: Omit<InputProps, "onChange" | "value">;
+  selectProps?: Omit<SelectProps<number>, "onChange" | "value">;
 }
 
 export interface ICommonFormProp<T extends object> {
@@ -100,7 +100,7 @@ export const CommonForm = <T extends object>({
                 }
                 label={displayName}
                 name={fieldKey}
-                valuePropName={getValuePropName(describer, fieldKey)}
+                valuePropName={"value"}
               >
                 {getInputItem(describer, fieldKey, props)}
               </Form.Item>
@@ -120,15 +120,6 @@ export const CommonForm = <T extends object>({
   );
 };
 
-function getValuePropName<T extends object>(
-  describer: ModelDescriber<T>,
-  fieldKey: KeyOf<T>
-): string {
-  return describer.properties[fieldKey].valueDescriber.type === "boolean"
-    ? "checked"
-    : "value";
-}
-
 function getInputItem<T extends object>(
   describer: ModelDescriber<T>,
   fieldKey: KeyOf<T>,
@@ -137,13 +128,23 @@ function getInputItem<T extends object>(
   const { valueDescriber, disabled } = describer.properties[fieldKey];
   const { type } = valueDescriber;
   if (type === "boolean") {
-    return <Switch disabled={disabled} {...props?.switchProps}></Switch>;
+    return (
+      <SwitchWrapper
+        disabled={disabled}
+        {...props?.switchProps}
+      ></SwitchWrapper>
+    );
   }
   const fieldName = describer.displayNames[fieldKey];
   const placeholder = `请输入${fieldName}`;
   if (type === "number") {
     return (
-      <Input disabled={disabled} type="number" {...props?.inputProps}></Input>
+      <NumberInputWrapper
+        disabled={disabled}
+        type="number"
+        placeholder={placeholder}
+        {...props?.inputProps}
+      ></NumberInputWrapper>
     );
   }
   if (type === "string") {
@@ -180,3 +181,24 @@ function getInputItem<T extends object>(
   }
   throw new Error("Invalid parameters of getInputItem");
 }
+
+const NumberInputWrapper: React.FC<
+  { onChange?: (value: number) => any } & Omit<InputProps, "onChange">
+> = ({ value, onChange, ...props }) => {
+  return (
+    <Input
+      {...props}
+      value={value}
+      onChange={(e) => {
+        const value = +e.target.value || 0;
+        onChange?.(value);
+      }}
+    ></Input>
+  );
+};
+
+const SwitchWrapper: React.FC<
+  { value?: boolean } & Omit<SwitchProps, "checked">
+> = ({ value, ...others }) => {
+  return <Switch checked={value} {...others}></Switch>;
+};
