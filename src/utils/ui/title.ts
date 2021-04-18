@@ -4,7 +4,6 @@ const PROJECT = "宠物医院学习系统";
 
 const titles: Record<RoutePaths, string> = {
   "/": "跳转中",
-  "/about": "关于我们",
   "/developing": "开发中",
   "/home": "主页",
   "/login": `${PROJECT} - 登录`,

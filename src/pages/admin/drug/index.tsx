@@ -1,12 +1,12 @@
 import React from "react";
 import { Drug } from "../../../api/info-manage";
 import { CRUDManager } from "../../../components/crud-manager";
-import { DisplayNameMapping } from "../../../components/manage-table";
 import { createDescriber } from "../../../models/describer-factory";
+import { KeyOf } from "../../../models/model-describer";
 import { BackendServiceFactory } from "../../../services";
 
 export const DrugManage: React.FC = () => {
-  const displayNameMapping: DisplayNameMapping<Drug> = {
+  const displayNameMapping: Record<KeyOf<Drug>, string> = {
     iD: "ID",
     drugName: "药品名称",
     drugPrice: "药品价格",

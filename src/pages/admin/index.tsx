@@ -15,7 +15,7 @@ const subRoutes: {
   { title: "试题管理", key: "question", component: QuestionManage },
 ];
 
-export const AdminPage: React.FC = () => {
+export const AdminHomePage: React.FC = () => {
   const [route, setRoute] = useState(subRoutes[0]!);
   return (
     <ManageStyleLayout title="管理后台" headerChildren={renderHeader()}>

@@ -1,6 +1,5 @@
 import React from "react";
 import { createHashHistory, History } from "history";
-import { AboutPage } from "../pages/about";
 import { PickKey } from "../utils/types";
 import { LoginPage } from "../pages/login";
 import { Redirect } from "react-router";
@@ -13,10 +12,10 @@ import { TakeTestPage } from "../pages/take-test";
 import { isDev } from "../env";
 import { TestResultPage } from "../pages/test-result";
 import { GuidePage } from "../pages/guide";
-import { MainPage } from "../pages/main";
+import { HomePage } from "../pages/home";
 import { TestPage } from "../pages/test-page";
 import { AdminLogin } from "../pages/admin/login";
-import { AdminPage } from "../pages/admin";
+import { AdminHomePage } from "../pages/admin";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -29,8 +28,7 @@ function defineRouteMapping<T extends Routes>(mapping: T) {
 export const routeMapping = defineRouteMapping({
   "/": () => <Redirect to="/login"></Redirect>,
   "/developing": DevelopingPage,
-  "/home": MainPage,
-  "/about": AboutPage,
+  "/home": HomePage,
   "/login": LoginPage,
   "/test-center": () => <TestCenterPage />,
   "/test-center/new-test": () => (
@@ -53,7 +51,7 @@ export const routeMapping = defineRouteMapping({
   "/vtour": GuidePage,
   "/admin": () => <Redirect to="/admin/login"></Redirect>,
   "/admin/login": AdminLogin,
-  "/admin/home": () => <AdminPage></AdminPage>,
+  "/admin/home": () => <AdminHomePage></AdminHomePage>,
   "/test-page": TestPage,
 } as const);
 
