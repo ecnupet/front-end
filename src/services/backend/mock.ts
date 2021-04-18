@@ -2,6 +2,7 @@ import { PersonInfoResponse } from "../../api";
 import { Drug } from "../../api/info-manage";
 import { QuestionType, SingleSelectQuestion } from "../../models";
 import { configStore } from "../../store/config";
+import { ObjectEntries } from "../../utils/common";
 import { RealQuizService } from "./impl";
 import {
   ResponseResultModel,
@@ -106,6 +107,28 @@ const mockOptions = {
   C: "Confusing",
   D: "xxx",
 };
+
+function simulate<T>(obj: T): T {
+  if (typeof obj === "boolean") {
+    return ((Math.random() < 0.5) as unknown) as T;
+  }
+  if (typeof obj === "number") {
+    return ((Math.random() * obj) as unknown) as T;
+  }
+  if (typeof obj === "string") {
+    return ([...obj].sort(() => Math.random() - 0.5).join("") as unknown) as T;
+  }
+  if (Array.isArray(obj)) {
+    return (obj
+      .map((o) => simulate(o))
+      .sort(() => Math.random() - 0.5) as unknown) as T;
+  }
+  return ObjectEntries(obj).reduce<Partial<T>>((prev, [key, value]) => {
+    prev[key] = simulate(value);
+    return prev;
+  }, {}) as T;
+}
+
 function mockList<T extends object>(
   model: T,
   idKey: keyof T,
@@ -115,7 +138,7 @@ function mockList<T extends object>(
   const result: T[] = [];
   for (let i = 0; i < count; i++) {
     result.push(
-      Object.assign({}, model, {
+      Object.assign({}, simulate(model), {
         [idKey]: idType === "number" ? i : i.toString(),
       })
     );
@@ -274,3 +297,20 @@ class MockDrugService extends AbstractCRUDService<Drug> {
   database = drugs;
 }
 export const mockDrugService: CRUDService<Drug> = new MockDrugService("iD");
+
+const questions = mockList<SingleSelectQuestion>(
+  {
+    questionId: 0,
+    description: "这道题选A",
+    duration: 10,
+    options: mockOptions,
+    type: QuestionType.InfectiousDisease,
+  },
+  "questionId",
+  100,
+  "number"
+);
+class MockQuestionService extends AbstractCRUDService<SingleSelectQuestion> {
+  database = questions;
+}
+export const mockQuestionService = new MockQuestionService("questionId");

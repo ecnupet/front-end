@@ -8,3 +8,8 @@ export function ObjectKeys<T>(obj: T): Array<keyof T> {
   // @ts-expect-error
   return Object.keys(obj);
 }
+
+export function ObjectEntries<T>(obj: T): Array<[keyof T, T[keyof T]]> {
+  // @ts-expect-error
+  return Object.entries(obj);
+}

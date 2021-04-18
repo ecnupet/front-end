@@ -58,6 +58,10 @@ export interface PageQueryParams {
   pageSize: number;
 }
 
+export interface SearchParams extends PageQueryParams {
+  keyword?: string;
+}
+
 export interface PageQueryResult<T> {
   count: number;
   records: T[];
@@ -219,9 +223,7 @@ export interface QuizService {
 export interface CRUDService<T extends object, IDType = number> {
   create(model: Partial<T>): Promise<ResponseResultModel<any>>;
   retrieve(id: IDType): Promise<ResponseResultModel<T>>;
-  query(
-    params: PageQueryParams
-  ): Promise<ResponseResultModel<PageQueryResult<T>>>;
+  query(params: SearchParams): Promise<ResponseResultModel<PageQueryResult<T>>>;
   update(model: Partial<T>): Promise<ResponseResultModel<any>>;
   delete(id: IDType): Promise<ResponseResultModel<any>>;
 }

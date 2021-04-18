@@ -1,11 +1,9 @@
 import React from "react";
 import { Drug } from "../../../api/info-manage";
-import { Labeled, TextOrDigital } from "../../../components/crud-form";
-import {
-  DisplayNameMapping,
-  ManageTable,
-} from "../../../components/manage-table";
-import { ObjectKeys } from "../../../utils/common";
+import { CRUDManager } from "../../../components/crud-manager";
+import { DisplayNameMapping } from "../../../components/manage-table";
+import { createDescriber } from "../../../models/describer-factory";
+import { BackendServiceFactory } from "../../../services";
 
 export const DrugManage: React.FC = () => {
   const displayNameMapping: DisplayNameMapping<Drug> = {
@@ -15,40 +13,42 @@ export const DrugManage: React.FC = () => {
     drugSave: "保存方法",
     drugUsage: "药品用途",
   };
-  return ManageTable("Drug", getDefaultDrug(), "iD", {
-    columns: ObjectKeys(displayNameMapping).map((key) => ({
-      dataIndex: key,
-      title: displayNameMapping[key],
-    })),
-    modalName: "药品",
-    fields: ObjectKeys(displayNameMapping).map((key) =>
-      Labeled({
-        label: displayNameMapping[key],
-        fieldKey: key,
-        formItemProps: {
-          required: true,
-          rules: [
-            {
-              validator(_, v, cb) {
-                typeof v === "number" ? cb() : !v ? cb("此项不能为空") : cb();
-              },
+  return (
+    <CRUDManager
+      service={BackendServiceFactory.getCRUDService("Drug")}
+      describer={createDescriber<Drug>({
+        displayNames: displayNameMapping,
+        modelName: "药物",
+        primaryKey: "iD",
+        searchableKey: "drugName",
+        properties: {
+          drugName: {
+            propertyKey: "drugName",
+            valueDescriber: { defaultValue: "", type: "string" },
+          },
+          drugPrice: {
+            propertyKey: "drugPrice",
+            valueDescriber: { defaultValue: 1, type: "number" },
+            validator: (value) => (value > 0 ? undefined : "价格必须为正数"),
+          },
+          drugSave: {
+            propertyKey: "drugSave",
+            valueDescriber: { defaultValue: "", type: "string" },
+          },
+          drugUsage: {
+            propertyKey: "drugUsage",
+            valueDescriber: {
+              defaultValue: "",
+              type: "string",
+              textType: "long",
             },
-          ],
+          },
+          iD: {
+            propertyKey: "iD",
+            valueDescriber: { defaultValue: -1, type: "number" },
+          },
         },
-        field: TextOrDigital({
-          placeholder: `请输入${displayNameMapping[key]}`,
-          init: getDefaultDrug()[key],
-        }),
-      })
-    ),
-  });
+      })}
+    ></CRUDManager>
+  );
 };
-function getDefaultDrug(): Drug {
-  return {
-    iD: 0,
-    drugName: "",
-    drugPrice: 0,
-    drugSave: "",
-    drugUsage: "",
-  };
-}

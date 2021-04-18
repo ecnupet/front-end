@@ -1,5 +1,6 @@
 import { autorun } from "mobx";
 import { Drug } from "../../api/info-manage";
+import { SingleSelectQuestion } from "../../models";
 import { configStore } from "../../store/config";
 import { callHook } from "../../utils/common";
 import {
@@ -7,7 +8,12 @@ import {
   RealBackendService,
   RealQuizService,
 } from "./impl";
-import { mockBackendService, mockDrugService, mockQuizService } from "./mock";
+import {
+  mockBackendService,
+  mockDrugService,
+  mockQuestionService,
+  mockQuizService,
+} from "./mock";
 import { CRUDService, PersonManageService, QuizService } from "./schema";
 
 const realService: PersonManageService = new RealBackendService();
@@ -17,6 +23,7 @@ const realDrugService: RealDrugCRUDService = new RealDrugCRUDService();
 export type ServiceType = "real" | "mock";
 export interface CRUDServiceMapping {
   Drug: Record<ServiceType, CRUDService<Drug, number>>;
+  Question: Record<ServiceType, CRUDService<SingleSelectQuestion, number>>;
 }
 
 export type ModelTypeOfService<
@@ -32,6 +39,10 @@ const crudServices: CRUDServiceMapping = {
   Drug: {
     mock: mockDrugService,
     real: realDrugService,
+  },
+  Question: {
+    mock: mockQuestionService,
+    real: mockQuestionService,
   },
 };
 
@@ -66,7 +77,10 @@ export const BackendServiceFactory = {
       }[type ?? defaultServiceType]
     );
   },
-  getCRUDService(service: CRUDServices, type?: ServiceType) {
+  getCRUDService<Service extends CRUDServices>(
+    service: Service,
+    type?: ServiceType
+  ): CRUDServiceMapping[Service][ServiceType] {
     return callHook(crudServices[service][type ?? defaultServiceType]);
   },
 };

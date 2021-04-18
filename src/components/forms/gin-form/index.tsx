@@ -43,6 +43,7 @@ export const GinForm: React.FC = () => {
             getValueFromEvent={(e) => {
               return e.file;
             }}
+            valuePropName="fileList"
           >
             <Upload
               beforeUpload={(file, fileList) => {

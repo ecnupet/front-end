@@ -1,0 +1,174 @@
+import {
+  Button,
+  Form,
+  Input,
+  InputProps,
+  Select,
+  SelectProps,
+  Switch,
+  SwitchProps,
+} from "antd";
+import React, { useEffect } from "react";
+import {
+  EnumPropertyDescriber,
+  KeyOf,
+  ModelDescriber,
+  StringPropertyDescriber,
+} from "../../models/model-describer";
+import { ObjectEntries, ObjectKeys } from "../../utils/common";
+import styles from "./style.module.css";
+
+interface FormItemRenderer<T extends object, K extends KeyOf<T>> {
+  render(props: {
+    fieldKey: K;
+    value: T[K];
+    model: T;
+    describer: ModelDescriber<T>;
+  }): React.ReactNode | undefined;
+}
+
+interface CustomFormInputItemProps {
+  switchProps?: SwitchProps;
+  inputProps?: InputProps;
+  selectProps?: SelectProps<number>;
+}
+
+export interface ICommonFormProp<T extends object> {
+  describer: ModelDescriber<T>;
+  props?: CustomFormInputItemProps;
+  customRenderer?: { [K in KeyOf<T>]?: FormItemRenderer<T, K> };
+  onSubmit: (form: T) => any;
+}
+
+export const CommonForm: React.FC<ICommonFormProp<any>> = <T extends object>({
+  describer,
+  customRenderer,
+  props,
+  onSubmit,
+}: React.PropsWithChildren<ICommonFormProp<T>>) => {
+  const [form] = Form.useForm<T>();
+  useEffect(() => {
+    form.setFieldsValue(describer.defaultValue as never);
+  }, [form, describer, describer.defaultValue]);
+  console.log("render!");
+  // @ts-ignore
+  window.desc2 = describer;
+  return (
+    <Form
+      form={form}
+      onFinish={onSubmit}
+      initialValues={describer.defaultValue}
+      labelCol={{ span: 4 }}
+    >
+      {ObjectKeys(describer.properties)
+        .sort((a, b) =>
+          a === describer.primaryKey ? -1 : b === describer.primaryKey ? 1 : 0
+        )
+        .map((fieldKey, index) => {
+          const { defaultValue, displayNames } = describer;
+          const { required, validator } = describer.properties[fieldKey];
+          const displayName = displayNames[fieldKey];
+          return (
+            customRenderer?.[fieldKey]?.render({
+              describer,
+              fieldKey,
+              model: defaultValue,
+              value: defaultValue[fieldKey],
+            }) ?? (
+              <Form.Item
+                required={required}
+                rules={
+                  validator
+                    ? [
+                        {
+                          validator(_, v, cb) {
+                            const validateResult = validator(v);
+                            !validateResult ? cb() : cb(validateResult);
+                          },
+                        },
+                      ]
+                    : [{ required: true, message: `请输入${displayName}` }]
+                }
+                label={displayName}
+                name={fieldKey}
+                key={index}
+                valuePropName={getValuePropName(describer, fieldKey)}
+              >
+                {getInputItem(describer, fieldKey, props)}
+              </Form.Item>
+            )
+          );
+        })}
+      <Form.Item>
+        <Button
+          type="primary"
+          className={styles["submit-button"]}
+          htmlType="submit"
+        >
+          确认
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+
+function getValuePropName<T extends object>(
+  describer: ModelDescriber<T>,
+  fieldKey: KeyOf<T>
+): string {
+  return describer.properties[fieldKey].valueDescriber.type === "boolean"
+    ? "checked"
+    : "value";
+}
+
+function getInputItem<T extends object>(
+  describer: ModelDescriber<T>,
+  fieldKey: KeyOf<T>,
+  props?: CustomFormInputItemProps
+): React.ReactNode {
+  const { valueDescriber, disabled } = describer.properties[fieldKey];
+  const { type } = valueDescriber;
+  if (type === "boolean") {
+    return <Switch disabled={disabled} {...props?.switchProps}></Switch>;
+  }
+  const fieldName = describer.displayNames[fieldKey];
+  const placeholder = `请输入${fieldName}`;
+  if (type === "number") {
+    return (
+      <Input disabled={disabled} type="number" {...props?.inputProps}></Input>
+    );
+  }
+  if (type === "string") {
+    const { textType = "short" } = valueDescriber as StringPropertyDescriber;
+    if (textType === "short")
+      return (
+        <Input
+          disabled={disabled}
+          type="text"
+          placeholder={placeholder}
+          {...props?.inputProps}
+        ></Input>
+      );
+    if (textType === "long") {
+      return (
+        <Input.TextArea
+          disabled={disabled}
+          placeholder={placeholder}
+        ></Input.TextArea>
+      );
+    }
+  }
+  if (type === "enum") {
+    const { displayNameMapping } = valueDescriber as EnumPropertyDescriber<any>;
+    return (
+      <Select disabled={disabled} {...props?.selectProps}>
+        {ObjectEntries(displayNameMapping).map(([optionKey, displayName]) => (
+          <Select.Option value={+optionKey} key={+optionKey}>
+            {displayName}
+          </Select.Option>
+        ))}
+      </Select>
+    );
+  }
+  throw new Error("Invalid parameters of getInputItem");
+}

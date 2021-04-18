@@ -37,6 +37,14 @@ export const NameOfQuestionType: Record<QuestionType, string> = {
   [QuestionType.PetImmunity]: "宠物免疫知识",
 };
 
+export const QuestionDisplayNameMapping = {
+  description: "试题描述",
+  duration: "作答限时",
+  options: "选项",
+  questionId: "ID",
+  type: "试题分类",
+};
+
 /**
  * 题目（选择题）
  */
