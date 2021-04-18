@@ -60,9 +60,8 @@ export interface PropertyTypeDescriberMapping<V> {
 
 export interface ModalProperty<T extends object, K extends KeyOf<T>> {
   readonly propertyKey: K;
-  // @ts-expect-error
   readonly valueDescriber: PropertyTypeDescriberMapping<
-    T[K]
+    T[K] /* @ts-expect-error */
   >[MapValueTypeToString<T[K]>];
   readonly required?: boolean;
   readonly disabled?: boolean;

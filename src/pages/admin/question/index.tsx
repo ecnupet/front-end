@@ -34,9 +34,9 @@ export const QuestionManage: React.FC = () => {
             propertyKey: "duration",
             valueDescriber: { defaultValue: 10, type: "number" },
           },
-          // @ts-expect-error
           options: {
             propertyKey: "options",
+            // @ts-expect-error
             valueDescriber: { defaultValue: {}, type: "map" },
           },
           questionId: {
