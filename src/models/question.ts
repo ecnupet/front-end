@@ -1,3 +1,5 @@
+import { KeyOf } from "./model-describer";
+
 /**
  * 题目类型（知识分类tag）枚举
  */
@@ -37,12 +39,16 @@ export const NameOfQuestionType: Record<QuestionType, string> = {
   [QuestionType.PetImmunity]: "宠物免疫知识",
 };
 
-export const QuestionDisplayNameMapping = {
+export const QuestionDisplayNameMapping: Record<
+  KeyOf<SingleSelectQuestionWithAnswer>,
+  string
+> = {
   description: "试题描述",
   duration: "作答限时",
   options: "选项",
   questionId: "ID",
   type: "试题分类",
+  answer: "答案",
 };
 
 /**
@@ -69,4 +75,11 @@ export interface SingleSelectQuestion {
    * 答题时间限制（单位秒）
    */
   duration: number;
+}
+
+export interface SingleSelectQuestionWithAnswer extends SingleSelectQuestion {
+  /**
+   * 问题答案
+   */
+  answer: string;
 }

@@ -1,6 +1,6 @@
 import { autorun } from "mobx";
 import { Drug } from "../../api/info-manage";
-import { SingleSelectQuestion } from "../../models";
+import { SingleSelectQuestionWithAnswer } from "../../models";
 import { configStore } from "../../store/config";
 import { callHook } from "../../utils/common";
 import {
@@ -23,7 +23,10 @@ const realDrugService: RealDrugCRUDService = new RealDrugCRUDService();
 export type ServiceType = "real" | "mock";
 export interface CRUDServiceMapping {
   Drug: Record<ServiceType, CRUDService<Drug, number>>;
-  Question: Record<ServiceType, CRUDService<SingleSelectQuestion, number>>;
+  Question: Record<
+    ServiceType,
+    CRUDService<SingleSelectQuestionWithAnswer, number>
+  >;
 }
 
 export type ModelTypeOfService<

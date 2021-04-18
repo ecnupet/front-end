@@ -43,7 +43,8 @@ export const CRUDModal: React.FC<ICRUDModalProp<any>> = <T extends object>({
       visible={visable}
       onCancel={onClose}
       title={`${TranslateCRUD[type]}${describer.modelName}`}
-      forceRender={true}
+      forceRender
+      getContainer={false}
       footer={false}
     >
       <CommonForm

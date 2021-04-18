@@ -16,10 +16,12 @@ import {
   StringPropertyDescriber,
 } from "../../models/model-describer";
 import { ObjectEntries, ObjectKeys } from "../../utils/common";
+import { useForceUpdate } from "../../utils/hooks/use-force-update";
 import styles from "./style.module.css";
 
 interface FormItemRenderer<T extends object, K extends KeyOf<T>> {
   render(props: {
+    key?: React.Key;
     fieldKey: K;
     value: T[K];
     model: T;
@@ -47,18 +49,22 @@ export const CommonForm: React.FC<ICommonFormProp<any>> = <T extends object>({
   onSubmit,
 }: React.PropsWithChildren<ICommonFormProp<T>>) => {
   const [form] = Form.useForm<T>();
+  const forceUpdate = useForceUpdate();
   useEffect(() => {
     form.setFieldsValue(describer.defaultValue as never);
-  }, [form, describer, describer.defaultValue]);
-  console.log("render!");
-  // @ts-ignore
-  window.desc2 = describer;
+    forceUpdate();
+  }, [form, describer, describer.defaultValue, forceUpdate]);
   return (
     <Form
       form={form}
       onFinish={onSubmit}
       initialValues={describer.defaultValue}
       labelCol={{ span: 4 }}
+      onValuesChange={(_, values) => {
+        // @ts-expect-error
+        form.setFieldsValue(values);
+        forceUpdate();
+      }}
     >
       {ObjectKeys(describer.properties)
         .sort((a, b) =>
@@ -68,14 +74,16 @@ export const CommonForm: React.FC<ICommonFormProp<any>> = <T extends object>({
           const { defaultValue, displayNames } = describer;
           const { required, validator } = describer.properties[fieldKey];
           const displayName = displayNames[fieldKey];
+          const currentFormValues = form.getFieldsValue() ?? defaultValue;
           return (
             customRenderer?.[fieldKey]?.render({
               describer,
               fieldKey,
-              model: defaultValue,
-              value: defaultValue[fieldKey],
+              model: currentFormValues,
+              value: currentFormValues[fieldKey],
             }) ?? (
               <Form.Item
+                key={index}
                 required={required}
                 rules={
                   validator
@@ -91,7 +99,6 @@ export const CommonForm: React.FC<ICommonFormProp<any>> = <T extends object>({
                 }
                 label={displayName}
                 name={fieldKey}
-                key={index}
                 valuePropName={getValuePropName(describer, fieldKey)}
               >
                 {getInputItem(describer, fieldKey, props)}

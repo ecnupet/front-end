@@ -1,6 +1,10 @@
 import { PersonInfoResponse } from "../../api";
 import { Drug } from "../../api/info-manage";
-import { QuestionType, SingleSelectQuestion } from "../../models";
+import {
+  QuestionType,
+  SingleSelectQuestion,
+  SingleSelectQuestionWithAnswer,
+} from "../../models";
 import { configStore } from "../../store/config";
 import { ObjectEntries } from "../../utils/common";
 import { RealQuizService } from "./impl";
@@ -298,19 +302,20 @@ class MockDrugService extends AbstractCRUDService<Drug> {
 }
 export const mockDrugService: CRUDService<Drug> = new MockDrugService("iD");
 
-const questions = mockList<SingleSelectQuestion>(
+const questions = mockList<SingleSelectQuestionWithAnswer>(
   {
     questionId: 0,
     description: "这道题选A",
     duration: 10,
     options: mockOptions,
     type: QuestionType.InfectiousDisease,
+    answer: "A",
   },
   "questionId",
   100,
   "number"
 );
-class MockQuestionService extends AbstractCRUDService<SingleSelectQuestion> {
+class MockQuestionService extends AbstractCRUDService<SingleSelectQuestionWithAnswer> {
   database = questions;
 }
 export const mockQuestionService = new MockQuestionService("questionId");

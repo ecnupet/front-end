@@ -1,4 +1,4 @@
-import { Form, Popover } from "antd";
+import { Form, Popover, Select } from "antd";
 import React from "react";
 import { CRUDManager, processLongText } from "../../../components/crud-manager";
 import { OptionsInput } from "../../../components/options-input";
@@ -7,16 +7,17 @@ import {
   QuestionDisplayNameMapping,
   QuestionType,
   SingleSelectQuestion,
+  SingleSelectQuestionWithAnswer,
 } from "../../../models";
 import { createDescriber } from "../../../models/describer-factory";
 import { BackendServiceFactory } from "../../../services";
-import { ObjectEntries, pickKeyOf } from "../../../utils/common";
+import { ObjectEntries, ObjectKeys, pickKeyOf } from "../../../utils/common";
 
 export const QuestionManage: React.FC = () => {
   return (
     <CRUDManager
       service={BackendServiceFactory.getCRUDService("Question")}
-      describer={createDescriber<SingleSelectQuestion>({
+      describer={createDescriber<SingleSelectQuestionWithAnswer>({
         displayNames: QuestionDisplayNameMapping,
         modelName: "试题",
         primaryKey: "questionId",
@@ -52,6 +53,13 @@ export const QuestionManage: React.FC = () => {
               displayNameMapping: NameOfQuestionType,
             },
           },
+          answer: {
+            propertyKey: "answer",
+            valueDescriber: {
+              defaultValue: "A",
+              type: "string",
+            },
+          },
         },
       })}
       renderColumn={(model, fieldKey) => {
@@ -80,9 +88,10 @@ export const QuestionManage: React.FC = () => {
       formProps={{
         customRenderer: {
           options: {
-            render({ describer, value }) {
+            render({ describer, value, key }) {
               return (
                 <Form.Item
+                  key={key}
                   name={pickKeyOf<SingleSelectQuestion>("options")}
                   label={QuestionDisplayNameMapping.options}
                 >
@@ -90,6 +99,25 @@ export const QuestionManage: React.FC = () => {
                     disabled={describer.properties.options.disabled}
                     value={value}
                   />
+                </Form.Item>
+              );
+            },
+          },
+          answer: {
+            render({ model, key }) {
+              return (
+                <Form.Item
+                  key={key}
+                  name={pickKeyOf<SingleSelectQuestionWithAnswer>("answer")}
+                  label={QuestionDisplayNameMapping.answer}
+                >
+                  <Select>
+                    {ObjectKeys(model.options ?? {}).map((option, index) => (
+                      <Select.Option key={index} value={option}>
+                        {option}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               );
             },
