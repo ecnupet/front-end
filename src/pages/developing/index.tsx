@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import { axiosInstance, baseURLs } from "../../api";
 import { Center } from "../../components/center";
@@ -7,8 +7,10 @@ import { ConfigForm } from "../../components/config-form";
 import { configStore } from "../../store/config";
 import { Observer } from "mobx-react-lite";
 import { router } from "../../routes";
+import { RequestFormComp } from "./requester";
 export const DevelopingPage: React.FC = () => {
   const [file, setFile] = useState("");
+  const [v, setV] = useState(false);
   return (
     <Center style={{ flexDirection: "column" }}>
       <h1>开发者专用页面</h1>
@@ -129,6 +131,17 @@ export const DevelopingPage: React.FC = () => {
             ></ConfigForm>
           )}
         </Observer>
+        <Button onClick={() => setV(true)}>发起测试请求</Button>
+        <Modal
+          style={{ width: 1000 }}
+          visible={v}
+          forceRender
+          title="发起测试请求"
+          footer={false}
+          onCancel={() => setV(false)}
+        >
+          <RequestFormComp></RequestFormComp>
+        </Modal>
       </div>
     </Center>
   );

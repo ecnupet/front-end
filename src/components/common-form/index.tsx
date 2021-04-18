@@ -42,7 +42,7 @@ export interface ICommonFormProp<T extends object> {
   onSubmit: (form: T) => any;
 }
 
-export const CommonForm: React.FC<ICommonFormProp<any>> = <T extends object>({
+export const CommonForm = <T extends object>({
   describer,
   customRenderer,
   props,
@@ -81,6 +81,7 @@ export const CommonForm: React.FC<ICommonFormProp<any>> = <T extends object>({
               fieldKey,
               model: currentFormValues,
               value: currentFormValues[fieldKey],
+              key: index,
             }) ?? (
               <Form.Item
                 key={index}
