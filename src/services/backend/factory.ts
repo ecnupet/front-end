@@ -7,6 +7,7 @@ import {
   RealDrugCRUDService,
   RealBackendService,
   RealQuizService,
+  RealQuestionCRUDService,
 } from "./impl";
 import {
   mockBackendService,
@@ -20,6 +21,7 @@ const realService: PersonManageService = new RealBackendService();
 const mockService: PersonManageService = mockBackendService;
 const realQuizService: QuizService = new RealQuizService();
 const realDrugService: RealDrugCRUDService = new RealDrugCRUDService();
+const realQuestionService: CRUDService<SingleSelectQuestionWithAnswer> = new RealQuestionCRUDService();
 export type ServiceType = "real" | "mock";
 export interface CRUDServiceMapping {
   Drug: Record<ServiceType, CRUDService<Drug, number>>;
@@ -45,7 +47,7 @@ const crudServices: CRUDServiceMapping = {
   },
   Question: {
     mock: mockQuestionService,
-    real: mockQuestionService,
+    real: realQuestionService,
   },
 };
 

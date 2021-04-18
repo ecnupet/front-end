@@ -1,7 +1,10 @@
 import { apiCaller, axiosInstance, PersonInfoResponse } from "../../api";
 import { Drug } from "../../api/info-manage";
-import { SingleSelectQuestion } from "../../models";
-import { getPasswordNumberArray } from "../../utils/common";
+import {
+  SingleSelectQuestion,
+  SingleSelectQuestionWithAnswer,
+} from "../../models";
+import { getPasswordNumberArray, RequestHook } from "../../utils/common";
 import {
   PersonManageService,
   CheckQuestionParams,
@@ -19,8 +22,8 @@ import {
   QuizHistoryCountResult,
   QuetionStatisticsResult,
   CRUDService,
-  PageQueryParams,
   PageQueryResult,
+  SearchParams,
 } from "./schema";
 
 export class RealBackendService implements PersonManageService {
@@ -114,26 +117,76 @@ export class RealQuizService implements QuizService {
 }
 
 export class RealDrugCRUDService implements CRUDService<Drug> {
-  query(
-    params: PageQueryParams
+  async query(
+    params: SearchParams
   ): Promise<ResponseResultModel<PageQueryResult<Drug>>> {
-    console.log(params);
+    // @ts-expect-error
+    return await apiCaller.get("/api/im/drug", params);
+  }
+  @RequestHook<Partial<Drug>>({
+    paramRewrite(drug) {
+      delete drug.iD;
+      return drug;
+    },
+  })
+  async create(model: Drug): Promise<ResponseResultModel<any>> {
+    return await apiCaller.post("/api/im/drugadd", model);
+  }
+  retrieve(): Promise<ResponseResultModel<Drug>> {
     throw new Error("Method not implemented.");
   }
-  create(model: Partial<Drug>): Promise<ResponseResultModel<any>> {
-    console.log(model);
+  async update(model: Drug): Promise<ResponseResultModel<any>> {
+    return await apiCaller.post("/api/im/drugupdate", model);
+  }
+  async delete(id: number): Promise<ResponseResultModel<any>> {
+    // @ts-expect-error
+    return await apiCaller.post("/api/im/drugdelete", { id });
+  }
+}
+
+export class RealQuestionCRUDService
+  implements CRUDService<SingleSelectQuestionWithAnswer> {
+  @RequestHook<Partial<SingleSelectQuestionWithAnswer>>({
+    paramRewrite(param) {
+      delete param.questionId;
+      return param;
+    },
+  })
+  async create(
+    model: Partial<SingleSelectQuestionWithAnswer>
+  ): Promise<ResponseResultModel<any>> {
+    const result = await axiosInstance.post(
+      "/api/tl/admin/question/insert",
+      model
+    );
+    return result.data;
+  }
+  retrieve(): Promise<ResponseResultModel<SingleSelectQuestionWithAnswer>> {
     throw new Error("Method not implemented.");
   }
-  retrieve(id: number): Promise<ResponseResultModel<Drug>> {
-    console.log(id);
-    throw new Error("Method not implemented.");
+  async query(
+    params: SearchParams
+  ): Promise<
+    ResponseResultModel<PageQueryResult<SingleSelectQuestionWithAnswer>>
+  > {
+    const result = await axiosInstance.get("/api/tl/admin/question", {
+      params,
+    });
+    return result.data;
   }
-  update(model: Partial<Drug>): Promise<ResponseResultModel<any>> {
-    console.log(model);
-    throw new Error("Method not implemented.");
+  async update(
+    model: Partial<SingleSelectQuestionWithAnswer>
+  ): Promise<ResponseResultModel<any>> {
+    const result = await axiosInstance.post(
+      "/api/tl/admin/question/update",
+      model
+    );
+    return result.data;
   }
-  delete(id: number): Promise<ResponseResultModel<any>> {
-    console.log(id);
-    throw new Error("Method not implemented.");
+  async delete(id: number): Promise<ResponseResultModel<any>> {
+    const result = await axiosInstance.post("/api/tl/admin/question/delete", {
+      questionId: id,
+    });
+    return result.data;
   }
 }
