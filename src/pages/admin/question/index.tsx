@@ -104,14 +104,14 @@ export const QuestionManage: React.FC = () => {
             },
           },
           answer: {
-            render({ model, key }) {
+            render({ model, key, describer }) {
               return (
                 <Form.Item
                   key={key}
                   name={pickKeyOf<SingleSelectQuestionWithAnswer>("answer")}
                   label={QuestionDisplayNameMapping.answer}
                 >
-                  <Select>
+                  <Select disabled={describer.properties.answer.disabled}>
                     {ObjectKeys(model.options ?? {}).map((option, index) => (
                       <Select.Option key={index} value={option}>
                         {option}
