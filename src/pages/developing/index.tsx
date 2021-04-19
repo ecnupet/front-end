@@ -8,8 +8,9 @@ import { configStore } from "../../store/config";
 import { Observer } from "mobx-react-lite";
 import { router } from "../../routes";
 import { RequestFormComp } from "./requester";
+import { InteractFactory } from "../../services";
 export const DevelopingPage: React.FC = () => {
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState<File>();
   const [v, setV] = useState(false);
   return (
     <Center style={{ flexDirection: "column" }}>
@@ -42,33 +43,23 @@ export const DevelopingPage: React.FC = () => {
         <div>
           <input
             type="file"
-            value={file}
             onChange={function (e) {
               // @ts-ignore
-              window.t = e.target.files[0];
-              setFile(e.target.value);
+              setFile(e.target.files?.[0]);
             }}
           />
           <Button
             onClick={async () => {
-              console.log(qiniu);
-              // @ts-expect-error
-              const file: File = window.t;
-              const response =
-                // {
-                //   token:
-                //     "zw2vHSsFk9wFKgUNmbOmopCR757f0SQB18G0tgwI:npPvVQR6r6CNYJeTIw8lm22WrV8=:eyJzY29wZSI6ImVjbnVwZXQ6MTIzLmpwZyIsImRlYWRsaW5lIjoxNjE3MjEyMzg0LCJjYWxsYmFja1VybCI6Imh0dHA6Ly9lY251LnNwYWNlL2FwaS9xaW5pdS9ub3RpZnkiLCJjYWxsYmFja0JvZHkiOiJrZXk9JChrZXkpXHUwMDI2aGFzaD0kKGV0YWcpXHUwMDI2YnVja2V0PSQoYnVja2V0KVx1MDAyNmZzaXplPSQoZnNpemUpXHUwMDI2bmFtZT0kKHg6bmFtZSkifQ==",
-                // };
-                await axiosInstance.get(
-                  "https://backend.ecnu.space/api/qiniu/image_token",
-                  {
-                    params: {
-                      filename: file.name,
-                    },
-                  }
-                );
-              console.log(response);
-              const ob = qiniu.upload(file, "123.jpg", response.data.token);
+              const key = file!.name;
+              console.log(key);
+              const response = await axiosInstance.get("/api/qiniu/uptoken", {
+                params: {
+                  filename: key,
+                },
+              });
+              const token = response.data.token;
+              console.log(token);
+              const ob = qiniu.upload(file!, key, token);
               const uploadResult = await new Promise<any>((resolve, reject) => {
                 ob.subscribe({
                   next() {
@@ -85,7 +76,9 @@ export const DevelopingPage: React.FC = () => {
                   },
                 });
               });
-              console.log(uploadResult);
+              InteractFactory.getMessager().success(
+                "上传成功！" + JSON.stringify(uploadResult)
+              );
             }}
           >
             测试上传文件到七牛云

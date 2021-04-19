@@ -19,7 +19,7 @@ export interface ModelDescriber<T extends object> {
 
 export type ValueType = string | number | boolean;
 export type MapValueTypeToString<V extends ValueType> = V extends string
-  ? "string"
+  ? "string" | "file"
   : V extends boolean
   ? "boolean"
   : "number" | "enum";
@@ -50,12 +50,21 @@ export interface EnumPropertyDescriber<Enum extends number>
   readonly displayNameMapping: Record<Enum, string>;
 }
 
+export type FileTypes = "image" | "video" | "others";
+
+export interface FilePropertyDescriber
+  extends BasePropertyTypeDescriber<string> {
+  readonly type: "file";
+  readonly fileType: FileTypes;
+}
+
 export interface PropertyTypeDescriberMapping<V> {
   string: StringPropertyDescriber;
   number: NumberPropertyDescriber;
   boolean: BooleanPropertyDescriber;
   // @ts-expect-error
   enum: EnumPropertyDescriber<V>;
+  file: FilePropertyDescriber;
 }
 
 export interface ModalProperty<T extends object, K extends KeyOf<T>> {

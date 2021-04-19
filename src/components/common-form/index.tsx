@@ -11,12 +11,14 @@ import {
 import React, { useEffect } from "react";
 import {
   EnumPropertyDescriber,
+  FilePropertyDescriber,
   KeyOf,
   ModelDescriber,
   StringPropertyDescriber,
 } from "../../models/model-describer";
 import { ObjectEntries, ObjectKeys } from "../../utils/common";
 import { useForceUpdate } from "../../utils/hooks/use-force-update";
+import { QiniuUploader } from "../uploader";
 import styles from "./style.module.css";
 
 interface FormItemRenderer<T extends object, K extends KeyOf<T>> {
@@ -102,7 +104,7 @@ export const CommonForm = <T extends object>({
                 name={fieldKey}
                 valuePropName={"value"}
               >
-                {getInputItem(describer, fieldKey, props)}
+                {renderInputItem(describer, fieldKey, props)}
               </Form.Item>
             )
           );
@@ -120,7 +122,7 @@ export const CommonForm = <T extends object>({
   );
 };
 
-function getInputItem<T extends object>(
+function renderInputItem<T extends object>(
   describer: ModelDescriber<T>,
   fieldKey: KeyOf<T>,
   props?: CustomFormInputItemProps
@@ -166,6 +168,13 @@ function getInputItem<T extends object>(
         ></Input.TextArea>
       );
     }
+  }
+  if (type === "file") {
+    return (
+      <QiniuUploader
+        type={(valueDescriber as FilePropertyDescriber).fileType}
+      ></QiniuUploader>
+    );
   }
   if (type === "enum") {
     const { displayNameMapping } = valueDescriber as EnumPropertyDescriber<any>;
