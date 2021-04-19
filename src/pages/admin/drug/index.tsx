@@ -7,7 +7,7 @@ import { BackendServiceFactory } from "../../../services";
 
 export const DrugManage: React.FC = () => {
   const displayNameMapping: Record<KeyOf<Drug>, string> = {
-    iD: "ID",
+    id: "ID",
     drugName: "药品名称",
     drugPrice: "药品价格",
     drugSave: "保存方法",
@@ -19,7 +19,7 @@ export const DrugManage: React.FC = () => {
       describer={createDescriber<Drug>({
         displayNames: displayNameMapping,
         modelName: "药物",
-        primaryKey: "iD",
+        primaryKey: "id",
         searchableKey: "drugName",
         properties: {
           drugName: {
@@ -43,8 +43,8 @@ export const DrugManage: React.FC = () => {
               textType: "long",
             },
           },
-          iD: {
-            propertyKey: "iD",
+          id: {
+            propertyKey: "id",
             valueDescriber: { defaultValue: -1, type: "number" },
           },
         },

@@ -1,5 +1,16 @@
+export interface DiseasePostForm {
+  diseaseName: string;
+  diseaseType: DType;
+}
+
+export interface Disease {
+  id: number;
+  diseaseName: string;
+  diseaseType: DType;
+}
+
 export interface Drug {
-  iD: number;
+  id: number;
   drugName: string;
   drugPrice: number;
   drugUsage: string;
@@ -14,8 +25,8 @@ export interface DrugPostForm {
 }
 
 export interface Case {
-  iD: number;
-  caseName: string;
+  id: number;
+  diseaseId: number;
   caseStage: CaseStages;
   description: string;
   image: string;
@@ -24,7 +35,7 @@ export interface Case {
 }
 
 export interface CaseForm {
-  caseName: string;
+  diseaseId: number;
   caseStage: CaseStages;
   description: string;
   image: string;
@@ -33,10 +44,10 @@ export interface CaseForm {
 }
 
 export interface RoomProcess {
-  iD: number;
+  id: number;
   name: string;
   process: string;
-  fatherID: number;
+  fatherId: number;
   video: string;
   image: string;
 }
@@ -50,7 +61,7 @@ export interface ProcessForm {
 }
 
 export interface ChargeProject {
-  iD: number;
+  id: number;
   projectName: string;
   projectDescription: string;
   projectCharge: string;
@@ -62,6 +73,10 @@ export interface ChargeProjectForm {
   projectCharge: string;
 }
 
+export enum DType {
+  InfectiousDisease = 0,
+  ParasiticDisease = 1,
+}
 export interface ActionResult<TValue> {
   value: TValue;
 }
@@ -84,13 +99,6 @@ export interface ResponseResultModel<TResult> {
   detail: string;
   data: TResult;
 }
-export interface DrugData {
-  drugName: string;
-  drugPrice: number;
-  drugUsage: string;
-  drugSave: string;
-}
-
 export enum ResponseResultEnum {
   Success = 0,
   Fail = 1,
@@ -102,11 +110,18 @@ export enum ResponseResultEnum {
   Unauthorized = 7,
   TimedOut = 8,
 }
-export interface CaseName {
-  name: string;
-  caseType: string;
+export interface DiseaseAllStage {
+  introduce: Case;
+  clinicalReception: Case;
+  check: Case;
+  diagnosis: Case;
+  therapeuticSchedule: Case;
 }
 
+export interface SearchResult<T> {
+  count: number;
+  records: Array<T>;
+}
 export type RequestMethodVerbs =
   | "get"
   | "post"
@@ -146,44 +161,39 @@ export interface APIInfo<
   responseType: Response;
 }
 export interface APIMapping {
-  ["/api/im/drug"](): APIInfo<
-    "DrugInfoGetAsync",
-    "get",
-    [ParameterInfo<"drugID", "query", string>],
-    ActionResult<ResponseResultModel<DrugData>>
+  ["/api/im/diseaseadd"](): APIInfo<
+    "DiseaseAddAsync",
+    "post",
+    [ParameterInfo<"diseasePostForm", "body", DiseasePostForm>],
+    ActionResult<ResponseResultModel<any>>
   >;
-  ["/api/im/case"](): APIInfo<
-    "CaseInfoGetAsync",
+  ["/api/im/diseaseget"](): APIInfo<
+    "DiseaseGetAsync",
+    "get",
+    [],
+    ActionResult<ResponseResultModel<Array<Disease>>>
+  >;
+  ["/api/im/diseaseupdate"](): APIInfo<
+    "DiseaseUpdateAsync",
+    "post",
+    [ParameterInfo<"disease", "body", Disease>],
+    ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/im/diseasedelete"](): APIInfo<
+    "DiseaseDeleteAsync",
+    "post",
+    [ParameterInfo<"diseaseID", "body", number>],
+    ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/im/drug"](): APIInfo<
+    "DrugSearchAsync",
     "get",
     [
-      ParameterInfo<"caseName", "query", string>,
-      ParameterInfo<"stage", "query", string>
+      ParameterInfo<"page", "query", number>,
+      ParameterInfo<"pageSize", "query", number>,
+      ParameterInfo<"keyword", "query", string>
     ],
-    ActionResult<ResponseResultModel<Case>>
-  >;
-  ["/api/im/casename"](): APIInfo<
-    "CaseNamesGetAsync",
-    "get",
-    [],
-    ActionResult<ResponseResultModel<Array<CaseName>>>
-  >;
-  ["/api/im/process"](): APIInfo<
-    "ProcessGet",
-    "get",
-    [ParameterInfo<"processRoute", "query", string>],
-    ActionResult<ResponseResultModel<RoomProcess>>
-  >;
-  ["/api/im/chargeprojectnames"](): APIInfo<
-    "ChargeProjectNamesGetAsync",
-    "get",
-    [],
-    ActionResult<ResponseResultModel<Array<string>>>
-  >;
-  ["/api/im/chargeproject"](): APIInfo<
-    "ChargeProjectGetAsync",
-    "get",
-    [ParameterInfo<"projectName", "query", string>],
-    ActionResult<ResponseResultModel<ChargeProject>>
+    ActionResult<ResponseResultModel<SearchResult<Drug>>>
   >;
   ["/api/im/drugupdate"](): APIInfo<
     "DrugUpdateAsync",
@@ -197,6 +207,18 @@ export interface APIMapping {
     [ParameterInfo<"drugPostForm", "body", DrugPostForm>],
     ActionResult<ResponseResultModel<any>>
   >;
+  ["/api/im/drugdelete"](): APIInfo<
+    "DrugDeleteAsync",
+    "post",
+    [ParameterInfo<"drugID", "body", number>],
+    ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/im/diseasecase"](): APIInfo<
+    "DiseaseStageGetAsync",
+    "get",
+    [ParameterInfo<"diseaseID", "query", number>],
+    ActionResult<ResponseResultModel<DiseaseAllStage>>
+  >;
   ["/api/im/caseupdate"](): APIInfo<
     "CaseUpdateAsync",
     "post",
@@ -208,6 +230,18 @@ export interface APIMapping {
     "post",
     [ParameterInfo<"cases", "body", CaseForm>],
     ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/im/casedelete"](): APIInfo<
+    "CaseDeleteAsync",
+    "post",
+    [ParameterInfo<"caseID", "body", number>],
+    ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/im/process"](): APIInfo<
+    "ProcessGet",
+    "get",
+    [ParameterInfo<"processRoute", "query", string>],
+    ActionResult<ResponseResultModel<RoomProcess>>
   >;
   ["/api/im/processupdate"](): APIInfo<
     "ProcessUpdateAsync",
@@ -233,11 +267,14 @@ export interface APIMapping {
     [ParameterInfo<"charge", "body", ChargeProjectForm>],
     ActionResult<ResponseResultModel<any>>
   >;
-  ["/api/im/AuthCheck"](): APIInfo<
-    "AuthCheck",
+  ["/api/im/chargeprojectsearch"](): APIInfo<
+    "ChargeProjectSearchAsync",
     "get",
-    [ParameterInfo<"cookies", "query", Array<any>>],
-    any
+    [
+      ParameterInfo<"page", "query", number>,
+      ParameterInfo<"pageSize", "query", number>,
+      ParameterInfo<"keyWord", "query", string>
+    ],
+    ActionResult<ResponseResultModel<SearchResult<ChargeProject>>>
   >;
-  ["/WeatherForecast/Get"](): APIInfo<"Get", "get", [], Array<WeatherForecast>>;
 }

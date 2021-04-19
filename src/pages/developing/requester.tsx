@@ -117,9 +117,7 @@ export const RecordInput: React.FC<IRecordInputProp> = ({
   value = {},
   onChange = () => 0,
 }) => {
-  const options = ObjectEntries(value).sort(([a], [b]) =>
-    a > b ? 1 : b > a ? -1 : 0
-  );
+  const options = ObjectEntries(value);
   return (
     <>
       <Divider style={{ fontSize: 10, color: "gray" }}>使用列表输入</Divider>
@@ -137,7 +135,7 @@ export const RecordInput: React.FC<IRecordInputProp> = ({
                 delete newRecord[option];
                 onChange(newRecord);
               }}
-              style={{ width: 80 }}
+              style={{ width: 120 }}
             ></Input>
             <label>值：</label>
             {typeof text === "string" ? (

@@ -287,20 +287,20 @@ class AbstractCRUDService<T extends object> implements CRUDService<T> {
 
 const drugs: Drug[] = mockList<Drug>(
   {
-    iD: 0,
+    id: 0,
     drugUsage: "电脑配件",
     drugSave: "避光保存",
     drugPrice: 100,
     drugName: "kusuri",
   },
-  "iD",
+  "id",
   100,
   "number"
 );
 class MockDrugService extends AbstractCRUDService<Drug> {
   database = drugs;
 }
-export const mockDrugService: CRUDService<Drug> = new MockDrugService("iD");
+export const mockDrugService: CRUDService<Drug> = new MockDrugService("id");
 
 const questions = mockList<SingleSelectQuestionWithAnswer>(
   {

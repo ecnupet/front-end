@@ -125,7 +125,7 @@ export class RealDrugCRUDService implements CRUDService<Drug> {
   }
   @RequestHook<Partial<Drug>>({
     paramRewrite(drug) {
-      delete drug.iD;
+      delete drug.id;
       return drug;
     },
   })
