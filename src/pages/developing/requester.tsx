@@ -26,6 +26,7 @@ interface RequestForm {
 export const RequestFormComp: React.FC = () => {
   const [result, setResult] = useState<any>();
   const [requesting, setRequesting] = useState(false);
+  const [lastPath, setLastPath] = useState("/api/pm/user/userInfo");
   return (
     <>
       <CommonForm
@@ -51,7 +52,7 @@ export const RequestFormComp: React.FC = () => {
               propertyKey: "path",
               valueDescriber: {
                 type: "string",
-                defaultValue: "/api/pm/user/userInfo",
+                defaultValue: lastPath,
               },
             },
             payload: {
@@ -79,6 +80,7 @@ export const RequestFormComp: React.FC = () => {
         onSubmit={async (form: RequestForm) => {
           try {
             setRequesting(true);
+            setLastPath(form.path);
             let result;
             switch (form.method) {
               case RequestType.GET:
