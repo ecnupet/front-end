@@ -22,3 +22,6 @@ export function concat<A extends string, B extends string>(a: A, b: B) {
 export function capitalize<Str extends string>(s: Str): Capitalize<Str> {
   return `${s.slice(0, 1).toUpperCase()}${s.slice(1)}` as never;
 }
+export function uncapitalize<Str extends string>(s: Str): Uncapitalize<Str> {
+  return `${s.slice(0, 1).toLowerCase()}${s.slice(1)}` as never;
+}

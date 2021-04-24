@@ -15,6 +15,7 @@ export interface ModelDescriber<T extends object> {
   readonly primaryKey: KeyOf<T>;
   readonly searchableKey?: KeyOf<T>;
   readonly properties: PropertyDescribers<T>;
+  readonly currentValue?: T;
 }
 
 export type ValueType = string | number | boolean;

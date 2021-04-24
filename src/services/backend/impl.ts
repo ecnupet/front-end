@@ -1,5 +1,5 @@
 import { apiCaller, axiosInstance, PersonInfoResponse } from "../../api";
-import { Drug } from "../../api/info-manage";
+import { Disease, Drug } from "../../api/info-manage";
 import {
   SingleSelectQuestion,
   SingleSelectQuestionWithAnswer,
@@ -187,5 +187,33 @@ export class RealQuestionCRUDService
       questionId: id,
     });
     return result.data;
+  }
+}
+
+export class RealDiseaseService implements CRUDService<Disease> {
+  create(model: Partial<Disease>): Promise<ResponseResultModel<any>> {
+    return apiCaller.post("/api/im/diseaseadd", model as Disease);
+  }
+  retrieve(): Promise<ResponseResultModel<Disease>> {
+    throw new Error("Method not implemented.");
+  }
+  async query(
+    params: SearchParams
+  ): Promise<ResponseResultModel<PageQueryResult<Disease>>> {
+    const diseases = await apiCaller.get("/api/im/diseaseget", params);
+    return {
+      detail: diseases.detail,
+      state: diseases.state,
+      data: {
+        count: diseases.data.length,
+        records: diseases.data,
+      },
+    };
+  }
+  update(model: Partial<Disease>): Promise<ResponseResultModel<any>> {
+    return apiCaller.post("/api/im/diseaseupdate", model as Disease);
+  }
+  delete(id: number): Promise<ResponseResultModel<any>> {
+    return apiCaller.post("/api/im/diseasedelete", { id });
   }
 }

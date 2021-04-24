@@ -1,5 +1,5 @@
 import { PersonInfoResponse } from "../../api";
-import { Drug } from "../../api/info-manage";
+import { Disease, Drug } from "../../api/info-manage";
 import {
   QuestionType,
   SingleSelectQuestion,
@@ -319,3 +319,17 @@ class MockQuestionService extends AbstractCRUDService<SingleSelectQuestionWithAn
   database = questions;
 }
 export const mockQuestionService = new MockQuestionService("questionId");
+const diseases = mockList<Disease>(
+  {
+    id: 0,
+    diseaseName: "某不科学的疾病",
+    diseaseType: "某不知名的类型",
+  },
+  "id",
+  100
+);
+class MockDiseaseService extends AbstractCRUDService<Disease> {
+  database = diseases;
+}
+
+export const mockDiseaseService = new MockDiseaseService("id");

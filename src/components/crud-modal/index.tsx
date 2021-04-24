@@ -18,6 +18,7 @@ export interface ICRUDModalProp<T extends object> {
   formProps?: Pick<ICommonFormProp<T>, "customRenderer" | "props">;
   onClose: () => void;
   onSumbit: (model: T, type: CRUD) => void;
+  footer?: React.ReactNode;
 }
 
 export const CRUDModal: React.FC<ICRUDModalProp<any>> = <T extends object>({
@@ -27,15 +28,17 @@ export const CRUDModal: React.FC<ICRUDModalProp<any>> = <T extends object>({
   visable,
   type,
   formProps,
+  footer = false,
 }: React.PropsWithChildren<ICRUDModalProp<T>>) => {
   const desc = { ...describer };
   ObjectEntries(desc.properties).forEach(([key, prop]) => {
     desc.properties[key] = {
       ...prop,
       disabled:
-        key === describer.primaryKey ||
-        type === "delete" ||
-        type === "retrieve",
+        prop.disabled ??
+        (key === describer.primaryKey ||
+          type === "delete" ||
+          type === "retrieve"),
     };
   });
   return (
@@ -45,7 +48,7 @@ export const CRUDModal: React.FC<ICRUDModalProp<any>> = <T extends object>({
       title={`${TranslateCRUD[type]}${describer.modelName}`}
       forceRender
       getContainer={false}
-      footer={false}
+      footer={footer}
     >
       <CommonForm
         describer={desc}

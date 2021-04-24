@@ -53,9 +53,17 @@ export const CommonForm = <T extends object>({
   const [form] = Form.useForm<T>();
   const forceUpdate = useForceUpdate();
   useEffect(() => {
-    form.setFieldsValue(describer.defaultValue as never);
+    form.setFieldsValue(
+      (describer.currentValue ?? describer.defaultValue) as never
+    );
     forceUpdate();
-  }, [form, describer, describer.defaultValue, forceUpdate]);
+  }, [
+    form,
+    describer,
+    describer.defaultValue,
+    describer.currentValue,
+    forceUpdate,
+  ]);
   return (
     <Form
       form={form}
@@ -74,7 +82,7 @@ export const CommonForm = <T extends object>({
         )
         .map((fieldKey, index) => {
           const { defaultValue, displayNames } = describer;
-          const { required, validator } = describer.properties[fieldKey];
+          const { required = true, validator } = describer.properties[fieldKey];
           const displayName = displayNames[fieldKey];
           const currentFormValues = form.getFieldsValue() ?? defaultValue;
           return (
@@ -87,17 +95,18 @@ export const CommonForm = <T extends object>({
             }) ?? (
               <Form.Item
                 key={index}
-                required={required}
                 rules={
-                  validator
-                    ? [
-                        {
-                          validator(_, v, cb) {
-                            const validateResult = validator(v);
-                            !validateResult ? cb() : cb(validateResult);
+                  !required
+                    ? validator
+                      ? [
+                          {
+                            validator(_, v, cb) {
+                              const validateResult = validator(v);
+                              !validateResult ? cb() : cb(validateResult);
+                            },
                           },
-                        },
-                      ]
+                        ]
+                      : undefined
                     : [{ required: true, message: `请输入${displayName}` }]
                 }
                 label={displayName}

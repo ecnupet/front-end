@@ -1,9 +1,9 @@
-import { Modal, Upload } from "antd";
+import { Button, Modal, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import * as qiniu from "qiniu-js";
 import { axiosInstance } from "../../api";
 import styles from "./style.module.css";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { UploadFile } from "antd/lib/upload/interface";
 import { InteractFactory } from "../../services";
 import { configStore } from "../../store/config";
@@ -37,7 +37,6 @@ export const QiniuUploader: React.FC<IQiniuUploaderProp> = ({
         }))
     );
   }, [value]);
-  console.log("render", fileList);
   return (
     <>
       {type === "image" && (
@@ -95,7 +94,66 @@ export const QiniuUploader: React.FC<IQiniuUploaderProp> = ({
           {fileList.length > 0 ? null : (
             <div>
               <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
+              <div style={{ marginTop: 8 }}>上传图片</div>
+            </div>
+          )}
+        </Upload>
+      )}
+      {type === "video" && (
+        <Upload
+          name="avatar"
+          className={styles["avatar-uploader"]}
+          listType="text"
+          fileList={fileList}
+          onPreview={(file) => {
+            console.log(file);
+            setPreviewing(true);
+            setPreviewFile(file.url);
+          }}
+          onRemove={(file) => {
+            setFileList(fileList.filter((f) => f.uid !== file.uid));
+            onChange?.();
+          }}
+          customRequest={async (e) => {
+            const { file } = e;
+            const {
+              data: { path, token },
+            } = await axiosInstance.get<{ token: string; path: string }>(
+              "/api/qiniu/uptoken"
+            );
+
+            if (file) {
+              const observable = qiniu.upload(file as File, path, token);
+              observable.subscribe({
+                async complete() {
+                  if (configStore.getConfig("enableGlobalMock")) {
+                    await wait(configStore.getConfig("mockRequestDuration"));
+                  }
+                  onChange?.(`https://cdn.ecnu.space/${path}`);
+                },
+                error(err) {
+                  InteractFactory.getMessager().internalError("视频上传失败！");
+                  console.error(err);
+                },
+                next(progress) {
+                  console.log("progress", progress.total.percent);
+                  setFileList([
+                    // @ts-expect-error
+                    {
+                      uid: `${fileList.length + 1}`,
+                      status: "uploading",
+                      percent: progress.total.percent,
+                      size: progress.total.size,
+                    },
+                  ]);
+                },
+              });
+            }
+          }}
+        >
+          {fileList.length > 0 ? null : (
+            <div>
+              <Button icon={<UploadOutlined />}>上传视频</Button>
             </div>
           )}
         </Upload>
@@ -107,7 +165,14 @@ export const QiniuUploader: React.FC<IQiniuUploaderProp> = ({
           setPreviewing(false);
         }}
       >
-        <img alt="preview" style={{ width: "100%" }} src={previewFile} />
+        {type === "image" && (
+          <img alt="preview" className={styles.preview} src={previewFile} />
+        )}
+        {type === "video" && (
+          <video className={styles.preview} controls>
+            <source src={previewFile}></source>
+          </video>
+        )}
       </Modal>
     </>
   );

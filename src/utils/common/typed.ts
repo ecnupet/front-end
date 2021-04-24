@@ -13,3 +13,7 @@ export function ObjectEntries<T>(obj: T): Array<[keyof T, T[keyof T]]> {
   // @ts-expect-error
   return Object.entries(obj);
 }
+
+export function ObjectValues<T>(obj: T): Array<T[keyof T]> {
+  return Object.values(obj);
+}

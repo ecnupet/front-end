@@ -50,9 +50,8 @@ export const CRUDManager = <T extends object>({
   const [record, setRecord] = useState<T>();
   const [pageSize, setPageSize] = useState(10);
   const [keyword, setKeyword] = useState("");
-  columns =
-    columns ??
-    ObjectKeys(describer.properties).map<TableColumn<T>>((fieldKey) => ({
+  columns = [
+    ...ObjectKeys(describer.properties).map<TableColumn<T>>((fieldKey) => ({
       dataIndex: fieldKey,
       render: (value, record) => {
         const rendered = renderColumn?.(record, fieldKey);
@@ -76,7 +75,9 @@ export const CRUDManager = <T extends object>({
         }
         return processLongText("" + value);
       },
-    }));
+    })),
+    ...(columns ?? []),
+  ];
   const [records, state, redoPageQuery] = useRequest(
     async (page: number, pageSize: number, keyword: string) => {
       const result = (await service.query({ page, pageSize, keyword })).data;
@@ -98,7 +99,7 @@ export const CRUDManager = <T extends object>({
     <>
       <CRUDModal
         describer={
-          !!record ? { ...describer, defaultValue: record } : describer
+          !!record ? { ...describer, currentValue: record } : describer
         }
         onClose={() => setEditorVisable(false)}
         visable={editorVisable}
@@ -156,8 +157,8 @@ export const CRUDManager = <T extends object>({
               columns={[
                 ...columns
                   .map((column) => ({
-                    ...column,
                     title: describer.displayNames[column.dataIndex],
+                    ...column,
                   }))
                   .sort((a, b) =>
                     a.dataIndex === describer.primaryKey
