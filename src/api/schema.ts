@@ -288,4 +288,5 @@ export interface APIMapping {
     ],
     ActionResult<ResponseResultModel<SearchResult<ChargeProject>>>
   >;
+  ["/WeatherForecast/Get"](): APIInfo<"Get", "get", [], Array<WeatherForecast>>;
 }

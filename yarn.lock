@@ -11813,10 +11813,10 @@ typescript@^4.2.3:
   resolved "https://registry.npm.taobao.org/typescript/download/typescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
   integrity sha1-hhC1l0feAo/aiYqK7w4QPxVtCWE=
 
-typewags@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.nlark.com/typewags/download/typewags-0.2.1.tgz?cache=0&sync_timestamp=1618799055785&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftypewags%2Fdownload%2Ftypewags-0.2.1.tgz#01ea1c908b99c8cf84582ef4d3915804c5f70d9e"
-  integrity sha1-AeockIuZyM+EWC7005FYBMX3DZ4=
+typewags@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.nlark.com/typewags/download/typewags-0.2.2.tgz#3a49332d2ccf3a38de008af91d49b3215793b7b3"
+  integrity sha1-OkkzLSzPOjjeAIr5HUmzIVeTt7M=
   dependencies:
     camelcase "^6.2.0"
 

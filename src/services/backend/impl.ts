@@ -139,7 +139,6 @@ export class RealDrugCRUDService implements CRUDService<Drug> {
     return await apiCaller.post("/api/im/drugupdate", model);
   }
   async delete(id: number): Promise<ResponseResultModel<any>> {
-    // @ts-expect-error
     return await apiCaller.post("/api/im/drugdelete", { id });
   }
 }
