@@ -40,7 +40,7 @@ export class RealBackendService implements PersonManageService {
   }): Promise<ResponseResultModel<any>> {
     const result = await apiCaller.post("/api/pm/user/logon", {
       name: form.uid,
-      password: getPasswordNumberArray(form.password),
+      password: await getPasswordNumberArray(form.password),
     });
     return result;
   }
@@ -50,7 +50,7 @@ export class RealBackendService implements PersonManageService {
   }): Promise<ResponseResultModel<any>> {
     const result = await apiCaller.post("/api/pm/user/login", {
       name: form.uid,
-      password: getPasswordNumberArray(form.password),
+      password: await getPasswordNumberArray(form.password),
     });
     return result;
   }

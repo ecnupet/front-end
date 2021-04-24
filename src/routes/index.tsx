@@ -16,6 +16,7 @@ import { HomePage } from "../pages/home";
 import { TestPage } from "../pages/test-page";
 import { AdminLogin } from "../pages/admin/login";
 import { AdminHomePage } from "../pages/admin";
+import { DiseaseCenter } from "../pages/disease-center";
 type State = unknown;
 export const routerHistory = createHashHistory<State>();
 type Routes = Record<string, React.ComponentType>;
@@ -30,6 +31,7 @@ export const routeMapping = defineRouteMapping({
   "/developing": DevelopingPage,
   "/home": HomePage,
   "/login": LoginPage,
+  "/disease-center": DiseaseCenter,
   "/test-center": () => <TestCenterPage />,
   "/test-center/new-test": () => (
     <TestCenterPage>

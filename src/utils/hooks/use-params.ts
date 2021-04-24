@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { parseQueryParameter } from "../common";
 
-export function useParams<T extends object>(defultParam: T) {
-  const [param] = useState(() => parseQueryParameter(defultParam));
+export function useParams<T extends object>(defaultParam: T) {
+  const [param] = useState(() => parseQueryParameter(defaultParam));
   return param;
 }

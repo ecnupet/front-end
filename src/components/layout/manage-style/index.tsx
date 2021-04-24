@@ -13,7 +13,7 @@ export const ManageStyleLayout: React.FC<ManageStyleLayoutProp> = (prop) => {
       <NavBar title={prop.title}>{prop.headerChildren}</NavBar>
       <main className={styles.main}>{prop.children}</main>
       <footer className={styles.footer}>
-        ECNU Pet ©2021 Powered by Ant Design
+        ECNU Pet ©2021 Powered by Ant Design & Material Design
       </footer>
     </section>
   );

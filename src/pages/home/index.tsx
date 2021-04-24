@@ -8,6 +8,7 @@ import BookOutlined from "@ant-design/icons/lib/icons/BookOutlined";
 import { mergeClassName } from "../../utils/ui/class-name";
 import { NavBar } from "../../components/nav-bar";
 import { renderHeader } from "../test-center";
+
 export const HomePage: React.FC = () => {
   return (
     <>
@@ -44,7 +45,7 @@ export const HomePage: React.FC = () => {
             styles["case-center"]
           )}
           onClick={() => {
-            alert("开发中，敬请期待");
+            router.push("/disease-center");
           }}
         >
           <Center className={styles.center}>

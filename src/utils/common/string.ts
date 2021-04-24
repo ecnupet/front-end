@@ -1,9 +1,12 @@
-import crypto from "crypto";
-
-export function getPasswordNumberArray(password: string): number[] {
-  const hash = crypto.createHash("sha256");
-  const updated = hash.update(password);
-  return updated.digest().toJSON().data;
+export async function getPasswordNumberArray(
+  password: string
+): Promise<number[]> {
+  const subtle = window.crypto.subtle;
+  const hash = await subtle.digest(
+    "sha-256",
+    new TextEncoder().encode(password)
+  );
+  return Array.from(new Uint8Array(hash));
 }
 
 export function pickKey<K extends string>(key: K) {

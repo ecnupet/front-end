@@ -1,3 +1,4 @@
+import React from "react";
 import { AutoComplete, Form, Input, Switch } from "antd";
 import { Observer } from "mobx-react-lite";
 
@@ -14,7 +15,7 @@ interface ConfigFormProp<T extends object> {
 
 export function ConfigForm<T extends object>(
   prop: ConfigFormProp<T>
-): JSX.Element {
+): React.ReactElement {
   function handleUpdate<K extends keyof T>(key: K, value: T[K]) {
     prop.onChange({ ...prop.config, [key]: value });
   }
