@@ -108,6 +108,7 @@ export const DiseaseManage: React.FC = () => {
       image: {
         propertyKey: "image",
         valueDescriber: { type: "file", defaultValue: "", fileType: "image" },
+        required: false,
       },
       video: {
         propertyKey: "video",
@@ -199,7 +200,6 @@ export const DiseaseManage: React.FC = () => {
                 let result: ResponseResultModel<any>;
                 switch (type) {
                   case "create":
-                    // @ts-expect-error
                     result = await apiCaller.post("/api/im/caseadd", caseobj);
                     break;
                   case "update":

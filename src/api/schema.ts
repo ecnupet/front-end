@@ -405,4 +405,5 @@ export interface APIMapping {
     ],
     ActionResult<ResponseResultModel<SearchResult<InspectionProject>>>
   >;
+  ["/WeatherForecast/Get"](): APIInfo<"Get", "get", [], Array<WeatherForecast>>;
 }
