@@ -3,7 +3,6 @@ import { ManageStyleLayout } from "../../components/layout/manage-style";
 import { renderHeader } from "../test-center";
 import {
   Button,
-  CircularProgress,
   createStyles,
   List,
   ListItem,
@@ -14,6 +13,8 @@ import { getDiseases } from "./service";
 import { Disease } from "../../api/info-manage";
 import { InteractFactory } from "../../services";
 import { BackToHome } from "../../components/back-to-home";
+import { openPage } from "../../utils/common";
+import { MuiLoadingWrapper } from "../../components/mui-loading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,20 +71,6 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: 0,
       height: "86px",
     },
-    loadingMask: {
-      backgroundColor: "#000a1220",
-      position: "relative",
-      height: "100%",
-      width: "100%",
-    },
-    loading: {
-      position: "relative",
-      backgroundColor: "#00000000",
-      top: "50%",
-      left: "50%",
-      marginTop: -12,
-      marginLeft: -12,
-    },
   })
 );
 
@@ -130,12 +117,13 @@ export const DiseaseCenter: React.FC = (): ReactElement => {
       block: "start",
     });
   };
+  const handleDiseaseCaseClick = (id: number) => {
+    openPage("/disease-center/stage", { id });
+  };
   return (
     <ManageStyleLayout title="病例中心" headerChildren={renderHeader()}>
       {loading ? (
-        <div className={classes.loadingMask}>
-          <CircularProgress className={classes.loading} />
-        </div>
+        <MuiLoadingWrapper />
       ) : (
         <div className={classes.container}>
           <nav className={classes.nav}>
@@ -169,13 +157,14 @@ export const DiseaseCenter: React.FC = (): ReactElement => {
                 <ul className={classes.ul}>
                   {diseases.map((disease) => (
                     <ListItem
-                      key={`item-${type}-${disease.id}`}
+                      key={`case-${type}-${disease.id}`}
                       className={classes.listItem}
                     >
                       <Button
                         variant="outlined"
                         color="primary"
                         className={classes.button}
+                        onClick={() => handleDiseaseCaseClick(disease.id)}
                       >
                         {disease.diseaseName}
                       </Button>
