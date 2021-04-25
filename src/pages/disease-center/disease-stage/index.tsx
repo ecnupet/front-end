@@ -188,7 +188,7 @@ export const DiseaseStage: React.FC = () => {
                     <Grid item xs={5} className={classes.imageWrapper}>
                       {!!case_.image ? (
                         <img
-                          alt="image"
+                          alt="disease-resource"
                           src={case_.image}
                           className={classes.image}
                         />
