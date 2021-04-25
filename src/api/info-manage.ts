@@ -67,13 +67,13 @@ export interface ChargeProject {
   id: number;
   projectName: string;
   projectDescription: string;
-  projectCharge: string;
+  projectCharge: number;
 }
 
 export interface ChargeProjectForm {
   projectName: string;
   projectDescription: string;
-  projectCharge: string;
+  projectCharge: number;
 }
 
 export interface ActionResult<TValue> {

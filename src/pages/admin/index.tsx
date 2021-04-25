@@ -2,6 +2,7 @@ import { Menu } from "antd";
 import React, { useState } from "react";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
 import { renderHeader } from "../test-center";
+import { ChargeProjectManage } from "./charge-project";
 import { DiseaseManage } from "./disease";
 import { DrugManage } from "./drug";
 import { QuestionManage } from "./question";
@@ -15,6 +16,7 @@ const subRoutes: {
   { title: "药品管理", key: "drug", component: DrugManage },
   { title: "试题管理", key: "question", component: QuestionManage },
   { title: "疾病管理", key: "disease", component: DiseaseManage },
+  { title: "收费项目", key: "chargeproject", component: ChargeProjectManage },
 ];
 
 export const AdminHomePage: React.FC = () => {

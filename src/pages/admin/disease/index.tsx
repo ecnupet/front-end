@@ -25,6 +25,7 @@ const diseaseDescriber = createDescriber<Disease>({
   },
   modelName: "疾病",
   primaryKey: "id",
+  searchableKey: "diseaseName",
   properties: {
     diseaseName: {
       propertyKey: "diseaseName",
@@ -43,7 +44,7 @@ const diseaseDescriber = createDescriber<Disease>({
     },
   },
 });
-const CaseStagesNames = {
+export const CaseStagesNames: Record<CaseStages, string> = {
   [CaseStages.Introduce]: "介绍",
   [CaseStages.Check]: "检查阶段",
   [CaseStages.ClinicalReception]: "临床接待",
@@ -102,7 +103,7 @@ export const DiseaseManage: React.FC = () => {
       },
       description: {
         propertyKey: "description",
-        valueDescriber: { type: "string", defaultValue: "" },
+        valueDescriber: { type: "string", defaultValue: "", textType: "long" },
       },
       image: {
         propertyKey: "image",

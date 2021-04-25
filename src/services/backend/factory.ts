@@ -1,5 +1,5 @@
 import { autorun } from "mobx";
-import { Disease, Drug } from "../../api/info-manage";
+import { ChargeProject, Disease, Drug } from "../../api/info-manage";
 import { SingleSelectQuestionWithAnswer } from "../../models";
 import { configStore } from "../../store/config";
 import { callHook } from "../../utils/common";
@@ -9,9 +9,11 @@ import {
   RealQuizService,
   RealQuestionCRUDService,
   RealDiseaseService,
+  RealChargeProjectService,
 } from "./impl";
 import {
   mockBackendService,
+  mockChargeProjectService,
   mockDiseaseService,
   mockDrugService,
   mockQuestionService,
@@ -25,6 +27,7 @@ const realQuizService: QuizService = new RealQuizService();
 const realDrugService: RealDrugCRUDService = new RealDrugCRUDService();
 const realQuestionService: CRUDService<SingleSelectQuestionWithAnswer> = new RealQuestionCRUDService();
 const realDiseaseService: CRUDService<Disease> = new RealDiseaseService();
+const realChargeProjectService: CRUDService<ChargeProject> = new RealChargeProjectService();
 export type ServiceType = "real" | "mock";
 export interface CRUDServiceMapping {
   Drug: Record<ServiceType, CRUDService<Drug, number>>;
@@ -33,6 +36,7 @@ export interface CRUDServiceMapping {
     CRUDService<SingleSelectQuestionWithAnswer, number>
   >;
   Disease: Record<ServiceType, CRUDService<Disease, number>>;
+  ChargeProject: Record<ServiceType, CRUDService<ChargeProject, number>>;
 }
 
 export type ModelTypeOfService<
@@ -56,6 +60,10 @@ const crudServices: CRUDServiceMapping = {
   Disease: {
     mock: mockDiseaseService,
     real: realDiseaseService,
+  },
+  ChargeProject: {
+    mock: mockChargeProjectService,
+    real: realChargeProjectService,
   },
 };
 

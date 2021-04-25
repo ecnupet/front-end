@@ -1,5 +1,5 @@
 import { PersonInfoResponse } from "../../api";
-import { Disease, Drug } from "../../api/info-manage";
+import { ChargeProject, Disease, Drug } from "../../api/info-manage";
 import {
   QuestionType,
   SingleSelectQuestion,
@@ -333,3 +333,21 @@ class MockDiseaseService extends AbstractCRUDService<Disease> {
 }
 
 export const mockDiseaseService = new MockDiseaseService("id");
+
+const chargeProjects = mockList<ChargeProject>(
+  {
+    id: 0,
+    projectCharge: 0,
+    projectDescription: "",
+    projectName: "",
+  },
+  "id",
+  100,
+  "number"
+);
+
+class MockChargeProjectService extends AbstractCRUDService<ChargeProject> {
+  database = chargeProjects;
+}
+
+export const mockChargeProjectService = new MockChargeProjectService("id");

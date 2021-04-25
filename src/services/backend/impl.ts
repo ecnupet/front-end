@@ -1,5 +1,5 @@
 import { apiCaller, axiosInstance, PersonInfoResponse } from "../../api";
-import { Disease, Drug } from "../../api/info-manage";
+import { ChargeProject, Disease, Drug } from "../../api/info-manage";
 import {
   SingleSelectQuestion,
   SingleSelectQuestionWithAnswer,
@@ -215,5 +215,29 @@ export class RealDiseaseService implements CRUDService<Disease> {
   }
   delete(id: number): Promise<ResponseResultModel<any>> {
     return apiCaller.post("/api/im/diseasedelete", { id });
+  }
+}
+
+export class RealChargeProjectService implements CRUDService<ChargeProject> {
+  create(model: Partial<ChargeProject>): Promise<ResponseResultModel<any>> {
+    return apiCaller.post("/api/im/chargeProjectadd", model as ChargeProject);
+  }
+  retrieve(): Promise<ResponseResultModel<ChargeProject>> {
+    throw new Error("Method not implemented.");
+  }
+  query(
+    params: SearchParams
+  ): Promise<ResponseResultModel<PageQueryResult<ChargeProject>>> {
+    // @ts-expect-error
+    return apiCaller.get("/api/im/chargeprojectsearch", params);
+  }
+  update(model: Partial<ChargeProject>): Promise<ResponseResultModel<any>> {
+    return apiCaller.post(
+      "/api/im/chargeprojectupdate",
+      model as ChargeProject
+    );
+  }
+  delete(id: number): Promise<ResponseResultModel<any>> {
+    return apiCaller.post("/api/im/chargeprojectdelete", { id });
   }
 }
