@@ -8,6 +8,7 @@ const titles: Record<RoutePaths, string> = {
   "/home": "主页",
   "/login": `${PROJECT} - 登录`,
   "/disease-center": `${PROJECT} - 病例中心`,
+  "/disease-center/stage": `${PROJECT} - 病例阶段`,
   "/test-center": `${PROJECT} - 测试中心`,
   "/test-center/my-tests": `${PROJECT} - 我的测试`,
   "/test-center/new-test": `${PROJECT} - 开始测试`,

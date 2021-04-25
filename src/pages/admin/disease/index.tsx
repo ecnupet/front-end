@@ -43,7 +43,7 @@ const diseaseDescriber = createDescriber<Disease>({
     },
   },
 });
-const CaseStagesNames = {
+export const CaseStagesNames = {
   [CaseStages.Introduce]: "介绍",
   [CaseStages.Check]: "检查阶段",
   [CaseStages.ClinicalReception]: "临床接待",
