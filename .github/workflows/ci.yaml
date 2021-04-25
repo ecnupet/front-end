@@ -13,6 +13,10 @@ jobs:
         run: chmod +x ./scripts/python/message.py
       - name: Send build notification
         run: echo "front-end 开始构建和上传" | ./scripts/python/message.py
+      - name: Change node env
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install # will run `yarn install` command
