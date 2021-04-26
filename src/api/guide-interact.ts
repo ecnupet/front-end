@@ -12,3 +12,8 @@ export interface RoomProcessQueryMessage {
    */
   path: string[];
 }
+
+export type QueryMessage =
+  | DrugQueryMessage
+  | ChargeProjectQueryMessage
+  | RoomProcessQueryMessage;

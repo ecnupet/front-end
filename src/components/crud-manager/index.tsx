@@ -54,30 +54,12 @@ export const CRUDManager = <T extends object>({
   columns = [
     ...ObjectKeys(describer.properties).map<TableColumn<T>>((fieldKey) => ({
       dataIndex: fieldKey,
-      render: (value, record) => {
+      render: (_, record) => {
         const rendered = renderColumn?.(record, fieldKey);
         if (rendered != null) {
           return rendered;
         }
-        const { valueDescriber } = describer.properties[fieldKey];
-        if (valueDescriber.type === "enum") {
-          const {
-            displayNameMapping,
-          } = valueDescriber as EnumPropertyDescriber<any>;
-          return <Tag>{displayNameMapping[value]}</Tag>;
-        }
-        if (
-          valueDescriber.type === "string" &&
-          (valueDescriber as StringPropertyDescriber).textType === "long"
-        ) {
-          return (
-            <Popover content={<p>{value}</p>}>{processLongText(value)}</Popover>
-          );
-        }
-        if (valueDescriber.type === "boolean") {
-          return <BooleanDisplay value={+value > 0.5}></BooleanDisplay>;
-        }
-        return processLongText("" + value);
+        return renderTableColumn(describer, fieldKey, record);
       },
     })),
     ...(columns ?? []),
@@ -216,3 +198,28 @@ export const CRUDManager = <T extends object>({
     </>
   );
 };
+
+export function renderTableColumn<T extends object>(
+  describer: ModelDescriber<T>,
+  fieldKey: KeyOf<T>,
+  record: T
+) {
+  const value = record[fieldKey];
+  const { valueDescriber } = describer.properties[fieldKey];
+  if (valueDescriber.type === "enum") {
+    const { displayNameMapping } = valueDescriber as EnumPropertyDescriber<any>;
+    return <Tag>{displayNameMapping[value]}</Tag>;
+  }
+  if (
+    valueDescriber.type === "string" &&
+    (valueDescriber as StringPropertyDescriber).textType === "long"
+  ) {
+    return (
+      <Popover content={<p>{value}</p>}>{processLongText("" + value)}</Popover>
+    );
+  }
+  if (valueDescriber.type === "boolean") {
+    return <BooleanDisplay value={+value > 0.5}></BooleanDisplay>;
+  }
+  return processLongText("" + value);
+}

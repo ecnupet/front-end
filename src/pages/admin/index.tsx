@@ -1,7 +1,10 @@
-import { Menu } from "antd";
+import { HomeFilled } from "@ant-design/icons";
+import { Button, Menu } from "antd";
 import React, { useState } from "react";
+import { AccessManage } from "../../components/access-manage";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
-import { renderHeader } from "../test-center";
+import { UserCenter } from "../../components/user-center";
+import { openPage } from "../../utils/common";
 import { ChargeProjectManage } from "./charge-project";
 import { DiseaseManage } from "./disease";
 import { DrugManage } from "./drug";
@@ -24,7 +27,23 @@ const subRoutes: {
 export const AdminHomePage: React.FC = () => {
   const [route, setRoute] = useState(subRoutes[0]!);
   return (
-    <ManageStyleLayout title="管理后台" headerChildren={renderHeader()}>
+    <ManageStyleLayout
+      title="管理后台"
+      headerChildren={
+        <div className={styles["nav-options"]}>
+          <AccessManage />
+          <UserCenter />
+          <Button
+            className={styles["to-home"]}
+            icon={<HomeFilled />}
+            type="text"
+            onClick={() => openPage("/home")}
+          >
+            去线上看看
+          </Button>
+        </div>
+      }
+    >
       <section className={styles.section}>
         <aside className={styles.menu}>
           <Menu

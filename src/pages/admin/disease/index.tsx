@@ -125,7 +125,7 @@ export const DiseaseManage: React.FC = () => {
           // @ts-expect-error
           {
             key: "disease-stages",
-            title: "病例操作",
+            title: "病例资源管理",
             render(_, record) {
               return (
                 <>
