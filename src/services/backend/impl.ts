@@ -1,9 +1,4 @@
-import {
-  apiCaller,
-  axiosInstance,
-  PersonInfomation,
-  PersonInfoResponse,
-} from "../../api";
+import { apiCaller, axiosInstance, PersonInfoResponse } from "../../api";
 import { ChargeProject, Disease, Drug } from "../../api/info-manage";
 import {
   SingleSelectQuestion,
@@ -244,35 +239,5 @@ export class RealChargeProjectService implements CRUDService<ChargeProject> {
   }
   delete(id: number): Promise<ResponseResultModel<any>> {
     return apiCaller.post("/api/im/chargeprojectdelete", { id });
-  }
-}
-
-export class RealPersonInformationService
-  implements CRUDService<PersonInfomation> {
-  create(model: Partial<PersonInfomation>): Promise<ResponseResultModel<any>> {
-    return apiCaller.post("/api/pm/user/logon", {
-      name: model.userName!,
-      password: model.password!,
-    });
-  }
-  retrieve(): Promise<ResponseResultModel<PersonInfomation>> {
-    throw new Error("Method not implemented.");
-  }
-  query(
-    params: SearchParams
-  ): Promise<ResponseResultModel<PageQueryResult<PersonInfomation>>> {
-    // @ts-expect-error
-    return apiCaller.get("/api/pm/admin/userlist", params);
-  }
-  update(model: Partial<PersonInfomation>): Promise<ResponseResultModel<any>> {
-    return apiCaller.post("/api/pm/admin/infochange", {
-      name: model.userName!,
-    });
-  }
-
-  delete(id: number | string): Promise<ResponseResultModel<any>> {
-    return apiCaller.delete("/api/pm/admin/user", {
-      userName: id.toString(),
-    });
   }
 }

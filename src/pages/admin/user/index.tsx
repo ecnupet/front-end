@@ -84,9 +84,14 @@ export const UserManage: React.FC = () => {
   );
 
   const resetUserPassword = async (username: string) => {
-    const { state, detail } = await apiCaller.post("/api/pm/admin/infochange", {
-      name: username,
-    });
+    const { state, detail } = await apiCaller.post(
+      "/api/pm/admin/secretreset",
+      {
+        name: username,
+        // @ts-expect-error
+        password: await getPasswordNumberArray("123456"),
+      }
+    );
     if (state === ResponseResultEnum.Success) {
       InteractFactory.getMessager().success(detail);
     } else {

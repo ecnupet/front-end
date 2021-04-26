@@ -275,6 +275,12 @@ export interface APIMapping {
     [ParameterInfo<"processRoute", "query", string>],
     ActionResult<ResponseResultModel<RoomProcess>>
   >;
+  ["/api/im/processall"](): APIInfo<
+    "ProcessAllGet",
+    "get",
+    [],
+    ActionResult<ResponseResultModel<Array<RoomProcess>>>
+  >;
   ["/api/im/processdelete"](): APIInfo<
     "ProcessDeleteAsync",
     "post",
