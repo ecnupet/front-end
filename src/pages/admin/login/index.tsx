@@ -48,7 +48,7 @@ export const AdminLogin: React.FC = () => {
                 password: values.password,
               });
               const rights = await service.userInfo();
-              if (rights.data.isAdmin) {
+              if (rights.data.authorization) {
                 InteractFactory.getMessager().success(result.detail);
                 router.replace("/admin/home");
               } else {

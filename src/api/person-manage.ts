@@ -39,11 +39,11 @@ export enum ResponseResultEnum {
 }
 export interface PersonInfoResponse {
   name: string;
-  isAdmin: number;
+  authorization: number;
 }
 
 export interface AuthCheckResponse {
-  isAdmin: string;
+  authorization: string;
   id: string;
   name: string;
   message: boolean;
@@ -57,7 +57,7 @@ export interface PersonInfomation {
   id: number;
   userName: string;
   password: Array<number>;
-  isAdmin: number;
+  authorization: number;
 }
 
 export type RequestMethodVerbs =

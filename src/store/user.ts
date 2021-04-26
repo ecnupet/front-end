@@ -24,7 +24,7 @@ class UserStore {
   async fetch() {
     try {
       const {
-        data: { isAdmin, name },
+        data: { authorization: isAdmin, name },
       } = await BackendServiceFactory.getPersionManageService().userInfo();
       this.setUserName(name);
       this.setIsAdmin(isAdmin === 1);

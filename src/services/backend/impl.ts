@@ -266,7 +266,7 @@ export class RealPersonInformationService
   }
   update(model: Partial<PersonInfomation>): Promise<ResponseResultModel<any>> {
     return apiCaller.post("/api/pm/admin/infochange", {
-      isAdmin: +model.isAdmin!,
+      isAdmin: +model.authorization!,
       name: model.userName!,
       newPassword: model.password!,
     });

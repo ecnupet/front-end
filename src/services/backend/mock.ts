@@ -34,7 +34,7 @@ export const mockBackendService: PersonManageService = {
       detail: "",
       state: 0,
       data: {
-        isAdmin: 1,
+        authorization: 1,
         name: configStore.getConfig("mockUserName") || "Darren",
       },
     };
@@ -355,7 +355,7 @@ export const mockChargeProjectService = new MockChargeProjectService("id");
 const userInformation = mockList<PersonInfomation>(
   {
     id: 0,
-    isAdmin: 1,
+    authorization: 1,
     password: [],
     userName: "Darren",
   },

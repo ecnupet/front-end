@@ -11,8 +11,8 @@ export const UserManage: React.FC = () => {
     <CRUDManager
       describer={createDescriber<PersonInfomation>({
         displayNames: {
+          authorization: "管理权限",
           id: "ID",
-          isAdmin: "管理权限",
           userName: "用户名",
           password: "密码",
         },
@@ -31,8 +31,8 @@ export const UserManage: React.FC = () => {
             propertyKey: "userName",
             valueDescriber: { type: "string", defaultValue: "" },
           },
-          isAdmin: {
-            propertyKey: "isAdmin",
+          authorization: {
+            propertyKey: "authorization",
             // @ts-expect-error
             valueDescriber: { type: "boolean", defaultValue: false },
           },
