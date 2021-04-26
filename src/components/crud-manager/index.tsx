@@ -13,6 +13,7 @@ import { CRUDService, InteractFactory } from "../../services";
 import { ObjectKeys } from "../../utils/common";
 import { debounce } from "../../utils/common/time";
 import { useRequest } from "../../utils/hooks/use-request";
+import { BooleanDisplay } from "../boolean-display";
 import { ICommonFormProp } from "../common-form";
 import { CRUD, CRUDModal } from "../crud-modal";
 import styles from "./style.module.css";
@@ -72,6 +73,9 @@ export const CRUDManager = <T extends object>({
           return (
             <Popover content={<p>{value}</p>}>{processLongText(value)}</Popover>
           );
+        }
+        if (valueDescriber.type === "boolean") {
+          return <BooleanDisplay value={+value > 0.5}></BooleanDisplay>;
         }
         return processLongText("" + value);
       },

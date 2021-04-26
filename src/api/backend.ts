@@ -63,9 +63,40 @@ interface APICaller {
         : never;
     }
   ): Promise<ReturnType<APIMapping[K]>["responseType"]["value"]>;
+  delete<K extends ExtractMethod<keyof APIMapping, "delete">>(
+    key: K,
+    params: {
+      [Key in Extract<
+        keyof ReturnType<APIMapping[K]>["parameters"],
+        number
+      >]: ReturnType<APIMapping[K]>["parameters"][Key] extends infer T
+        ? T extends ParameterInfo<any, any, any>
+          ? T["type"]
+          : never
+        : never;
+    }[0]
+  ): Promise<ReturnType<APIMapping[K]>["responseType"]["value"]>;
 }
 
 class RealAPICaller implements APICaller {
+  async delete<K extends "/api/pm/admin/user">(
+    key: K,
+    params: {
+      [Key in Extract<
+        keyof ReturnType<APIMapping[K]>["parameters"],
+        number
+      > as ReturnType<APIMapping[K]>["parameters"][Key]["name"]]: ReturnType<
+        APIMapping[K]
+      >["parameters"][Key] extends infer T
+        ? T extends ParameterInfo<any, "query", any>
+          ? T["type"]
+          : never
+        : never;
+    }
+  ): Promise<ReturnType<APIMapping[K]>["responseType"]["value"]> {
+    const result = await axiosInstance.delete(key, { data: params });
+    return result.data;
+  }
   async get<K extends ExtractMethod<keyof APIMapping, "get">>(
     key: K,
     params: {
@@ -87,7 +118,7 @@ class RealAPICaller implements APICaller {
     data: any
   ) {
     const response = await axiosInstance.post(key, data);
-    return response.data as any;
+    return response.data;
   }
 }
 

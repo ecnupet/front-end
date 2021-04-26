@@ -8,9 +8,10 @@ export interface PersonLoginForm {
   password: Array<number>;
 }
 
-export interface PersonPasswordChangeForm {
+export interface PersonInfoChangeForm {
   name: string;
   newPassword: Array<number>;
+  isAdmin: number;
 }
 
 export interface PersonDeleteForm {
@@ -38,6 +39,24 @@ export enum ResponseResultEnum {
 }
 export interface PersonInfoResponse {
   name: string;
+  isAdmin: number;
+}
+
+export interface AuthCheckResponse {
+  isAdmin: string;
+  id: string;
+  name: string;
+  message: boolean;
+}
+
+export interface SearchResult<T> {
+  count: number;
+  records: Array<T>;
+}
+export interface PersonInfomation {
+  id: number;
+  userName: string;
+  password: Array<number>;
   isAdmin: number;
 }
 
@@ -98,17 +117,21 @@ export interface APIMapping {
     [],
     ActionResult<ResponseResultModel<PersonInfoResponse>>
   >;
-  ["/api/pm/admin/userinfo"](): APIInfo<
-    "PersonChangeSerect",
+  ["/api/pm/admin/infochange"](): APIInfo<
+    "PersonInfoChange",
     "post",
-    [
-      ParameterInfo<
-        "personPasswordChangeForm",
-        "body",
-        PersonPasswordChangeForm
-      >
-    ],
+    [ParameterInfo<"personInfoChangeForm", "body", PersonInfoChangeForm>],
     ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/pm/admin/userlist"](): APIInfo<
+    "UserSearchAsync",
+    "get",
+    [
+      ParameterInfo<"page", "query", number>,
+      ParameterInfo<"pageSize", "query", number>,
+      ParameterInfo<"keyWord", "query", string>
+    ],
+    ActionResult<ResponseResultModel<SearchResult<PersonInfomation>>>
   >;
   ["/api/pm/admin/user"](): APIInfo<
     "DeleteUser",
@@ -116,9 +139,21 @@ export interface APIMapping {
     [ParameterInfo<"personDeleteForm", "body", PersonDeleteForm>],
     ActionResult<ResponseResultModel<any>>
   >;
+  ["/api/pm/auth/check"](): APIInfo<
+    "AuthCheck",
+    "get",
+    [],
+    ActionResult<ResponseResultModel<AuthCheckResponse>>
+  >;
   ["/api/pm/user/logout"](): APIInfo<
     "PersonLogout",
     "post",
+    [],
+    ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/pm/user/test"](): APIInfo<
+    "Test",
+    "get",
     [],
     ActionResult<ResponseResultModel<any>>
   >;

@@ -1,0 +1,9 @@
+/* @type */
+
+.truthy {
+  color: #4fdf4f;
+}
+
+.falsy {
+  color: #e94141;
+}

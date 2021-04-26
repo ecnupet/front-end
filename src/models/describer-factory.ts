@@ -16,7 +16,5 @@ export function createDescriber<T extends object>(
     ...others,
     defaultValue,
   };
-  // @ts-ignore
-  window.result1 = result;
   return result;
 }

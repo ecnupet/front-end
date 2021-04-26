@@ -30,8 +30,11 @@ export const CRUDModal: React.FC<ICRUDModalProp<any>> = <T extends object>({
   formProps,
   footer = false,
 }: React.PropsWithChildren<ICRUDModalProp<T>>) => {
-  const desc = { ...describer };
-  ObjectEntries(desc.properties).forEach(([key, prop]) => {
+  const desc: ModelDescriber<T> = {
+    ...describer,
+    properties: { ...describer.properties },
+  };
+  ObjectEntries(describer.properties).forEach(([key, prop]) => {
     desc.properties[key] = {
       ...prop,
       disabled:

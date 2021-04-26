@@ -218,5 +218,5 @@ const NumberInputWrapper: React.FC<
 const SwitchWrapper: React.FC<
   { value?: boolean } & Omit<SwitchProps, "checked">
 > = ({ value, ...others }) => {
-  return <Switch checked={value} {...others}></Switch>;
+  return <Switch checked={+(value ?? 0) > 0.5} {...others}></Switch>;
 };

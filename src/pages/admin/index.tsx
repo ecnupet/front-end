@@ -7,6 +7,7 @@ import { DiseaseManage } from "./disease";
 import { DrugManage } from "./drug";
 import { QuestionManage } from "./question";
 import styles from "./style.module.css";
+import { UserManage } from "./user";
 
 const subRoutes: {
   title: string;
@@ -17,6 +18,7 @@ const subRoutes: {
   { title: "试题管理", key: "question", component: QuestionManage },
   { title: "疾病管理", key: "disease", component: DiseaseManage },
   { title: "收费项目", key: "chargeproject", component: ChargeProjectManage },
+  { title: "用户管理", key: "usermanage", component: UserManage },
 ];
 
 export const AdminHomePage: React.FC = () => {
