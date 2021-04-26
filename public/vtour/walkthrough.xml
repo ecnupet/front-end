@@ -1,0 +1,123 @@
+﻿<krpano>
+
+	<include url="actions.xml"/>
+	<include url="styles.xml"/>
+	<include url="layers.xml"/>
+
+
+	<!-- startup action - load the first scene -->
+	<action name="startup" autorun="onstart">
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		loadscene(get(startscene), null, MERGE);
+		if(startactions !== null, startactions() );
+	</action>
+
+
+	<scene name="scene_qiantai" title="前台" onstart="js(action_updateSceneHotspotWithRole(qiantai);)" thumburl="panos/qiantai.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/qiantai.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/qiantai.tiles/pano_%s.jpg" />
+			<cube url="panos/qiantai.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_shoushushi" title="手术室" onstart="js(action_updateSceneHotspotWithRole(shoushushi);)" thumburl="panos/shoushushi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/shoushushi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/shoushushi.tiles/pano_%s.jpg" />
+			<cube url="panos/shoushushi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_danganshi" title="档案室" onstart="js(action_updateSceneHotspotWithRole(danganshi);)" thumburl="panos/danganshi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/danganshi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/danganshi.tiles/pano_%s.jpg" />
+			<cube url="panos/danganshi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_zhenshi" title="诊室" onstart="js(action_updateSceneHotspotWithRole(zhenshi);)" thumburl="panos/zhenshi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/zhenshi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/zhenshi.tiles/pano_%s.jpg" />
+			<cube url="panos/zhenshi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_zhuyuanbu" title="住院部" onstart="js(action_updateSceneHotspotWithRole(zhuyuanbu);)" thumburl="panos/zhuyuanbu.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/zhuyuanbu.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/zhuyuanbu.tiles/pano_%s.jpg" />
+			<cube url="panos/zhuyuanbu.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_yingxiangshi" title="影像室" onstart="js(action_updateSceneHotspotWithRole(yingxiangshi);)" thumburl="panos/yingxiangshi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/yingxiangshi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/yingxiangshi.tiles/pano_%s.jpg" />
+			<cube url="panos/yingxiangshi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_jianchashi" title="检查室" onstart="js(action_updateSceneHotspotWithRole(jianchashi);)" thumburl="panos/jianchashi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/jianchashi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/jianchashi.tiles/pano_%s.jpg" />
+			<cube url="panos/jianchashi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_shoushuzhunbeishi" title="手术准备室" onstart="js(action_updateSceneHotspotWithRole(shoushuzhunbeishi);)" thumburl="panos/shoushuzhunbeishi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/shoushuzhunbeishi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/shoushuzhunbeishi.tiles/pano_%s.jpg" />
+			<cube url="panos/shoushuzhunbeishi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_zhusheshi" title="注射室" onstart="js(action_updateSceneHotspotWithRole(zhusheshi);)" thumburl="panos/zhusheshi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/zhusheshi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/zhusheshi.tiles/pano_%s.jpg" />
+			<cube url="panos/zhusheshi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_chuzhishi" title="处置室" onstart="js(action_updateSceneHotspotWithRole(chuzhishi);)" thumburl="panos/chuzhishi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/chuzhishi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/chuzhishi.tiles/pano_%s.jpg" />
+			<cube url="panos/chuzhishi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_huayanshi" title="化验室" onstart="js(action_updateSceneHotspotWithRole(huayanshi);)" thumburl="panos/huayanshi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/huayanshi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/huayanshi.tiles/pano_%s.jpg" />
+			<cube url="panos/huayanshi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+
+	<scene name="scene_mianyishi" title="免疫室" onstart="js(action_updateSceneHotspotWithRole(mianyishi);)" thumburl="panos/mianyishi.tiles/thumb.jpg" lat="" lng="" heading="">
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+		<preview url="panos/mianyishi.tiles/preview.jpg" />
+		<image>
+			<cube url="panos/mianyishi.tiles/pano_%s.jpg" />
+			<cube url="panos/mianyishi.tiles/mobile/pano_%s.jpg" devices="mobile" />
+		</image>
+	</scene>
+</krpano>

@@ -1,0 +1,10 @@
+{
+  "name": "vtour",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/jquery": "^3.5.5"
+  }
+}

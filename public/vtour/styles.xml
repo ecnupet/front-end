@@ -1,0 +1,24 @@
+<krpano>
+    <!-- hotspot styles -->
+    <style name="arrow_up" url="skin/arrow_up.png" distorted="true" />
+    <style name="arrow_left_up" url="skin/arrow_left_up.png" distorted="true" />
+    <style name="arrow_right_up" url="skin/arrow_right_up.png" distorted="true" />
+    <style name="zoom" url="skin/zoomicon.png" distorted="true" />
+
+    <style name="spot_location_reachable" url="skin/icon_location_reachable.png" background="false" />
+    <style name="spot_location_active" url="skin/icon_location_active.png" background="false" />
+    <style name="spot_location_forbid" url="skin/icon_location_forbid.png" background="false" />
+    <style name="textfield" url="%SWFPATH%/plugins/textfield.swf" background="false" css="font-size:14px; color:#FFFFFF;" />
+    <style name="textTitle" url="%SWFPATH%/plugins/textfield.swf" background="false" css="font-size:24px; color:#FFFFFF;letter-spacing:2px;" />
+    <style name="scrollarea" url.flash="%SWFPATH%/plugins/scrollarea.swf" url.html5="%SWFPATH%/plugins/scrollarea.js" />
+    <style name="dragable" ondown="copy(sx,x);copy(sy,y);copy(mx,mouse.x);copy(my,mouse.y);asyncloop(pressed,set(x,calc(sx-mx+mouse.x));set(y,calc(sy-my+mouse.y)););" />
+
+    <!-- the 'tooltip' style - show the tooltip textfield and update its position as long as hovering -->
+    <style name="tooltip"
+           onover="copy(layer[tooltip].html, tooltip);
+	               set(layer[tooltip].visible, true);
+	               tween(layer[tooltip].alpha, 1.0, 0.5);
+	               asyncloop(hovering, copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );"
+           onout="tween(layer[tooltip].alpha, 0.0, 0.25, default, set(layer[tooltip].visible,false), copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );"
+    />
+</krpano>
