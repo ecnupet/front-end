@@ -1,75 +1,37 @@
-import { Form } from "antd";
+import { Table } from "antd";
 import React from "react";
 import { PersonInfomation } from "../../../api";
-import { CRUDManager } from "../../../components/crud-manager";
-import { PasswordInput } from "../../../components/password-input";
-import { createDescriber } from "../../../models/describer-factory";
-import { BackendServiceFactory } from "../../../services";
+import { TableColumn } from "../../../components/crud-manager";
+import { withType } from "../../../utils/common";
+import { PickKey } from "../../../utils/types";
+
+export type UserTableRecord = Omit<
+  PersonInfomation,
+  PickKey<PersonInfomation, "password">
+>;
 
 export const UserManage: React.FC = () => {
   return (
-    <CRUDManager
-      describer={createDescriber<PersonInfomation>({
-        displayNames: {
-          authorization: "管理权限",
-          id: "ID",
-          userName: "用户名",
-          password: "密码",
-        },
-        modelName: "用户信息",
-        primaryKey: "id",
-        searchableKey: "userName",
-        properties: {
-          id: {
-            propertyKey: "id",
-            valueDescriber: {
-              defaultValue: -1,
-              type: "number",
+    <>
+      <Table
+        columns={[
+          ...withType<TableColumn<UserTableRecord>[]>([
+            {
+              dataIndex: "id",
+              title: "ID",
             },
-          },
-          userName: {
-            propertyKey: "userName",
-            valueDescriber: { type: "string", defaultValue: "" },
-          },
-          authorization: {
-            propertyKey: "authorization",
-            // @ts-expect-error
-            valueDescriber: { type: "boolean", defaultValue: false },
-          },
-          password: {
-            propertyKey: "password",
-            valueDescriber: {
-              // @ts-expect-error
-              type: "array",
-              defaultValue: [],
+            {
+              dataIndex: "userName",
             },
-            disabled: true,
-          },
-        },
-      })}
-      service={BackendServiceFactory.getCRUDService("UserService")}
-      renderColumn={(model, fieldKey) => {
-        if (fieldKey === "password") {
-          return "*".repeat(~~(model[fieldKey].length / 2));
-        }
-        return null;
-      }}
-      formProps={{
-        customRenderer: {
-          password: {
-            render({ fieldKey, describer }) {
-              return (
-                <Form.Item
-                  name={fieldKey}
-                  label={describer.displayNames.password}
-                >
-                  <PasswordInput />
-                </Form.Item>
-              );
+            {
+              dataIndex: "authorization",
             },
+          ]),
+          {
+            key: "__operation__",
           },
-        },
-      }}
-    ></CRUDManager>
+        ]}
+      ></Table>
+    </>
   );
 };
