@@ -8,10 +8,19 @@ export interface PersonLoginForm {
   password: Array<number>;
 }
 
-export interface PersonInfoChangeForm {
+export interface PersonAuthChangeForm {
   name: string;
-  newPassword: Array<number>;
-  isAdmin: number;
+  authorization: Auth;
+}
+
+export interface PersonSecretResetForm {
+  name: string;
+}
+
+export interface PersonCreateForm {
+  name: string;
+  password: Array<number>;
+  authorization: Auth;
 }
 
 export interface PersonDeleteForm {
@@ -20,6 +29,11 @@ export interface PersonDeleteForm {
 
 export interface ActionResult<TValue> {
   value: TValue;
+}
+export enum Auth {
+  Normal = 0,
+  Admin = 1,
+  SuperAdmin = 2,
 }
 export interface ResponseResultModel<TResult> {
   state: ResponseResultEnum;
@@ -57,7 +71,7 @@ export interface PersonInfomation {
   id: number;
   userName: string;
   password: Array<number>;
-  authorization: number;
+  authorization: Auth;
 }
 
 export type RequestMethodVerbs =
@@ -120,7 +134,19 @@ export interface APIMapping {
   ["/api/pm/admin/infochange"](): APIInfo<
     "PersonInfoChange",
     "post",
-    [ParameterInfo<"personInfoChangeForm", "body", PersonInfoChangeForm>],
+    [ParameterInfo<"personAuthForm", "body", PersonAuthChangeForm>],
+    ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/pm/admin/infochange"](): APIInfo<
+    "PersonSecretReset",
+    "post",
+    [ParameterInfo<"personSecretResetForm", "body", PersonSecretResetForm>],
+    ActionResult<ResponseResultModel<any>>
+  >;
+  ["/api/pm/admin/personcreate"](): APIInfo<
+    "PersonCreate",
+    "post",
+    [ParameterInfo<"personCreateForm", "body", PersonCreateForm>],
     ActionResult<ResponseResultModel<any>>
   >;
   ["/api/pm/admin/userlist"](): APIInfo<

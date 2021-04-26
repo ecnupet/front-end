@@ -26,7 +26,7 @@ export interface ICRUDManagerProp<T extends object> {
   renderColumn?: (model: T, fieldKey: KeyOf<T>) => React.ReactNode;
 }
 
-interface TableColumn<T extends object> extends ColumnType<T> {
+export interface TableColumn<T extends object> extends ColumnType<T> {
   dataIndex: Extract<keyof T, string>;
 }
 
