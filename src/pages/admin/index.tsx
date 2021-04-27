@@ -30,7 +30,7 @@ const subRoutes: {
 export const AdminHomePage: React.FC = () => {
   const [route, setRoute] = useState(subRoutes[0]!);
   return (
-    <ManageStyleLayout title="管理后台" headerChildren={null && renderHeader()}>
+    <ManageStyleLayout title="管理后台" headerChildren={renderHeader()}>
       <section className={styles.section}>
         <aside className={styles.menu}>
           <Menu

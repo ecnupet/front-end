@@ -66,14 +66,19 @@ export const UserManage: React.FC = () => {
   const [tableData, tableRequestState, fetchTableData] = useRequest(
     async (page: number, pageSize: number, keyword: string) => {
       try {
-        const { data, state } = await apiCaller.get("/api/pm/admin/userlist", {
-          page,
-          pageSize,
-          keyWord: keyword,
-        });
+        const { data, state, detail } = await apiCaller.get(
+          "/api/pm/admin/userlist",
+          {
+            page,
+            pageSize,
+            keyWord: keyword,
+          }
+        );
         if (state === ResponseResultEnum.Success) {
           setPageInfo({ count: data.count });
           return data.records;
+        } else {
+          InteractFactory.getMessager().fail(detail);
         }
       } catch (error) {
         globalErrorHandle(error);

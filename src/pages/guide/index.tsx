@@ -63,6 +63,9 @@ export const GuidePage: React.FC = () => {
   const [drawerVisable, setDrawerVisable] = useState(false);
   const [query, setQuery] = useState<QueryTypes>("drug");
   const [paths, setPaths] = useState<string[]>();
+  const [drawerContent, setDrawerContent] = useState<"query" | "room-process">(
+    "query"
+  );
   const [describer, setDescriber] = useState<
     ModelDescriber<Drug> | ModelDescriber<ChargeProject>
   >();
@@ -98,9 +101,11 @@ export const GuidePage: React.FC = () => {
       if (command && command.queryObject) {
         setDrawerVisable(true);
         if (command.queryObject !== "room-process") {
+          setDrawerContent("query");
           setQuery(command.queryObject);
           setDescriber(describers[command.queryObject]);
         } else {
+          setDrawerContent("room-process");
           setPaths(command.path);
         }
       }
@@ -118,13 +123,13 @@ export const GuidePage: React.FC = () => {
         visible={drawerVisable}
         onClose={() => setDrawerVisable(false)}
       >
-        {describer && drawerVisable && (
+        {drawerContent === "query" && describer && drawerVisable && (
           <QueryTable
             discriber={describer as never}
             query={queries[query] as never}
           ></QueryTable>
         )}
-        {roomProcess && (
+        {drawerContent === "room-process" && roomProcess && (
           <Spin spinning={state === "pending"}>
             <ProgressDisplay process={roomProcess}></ProgressDisplay>
           </Spin>
