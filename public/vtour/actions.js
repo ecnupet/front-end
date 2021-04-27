@@ -56,9 +56,21 @@ Array.prototype.contains = function(obj) {
 //         krpano.call(str);
 //     }
 // }
+//跟换角色之后每次都将房间显示属性设置为True
+function action_setAllSceneShow(){
+    var str="";
+    for(var i=0;i<sceneData.length;i++){
+        var textname='current_location'+i.toString();
+        var imgname='bd_scroller_container'+i.toString();
+        str += 'set(layer['+textname+'].visible,true);';
+        str += 'set(layer['+imgname+'].visible,true);';
+    }
+    krpano.call(str);
+}
 //根据角色权限设定当前起始位置
 function action_setInitScene(){
     var str='';
+    console.log(currentRoleId);
     if(currentRoleId==0) {
         str += 'loadscene(scene_qiantai, null, MERGE);';
         str += 'set(layer[current_role].html,"当前角色：前台");';
@@ -74,13 +86,19 @@ function action_setInitScene(){
         str += 'set(layer[current_role].html,"当前角色：医助");';
         str += 'set(layer[current_desc].html,"包括静脉注射、皮下注射、肌肉注射、局部封闭注射的操作流程");';
         str += 'set(layer[current_location].html,"注射室")';
+    }else{
+        str += 'loadscene(scene_qiantai, null, MERGE);';
+        str += 'set(layer[current_role].html,"当前角色：游客");';
+        str += 'set(layer[current_desc].html,"包括接待挂号、导医咨询、收费等");';
+        str += 'set(layer[current_location].html,"前台");';
     }
     krpano.call(str);
 }
-//根据模式与角色权限更新热点
+
+//根据模式与角色权限更新场景以及场景中的具体介绍
 function action_updateSceneHotspotWithRole(curScene){
     var str = '';
-   if(currentMode==1){//角色扮演模式：根据角色权限更新场景切换热点
+   if(currentMode==1){//角色扮演模式：根据角色权限更新预览场景
         for(var i=0;i<sceneData.length;i++){
             if(!roles[currentRoleId].room.contains(i)){
                 var textname='current_location'+i.toString();
@@ -91,11 +109,7 @@ function action_updateSceneHotspotWithRole(curScene){
         }
     }
     console.log(curScene);
-    // str += 'layer[spot_location_'+lastActiveMapSpot+'].loadStyle('+mapSpotStyle_normal+');';
-    // str += 'layer[spot_location_'+curScene+'].loadStyle('+mapSpotStyle_active+');';
-    lastActiveMapSpot=curScene;
     krpano.call(str);
-    action_updateHotspotName();
 }
 //每次切换场景时设置当前active位置
 function action_setCurrentMapLocation(currole){
@@ -116,9 +130,7 @@ function action_setCurrentMapLocation(currole){
     krpano.call(str);
 }
 //返回上级
-function action_goBack(){
-    krpano.call("openurl('skin/test.mp4',_self);");
-}
+
 //根据roomList修改科室名称
 function action_updateSceneAndMapName(){
     var str='';
@@ -174,18 +186,18 @@ function action_flyin(layerName){
 /**********************************/
 function loadRoleData(callback){
     roles = [
-        {id: 0, name: '前台', room: [0, 3]},
-        {id: 1, name: '兽医', room: [1, 2, 4, 5, 6, 7, 8, 9,10,11,12,13]},
+        {id: 0, name: '前台', room: [0, 2]},
+        {id: 1, name: '兽医', room: [1, 3, 4, 5, 6, 7, 8, 9,10,11,12,13]},
         {id: 2, name: '助理', room: [4, 5, 7, 8, 9, 10,11,12]}
     ];
     callback();
 }
 function callback_walkthrough(){
-   // action_initMaps();//加载全部小地图
-    action_setCurrentMapLocation();
-    action_updateSceneAndMapName();
+    action_setAllSceneShow();
+    action_setInitScene(currentRoleId);
 }
 function callback_roleplay() {
+    action_setAllSceneShow();
     action_setInitScene(currentRoleId);
    // action_updateMapsWithRole();
     action_updateSceneHotspotWithRole(currentRoleId);

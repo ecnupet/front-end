@@ -74,27 +74,32 @@ function getQueryString(name) {
 //默认模式为3D导览
 var currentMode = 0;
 
-var currentRoleId ="";
+var currentRoleId =3;
 
+//角色扮演前台模式
 function setqiantaiMode() {
     currentMode = 1;
     currentRoleId=0;
     loadRoleData(callback_roleplay);
 }
+//角色扮演医师模式
 function setyishiMode() {
     currentMode = 1;
     currentRoleId=1;
     loadRoleData(callback_roleplay);
 }
+//角色扮演医助模式
 function setyizhuMode() {
     currentMode = 1;
     currentRoleId=2;
     loadRoleData(callback_roleplay);
 }
-//接收角色身份
-
-
-
+//返回普通游客模式
+function setyoukeMode(){
+    currentMode = 0;
+    currentRoleId =3;
+    loadRoleData(callback_walkthrough);
+}
 var lastActiveMapSpot='';
 
 
@@ -104,10 +109,13 @@ if(currentMode==0){//3D导览
     console.log('模式传参有误！');
 }
 
-document.getElementById("panel").onclick = function () {
-    axios.get("")
-}
-
-function tiaozhuan(){
-    console.log("woshishabi");
+/**
+ * 将参数转成数组传给showRoomProcess()
+ * @para path
+ */
+function doProcess(){
+    //将实参转化为数组
+    var slice = Array.prototype.slice,
+　　  params = slice.apply(arguments);
+    interact.showRoomProcess(params);
 }

@@ -44,8 +44,8 @@
       if(((scene[%2].title == "处置室")), set(layer[current_desc].html, "包括口服投药、换药、清洗耳道、挤肛门腺、等基本处置操作流程"));
       if(((scene[%2].title == "化验室")), set(layer[current_desc].html, "包括对送检样本的预处理，对相应样本进行检查操作"));
       if(((scene[%2].title == "免疫室")), set(layer[current_desc].html, "包括为健康宠物接种疫苗的流程，对常见并发症的处理流程等"));
-      if(((scene[%2].title == "药房")), set(layer[current_desc].html, "我是药房"));
-      if(((scene[%2].title == "解剖室")), set(layer[current_desc].html, "我是解剖室"));
+      if(((scene[%2].title == "药房")), set(layer[current_desc].html, "包括对各种药物的存放要求、处方的审核流程、药物的发放流程、常见药物的使用说明等"));
+      if(((scene[%2].title == "解剖室")), set(layer[current_desc].html, "包括对病死动物剖解的流程，病理剖检室的消毒流程"));
 
 
       set(layer[current_location].html,get(scene[%2].title));
@@ -129,14 +129,7 @@
         tween(layer[%1].ry,  get(layer[%1].oldry));
         tween(layer[%1].rz,  get(layer[%1].oldrz));
     </action>
-
-    <action name="resetVideo">
-        layer[device_video].stop();
-
-    </action>
-    <action name="action_goBack">
-        
-    </action>
+    
     <action name="toggleMap">
 <!--         if(layer[thumbsicon].url == 'skin/icon_map.png',set(layer[thumbsicon].url,'skin/icon_map_active.png'),set(layer[thumbsicon].url,'skin/icon_map.png');); -->
         if(layer[layer_map].visible == false,set(layer[layer_map].visible,true),set(layer[layer_map].visible,false); );
