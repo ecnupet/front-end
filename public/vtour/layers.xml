@@ -1,38 +1,38 @@
 <krpano>
     <!--医院平面图-->
   <layer name="layer_map" keep="true" type="container" width="775" height="335" align="center" bgcolor="0x333333" bgalpha="0.7" x="0" y="0" visible="false">
-    <layer name="current_location1" style="textTitle" html="前台" align="left" x="30" y="0" width="100"  background="false" enabled="false" />
-    <layer name="current_location2" style="textTitle" html="手术室" align="left" x="130" y="0" width="100"  background="false" enabled="false" />
-    <layer name="current_location3" style="textTitle" html="档案室" align="left" x="240" y="0" width="100"  background="false" enabled="false" />
-    <layer name="current_location4" style="textTitle" html="诊室" align="left" x="360" y="0" width="100"  background="false" enabled="false" />
-    <layer name="current_location5" style="textTitle" html="住院部" align="left" x="460" y="0" width="100"  background="false" enabled="false" />
-    <layer name="current_location6" style="textTitle" html="影像室" align="left" x="570" y="0" width="100"  background="false" enabled="false" />
-    <layer name="current_location14" style="textTitle" html="药房" align="left" x="680" y="0" width="100"  background="false" enabled="false" />
-    <layer name="current_location7" style="textTitle" html="检查室" align="left" x="20" y="145" width="100"  background="false" enabled="false" />
-    <layer name="current_location8" style="textTitle" html="手术准备室" align="left" x="100" y="145" width="140"  background="false" enabled="false" />
-    <layer name="current_location9" style="textTitle" html="注射室" align="left" x="240" y="145" width="100"  background="false" enabled="false" />
-    <layer name="current_location10" style="textTitle" html="处置室" align="left" x="350" y="145" width="100"  background="false" enabled="false" />
-    <layer name="current_location11" style="textTitle" html="化验室" align="left" x="460" y="145" width="100"  background="false" enabled="false" />
-    <layer name="current_location12" style="textTitle" html="免疫室" align="left" x="570" y="145" width="100"  background="false" enabled="false" />
+    <layer name="current_location0" style="textTitle" html="前台" align="left" x="30" y="0" width="100"  background="false" enabled="false" />
+    <layer name="current_location1" style="textTitle" html="手术室" align="left" x="130" y="0" width="100"  background="false" enabled="false" />
+    <layer name="current_location2" style="textTitle" html="档案室" align="left" x="240" y="0" width="100"  background="false" enabled="false" />
+    <layer name="current_location3" style="textTitle" html="诊室" align="left" x="360" y="0" width="100"  background="false" enabled="false" />
+    <layer name="current_location4" style="textTitle" html="住院部" align="left" x="460" y="0" width="100"  background="false" enabled="false" />
+    <layer name="current_location5" style="textTitle" html="影像室" align="left" x="570" y="0" width="100"  background="false" enabled="false" />
+    <layer name="current_location12" style="textTitle" html="药房" align="left" x="680" y="0" width="100"  background="false" enabled="false" />
+    <layer name="current_location6" style="textTitle" html="检查室" align="left" x="20" y="145" width="100"  background="false" enabled="false" />
+    <layer name="current_location7" style="textTitle" html="手术准备室" align="left" x="100" y="145" width="140"  background="false" enabled="false" />
+    <layer name="current_location8" style="textTitle" html="注射室" align="left" x="240" y="145" width="100"  background="false" enabled="false" />
+    <layer name="current_location9" style="textTitle" html="处置室" align="left" x="350" y="145" width="100"  background="false" enabled="false" />
+    <layer name="current_location10" style="textTitle" html="化验室" align="left" x="460" y="145" width="100"  background="false" enabled="false" />
+    <layer name="current_location11" style="textTitle" html="免疫室" align="left" x="570" y="145" width="100"  background="false" enabled="false" />
     <layer name="current_location13" style="textTitle" html="解剖室" align="left" x="680" y="145" width="100"  background="false" enabled="false" />
-    <layer name="bd_scroller_container" type="container" align="left" x="10" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/qiantai.tiles/thumb.jpg" onclick="transition(spot_qiantai,  scene_qiantai,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container2" type="container" align="left" x="120" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/shoushushi.tiles/thumb.jpg" onclick="transition(spot_shoushushi,  scene_shoushushi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container3" type="container" align="left" x="230" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/danganshi.tiles/thumb.jpg" onclick="transition(spot_danganshi,  scene_danganshi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container4" type="container" align="left" x="340" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/zhenshi.tiles/thumb.jpg" onclick="transition(spot_zhenshi,  scene_zhenshi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container5" type="container" align="left" x="450" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/zhuyuanbu.tiles/thumb.jpg" onclick="transition(spot_zhuyuanbu,  scene_zhuyuanbu,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container6" type="container" align="left" x="560" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/yingxiangshi.tiles/thumb.jpg" onclick="transition(spot_yingxiangshi,  scene_yingxiangshi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container14" type="container" align="left" x="670" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/yaofang.tiles/thumb.jpg" onclick="transition(spot_yaofang,  scene_yaofang,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container7" type="container" align="left" x="10" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/jianchashi.tiles/thumb.jpg" onclick="transition(spot_jianchashi,  scene_jianchashi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container8" type="container" align="left" x="120" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/shoushuzhunbeishi.tiles/thumb.jpg" onclick="transition(spot_shoushuzhunbeishi,  scene_shoushuzhunbeishi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container9" type="container" align="left" x="230" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/zhusheshi.tiles/thumb.jpg" onclick="transition(spot_zhusheshi,  scene_zhusheshi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container10" type="container" align="left" x="340" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/chuzhishi.tiles/thumb.jpg" onclick="transition(spot_chuzhishi,  scene_chuzhishi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container11" type="container" align="left" x="450" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/huayanshi.tiles/thumb.jpg" onclick="transition(spot_huayanshi,  scene_huayanshi,  -373, -6, 20);"></layer>
-    <layer name="bd_scroller_container12" type="container" align="left" x="560" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/mianyishi.tiles/thumb.jpg" onclick="transition(spot_mianyishi,  scene_mianyishi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container0" type="container" align="left" x="10" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/qiantai.tiles/thumb.jpg" onclick="transition(spot_qiantai,  scene_qiantai,  -373, -6, 20);" ></layer>
+    <layer name="bd_scroller_container1" type="container" align="left" x="120" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/shoushushi.tiles/thumb.jpg" onclick="transition(spot_shoushushi,  scene_shoushushi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container2" type="container" align="left" x="230" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/danganshi.tiles/thumb.jpg" onclick="transition(spot_danganshi,  scene_danganshi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container3" type="container" align="left" x="340" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/zhenshi.tiles/thumb.jpg" onclick="transition(spot_zhenshi,  scene_zhenshi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container4" type="container" align="left" x="450" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/zhuyuanbu.tiles/thumb.jpg" onclick="transition(spot_zhuyuanbu,  scene_zhuyuanbu,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container5" type="container" align="left" x="560" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/yingxiangshi.tiles/thumb.jpg" onclick="transition(spot_yingxiangshi,  scene_yingxiangshi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container12" type="container" align="left" x="670" y="-65" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/yaofang.tiles/thumb.jpg" onclick="transition(spot_yaofang,  scene_yaofang,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container6" type="container" align="left" x="10" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/jianchashi.tiles/thumb.jpg" onclick="transition(spot_jianchashi,  scene_jianchashi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container7" type="container" align="left" x="120" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/shoushuzhunbeishi.tiles/thumb.jpg" onclick="transition(spot_shoushuzhunbeishi,  scene_shoushuzhunbeishi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container8" type="container" align="left" x="230" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/zhusheshi.tiles/thumb.jpg" onclick="transition(spot_zhusheshi,  scene_zhusheshi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container9" type="container" align="left" x="340" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/chuzhishi.tiles/thumb.jpg" onclick="transition(spot_chuzhishi,  scene_chuzhishi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container10" type="container" align="left" x="450" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/huayanshi.tiles/thumb.jpg" onclick="transition(spot_huayanshi,  scene_huayanshi,  -373, -6, 20);"></layer>
+    <layer name="bd_scroller_container11" type="container" align="left" x="560" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/mianyishi.tiles/thumb.jpg" onclick="transition(spot_mianyishi,  scene_mianyishi,  -373, -6, 20);"></layer>
     <layer name="bd_scroller_container13" type="container" align="left" x="670" y="80" width="100" height="100" bgborder="1 0xFFFFFF 0.8" url="panos/jiepoushi.tiles/thumb.jpg" onclick="transition(spot_jiepoushi,  scene_jiepoushi,  -373, -6, 20);"></layer>
   </layer>
     <!--END-->
    <layer name="layer_role" keep="true" type="container"  align="bottom" bgcolor="0x333333" x="10" y="10" width="250" height="60" bgalpha="0.6" >
-   <layer name="current_role" style="textTitle" html="游客" align="center" background="false" enabled="false" />
+   <layer name="current_role" style="textTitle" html="当前角色：游客" align="center" background="false" enabled="false" />
    </layer>
   
     <layer name="layer_location" keep="true" type="container" width="220" height="80" align="middletop" bgcolor="0x333333" bgalpha="0.6" x="0" y="40">
@@ -40,7 +40,7 @@
     </layer>
 
     <layer name="layer_desc" keep="true" type="container" width="220" height="150" align="rightmiddle" bgcolor="0x333333" bgalpha="0.6" x="0" y="40">
-        <layer name="current_desc" style="textTitle" html="初始html" width="200" x="10" y="10" height="130" align="center" background="false" enabled="false" />
+        <layer name="current_desc" style="textTitle" html="包括接待挂号、导医咨询、收费等" width="200" x="10" y="10" height="130" align="center" background="false" enabled="false" />
     </layer>
     <!-- thumbs -->
     <layer name="thumbs" keep="true" type="container" align="left" width="50" height="50" x="0" y="0" bgcolor="0x333333" bgalpha="0.6">

@@ -77,14 +77,17 @@ var currentMode = 0;
 var currentRoleId ="";
 
 function setqiantaiMode() {
+    currentMode = 1;
     currentRoleId=0;
     loadRoleData(callback_roleplay);
 }
 function setyishiMode() {
+    currentMode = 1;
     currentRoleId=1;
     loadRoleData(callback_roleplay);
 }
 function setyizhuMode() {
+    currentMode = 1;
     currentRoleId=2;
     loadRoleData(callback_roleplay);
 }
@@ -103,4 +106,8 @@ if(currentMode==0){//3D导览
 
 document.getElementById("panel").onclick = function () {
     axios.get("")
+}
+
+function tiaozhuan(){
+    console.log("woshishabi");
 }
