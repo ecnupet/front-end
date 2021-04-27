@@ -15,12 +15,14 @@ var sceneData=[
     {id:3,name:'danganshi',tooltip:'档案室',width:18,height:18,x:230,y:100},
     {id:4,name:'zhuyuanbu',tooltip:'住院部',width:18,height:18,x:450,y:100},
     {id:5,name:'yingxiangshi',tooltip:'影像室',width:18,height:18,x:560,y:100},
+    {id:12,name:'yaofang',tooltip:'药房',width:18,height:18,x:670,y:100},
     {id:6,name:'jianchashi',tooltip:'检查室',width:18,height:18,x:10,y:250},
     {id:7,name:'shoushuzhunbeishi',tooltip:'手术准备室',width:18,height:18,x:120,y:250},
     {id:8,name:'zhusheshi',tooltip:'注射室',width:18,height:18,x:230,y:250},
     {id:9,name:'chuzhishi',tooltip:'处置室',width:18,height:18,x:340,y:250},
     {id:10,name:'huayanshi',tooltip:'化验室',width:18,height:18,x:450,y:250},
-    {id:11,name:'mianyishi',tooltip:'免疫室',width:18,height:18,x:560,y:250}
+    {id:11,name:'mianyishi',tooltip:'免疫室',width:18,height:18,x:560,y:250},
+    {id:13,name:'jiepoushi',tooltip:'解剖室',width:18,height:18,x:670,y:250}
 ];
 
 var roomList=[
@@ -35,7 +37,9 @@ var roomList=[
     {id:8,name:'zhusheshi',title:'注射室'},
     {id:9,name:'chuzhishi',title:'处置室'},
     {id:10,name:'huayanshi',title:'化验室'},
-    {id:11,name:'mianyishi',title:'免疫室'}
+    {id:11,name:'mianyishi',title:'免疫室'},
+    {id:12,name:'yaofang',title:'药房'},
+    {id:13,name:'jiepoushi',title:'解剖室'}
 ];
 
 var deviceList=[
@@ -67,10 +71,25 @@ function getQueryString(name) {
     if (r != null) return unescape(r[2]); return null;
 }
 
-//当前模式
-var currentMode=1;
+//默认模式为3D导览
+var currentMode = 0;
+
+var currentRoleId ="";
+
+function setqiantaiMode() {
+    currentRoleId=0;
+    loadRoleData(callback_roleplay);
+}
+function setyishiMode() {
+    currentRoleId=1;
+    loadRoleData(callback_roleplay);
+}
+function setyizhuMode() {
+    currentRoleId=2;
+    loadRoleData(callback_roleplay);
+}
 //接收角色身份
-var currentRoleId =1;
+
 
 
 var lastActiveMapSpot='';
@@ -78,8 +97,10 @@ var lastActiveMapSpot='';
 
 if(currentMode==0){//3D导览
     loadRoleData(callback_walkthrough);
-}else if(currentMode==1){//角色扮演
-    loadRoleData(callback_roleplay);
 }else{
     console.log('模式传参有误！');
+}
+
+document.getElementById("panel").onclick = function () {
+    axios.get("")
 }
