@@ -1,0 +1,14 @@
+/* @type */
+.container {
+  display: flex;
+  flex-direction: row;
+}
+.tree {
+  width: 256px;
+}
+.manage {
+  width: 100%;
+}
+.update-form {
+  width: 100%;
+}

@@ -1,11 +1,19 @@
-import { Drawer } from "antd";
+import { Drawer, Spin } from "antd";
 import React, { useEffect, useState } from "react";
+import { apiCaller } from "../../api";
 import { QueryMessage } from "../../api/guide-interact";
-import { ChargeProject, Drug, ResponseResultEnum } from "../../api/info-manage";
+import {
+  ChargeProject,
+  Drug,
+  ResponseResultEnum,
+  RoomProcess,
+} from "../../api/info-manage";
 import { BackToHome } from "../../components/back-to-home";
+import { ProgressDisplay } from "../../components/progress-display";
 import { IQueryTableProp, QueryTable } from "../../components/query-table";
 import { ModelDescriber } from "../../models/model-describer";
 import { BackendServiceFactory, InteractFactory } from "../../services";
+import { useRequest } from "../../utils/hooks/use-request";
 import { PickString } from "../../utils/types";
 import { chargeProjectDescriber } from "../admin/charge-project";
 import { drugDiscriber } from "../admin/drug";
@@ -52,20 +60,48 @@ const describers: Record<
 };
 
 export const GuidePage: React.FC = () => {
-  const [queryVisable, setQueryVisable] = useState(false);
+  const [drawerVisable, setDrawerVisable] = useState(false);
   const [query, setQuery] = useState<QueryTypes>("drug");
+  const [paths, setPaths] = useState<string[]>();
   const [describer, setDescriber] = useState<
     ModelDescriber<Drug> | ModelDescriber<ChargeProject>
   >();
-
+  const [roomProcess, state] = useRequest(
+    async (path) => {
+      if (!path) {
+        const empty: RoomProcess = {
+          fatherId: -1,
+          id: -1,
+          image: "",
+          name: "",
+          process: "",
+          video: "",
+        };
+        return empty;
+      }
+      if (!path.length) {
+        throw new Error("Invalid path");
+      }
+      const { data, detail, state } = await apiCaller.get("/api/im/process", {
+        processRoute: path.join(";"),
+      });
+      if (state !== ResponseResultEnum.Success) {
+        throw new Error(detail);
+      }
+      return data;
+    },
+    [paths]
+  );
   useEffect(() => {
     const handler = (e: MessageEvent) => {
       const command: QueryMessage = e.data;
       if (command && command.queryObject) {
-        setQueryVisable(true);
+        setDrawerVisable(true);
         if (command.queryObject !== "room-process") {
           setQuery(command.queryObject);
           setDescriber(describers[command.queryObject]);
+        } else {
+          setPaths(command.path);
         }
       }
     };
@@ -79,14 +115,19 @@ export const GuidePage: React.FC = () => {
       <Drawer
         title={describer?.modelName}
         width={600}
-        visible={queryVisable}
-        onClose={() => setQueryVisable(false)}
+        visible={drawerVisable}
+        onClose={() => setDrawerVisable(false)}
       >
-        {describer && queryVisable && (
+        {describer && drawerVisable && (
           <QueryTable
             discriber={describer as never}
             query={queries[query] as never}
           ></QueryTable>
+        )}
+        {roomProcess && (
+          <Spin spinning={state === "pending"}>
+            <ProgressDisplay process={roomProcess}></ProgressDisplay>
+          </Spin>
         )}
       </Drawer>
       <iframe

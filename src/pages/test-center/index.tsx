@@ -1,12 +1,15 @@
-import { Menu } from "antd";
+import { HomeFilled, SettingFilled } from "@ant-design/icons";
+import { Button, Menu } from "antd";
 import { Observer } from "mobx-react-lite";
 import React from "react";
+import { Auth } from "../../api/person-manage";
 import { AccessManage } from "../../components/access-manage";
 import { BackToHome } from "../../components/back-to-home";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
 import { UserCenter } from "../../components/user-center";
 import { RoutePaths } from "../../routes";
 import { globalStore } from "../../store";
+import { openPage } from "../../utils/common";
 import { useService } from "../../utils/hooks";
 import { mergeClassName } from "../../utils/ui/class-name";
 import { globalCss } from "../../utils/ui/global-css";
@@ -33,10 +36,40 @@ const subRoutes: Array<{
 
 export function renderHeader() {
   return (
-    <div className={styles["rest-header"]}>
-      <AccessManage />
-      <UserCenter />
-    </div>
+    <Observer>
+      {() => {
+        const { authentication } = globalStore.user;
+        const { path } = globalStore.route;
+        return (
+          <div className={styles["rest-header"]}>
+            <AccessManage />
+            <UserCenter />
+            {authentication !== Auth.Normal && !path.startsWith("/admin") && (
+              <Button
+                className={styles.manage}
+                type="text"
+                icon={<SettingFilled />}
+                onClick={() => {
+                  openPage("/admin");
+                }}
+              >
+                后台
+              </Button>
+            )}
+            {path.startsWith("/admin") && (
+              <Button
+                className={styles.manage}
+                icon={<HomeFilled />}
+                type="text"
+                onClick={() => openPage("/home")}
+              >
+                主页
+              </Button>
+            )}
+          </div>
+        );
+      }}
+    </Observer>
   );
 }
 

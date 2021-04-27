@@ -27,3 +27,11 @@
   padding: 20px;
   position: relative;
 }
+
+.manage {
+  color: skyblue;
+}
+
+.manage:hover {
+  color: skyblue;
+}

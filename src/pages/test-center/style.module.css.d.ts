@@ -4,5 +4,6 @@ declare const styles: {
   readonly aside: string;
   readonly menu: string;
   readonly main: string;
+  readonly manage: string;
 };
 export = styles;

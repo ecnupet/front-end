@@ -1,10 +1,11 @@
 import { LockOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { Center } from "../../../components/center";
 import { NavBar } from "../../../components/nav-bar";
 import { router } from "../../../routes";
 import { BackendServiceFactory, InteractFactory } from "../../../services";
+import { globalStore } from "../../../store";
 import { pickKeyOf } from "../../../utils/common/string";
 import { globalErrorHandle } from "../../../utils/services/global-error-handler";
 import styles from "./style.module.css";
@@ -16,6 +17,11 @@ interface AdminLoginForm {
 
 export const AdminLogin: React.FC = () => {
   const [form] = Form.useForm<AdminLoginForm>();
+  useEffect(() => {
+    if (globalStore.user.userName) {
+      router.replace("/admin/home");
+    }
+  }, []);
   return (
     <div>
       <NavBar title="后台管理">

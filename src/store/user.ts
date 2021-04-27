@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { Auth } from "../api";
 import { router } from "../routes";
 import { BackendServiceFactory } from "../services";
 import { USERNAME } from "./keys";
@@ -15,19 +16,19 @@ class UserStore {
     localStorage.setItem(USERNAME, name);
   }
 
-  isAdmin = false;
+  authentication = Auth.Normal;
 
-  setIsAdmin(isAdmin: boolean) {
-    this.isAdmin = isAdmin;
+  setAuthentication(auth: Auth) {
+    this.authentication = auth;
   }
 
   async fetch() {
     try {
       const {
-        data: { authorization: isAdmin, name },
+        data: { authorization, name },
       } = await BackendServiceFactory.getPersionManageService().userInfo();
       this.setUserName(name);
-      this.setIsAdmin(isAdmin === 1);
+      this.setAuthentication(authorization);
     } catch (error) {
       this.logout();
     }

@@ -9,7 +9,9 @@ export const UserCenter: React.FC = () => {
       {() => {
         const { userName } = globalStore.user;
         return userName ? (
-          <div className={styles["logged-in"]}>欢迎，{userName}</div>
+          <>
+            <span className={styles["logged-in"]}>欢迎，{userName}</span>
+          </>
         ) : (
           <div className={styles["not-logged-in"]}>未登录</div>
         );

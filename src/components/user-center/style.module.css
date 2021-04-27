@@ -2,8 +2,18 @@
 
 .logged-in {
   color: wheat;
+  font-size: 14px;
 }
 
 .not-logged-in {
+  font-size: 14px;
   color: red;
+}
+
+.manage {
+  color: skyblue;
+}
+
+.manage:hover {
+  color: skyblue;
 }

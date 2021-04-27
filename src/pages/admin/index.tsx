@@ -1,14 +1,12 @@
-import { HomeFilled } from "@ant-design/icons";
-import { Button, Menu } from "antd";
+import { Menu } from "antd";
 import React, { useState } from "react";
-import { AccessManage } from "../../components/access-manage";
 import { ManageStyleLayout } from "../../components/layout/manage-style";
-import { UserCenter } from "../../components/user-center";
-import { openPage } from "../../utils/common";
+import { renderHeader } from "../test-center";
 import { ChargeProjectManage } from "./charge-project";
 import { DiseaseManage } from "./disease";
 import { DrugManage } from "./drug";
 import { QuestionManage } from "./question";
+import { RoomProcessManage } from "./room-process";
 import styles from "./style.module.css";
 import { UserManage } from "./user";
 
@@ -21,29 +19,18 @@ const subRoutes: {
   { title: "试题管理", key: "question", component: QuestionManage },
   { title: "疾病管理", key: "disease", component: DiseaseManage },
   { title: "收费项目", key: "chargeproject", component: ChargeProjectManage },
-  { title: "用户管理", key: "usermanage", component: UserManage },
+  { title: "用户管理", key: "user-manage", component: UserManage },
+  {
+    title: "过程介绍管理",
+    key: "process-manage",
+    component: RoomProcessManage,
+  },
 ];
 
 export const AdminHomePage: React.FC = () => {
   const [route, setRoute] = useState(subRoutes[0]!);
   return (
-    <ManageStyleLayout
-      title="管理后台"
-      headerChildren={
-        <div className={styles["nav-options"]}>
-          <AccessManage />
-          <UserCenter />
-          <Button
-            className={styles["to-home"]}
-            icon={<HomeFilled />}
-            type="text"
-            onClick={() => openPage("/home")}
-          >
-            去线上看看
-          </Button>
-        </div>
-      }
-    >
+    <ManageStyleLayout title="管理后台" headerChildren={null && renderHeader()}>
       <section className={styles.section}>
         <aside className={styles.menu}>
           <Menu

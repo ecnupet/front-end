@@ -16,11 +16,6 @@
   height: 100%;
   overflow: auto;
 }
-.nav-options {
-  width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-}
 .to-home {
   color: skyblue;
 }
