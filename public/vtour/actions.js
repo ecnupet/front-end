@@ -13,26 +13,25 @@ Array.prototype.contains = function(obj) {
 }
 /******************************************/
 //加载医院平面图热点
-function action_initMaps(){
-    for(var i=0;i<sceneData.length;i++){
-        var layer=sceneData[i];
-        var str='';
-        str+='set(ln,'+'spot_location_'+layer.name+');';
-        str+='addlayer(get(ln));';
-        str+='copy(lr, layer[get(ln)]);';
-        str+='set(lr.parent, bd_scroller_container);';
-        str+='set(lr.keep, true);';
-        str+='lr.loadstyle('+mapSpotStyle_normal+');';
-        str+='set(lr.tooltip, '+layer.tooltip+');';
-        str+='set(lr.width, '+layer.width+');';
-        str+='set(lr.height,'+layer.height+');';
-        str+='set(lr.x, '+layer.x+');';
-        str+='set(lr.y, '+layer.y+');';
-        str += 'set(lr.onclick,transition_location(spot_location_' + layer.name + ',scene_' + layer.name + ',-98,0,31););';
-        console.log(sceneData[i]);
-        krpano.call(str);
-    }
-}
+// function action_initMaps(){
+//     for(var i=0;i<sceneData.length;i++){
+//         var layer=sceneData[i];
+//         var str='';
+//         str+='set(ln,'+'spot_location_'+layer.name+');';
+//         str+='addlayer(get(ln));';
+//         str+='copy(lr, layer[get(ln)]);';
+//         str+='set(lr.parent, bd_scroller_container);';
+//         str+='set(lr.keep, true);';
+//         str+='lr.loadstyle('+mapSpotStyle_normal+');';
+//         str+='set(lr.tooltip, '+layer.tooltip+');';
+//         str+='set(lr.width, '+layer.width+');';
+//         str+='set(lr.height,'+layer.height+');';
+//         str+='set(lr.x, '+layer.x+');';
+//         str+='set(lr.y, '+layer.y+');';
+//         str += 'set(lr.onclick,transition_location(spot_location_' + layer.name + ',scene_' + layer.name + ',-98,0,31););';
+//         krpano.call(str);
+//     }
+// }
 //根据角色权限更新医院平面图热点
 function action_updateMapsWithRole(){
     for(var i=0;i<sceneData.length;i++){
@@ -62,19 +61,23 @@ function action_setInitScene(){
     var str='';
     if(currentRoleId==0) {
         str += 'loadscene(scene_qiantai, null, MERGE);';
+        str += 'set(layer[current_desc].html,"包括接待挂号导医咨询病历档案发出与回收收费");';
         str += 'set(layer[current_location].html,"前台");';
     }else if(currentRoleId==1) {
         str += 'loadscene(scene_zhenshi, null, MERGE);';
+        str += 'set(layer[current_desc].html,"对宠物进行临床基本检查视听触嗅疾病诊与宠物主人交流并根据情况开具处方");';
         str += 'set(layer[current_location].html,"诊室")';
+        str += 'set(layer[current_role].html,"专业医师")';
     }else if(currentRoleId==2) {
         str += 'loadscene(scene_zhusheshi, null, MERGE);';
+        str += 'set(layer[current_desc].html,"包括静脉注射皮下注射肌肉注射局部封闭注射的操作流程常见问题的处理方法输液泵加热垫的使用方法注射室的消毒流程");';
         str += 'set(layer[current_location].html,"注射室")';
     }
     krpano.call(str);
 }
 //根据模式与角色权限更新热点
 function action_updateSceneHotspotWithRole(curScene){
-    var str='';
+    var str = '';
     if(currentMode==0){//3D导览模式下：隐藏设备热点
         for(var i=0;i<deviceList.length;i++){
             var name='spot_'+deviceList[i].name;
@@ -89,7 +92,6 @@ function action_updateSceneHotspotWithRole(curScene){
         }
     }
     console.log(curScene);
-    str += 'set(layer[current_desc].html,"Loading")';
     str += 'layer[spot_location_'+lastActiveMapSpot+'].loadStyle('+mapSpotStyle_normal+');';
     str += 'layer[spot_location_'+curScene+'].loadStyle('+mapSpotStyle_active+');';
     lastActiveMapSpot=curScene;
@@ -97,18 +99,18 @@ function action_updateSceneHotspotWithRole(curScene){
     action_updateHotspotName();
 }
 //每次切换场景时设置当前active位置
-function action_setCurrentMapLocation(curRole){
-    if(!curRole){
-        lastActiveMapSpot='qiantai';
+function action_setCurrentMapLocation(currole){
+    if(!currole){
+        lastactivemapspot='qiantai';
     }else{
-        if(curRole==0){
-            lastActiveMapSpot='qiantai';
-        }else if(curRole==1){
-            lastActiveMapSpot='zhenshi';
-        }else if(curRole==2){
-            lastActiveMapSpot='zhusheshi';
+        if(currole==0){
+            lastactivemapspot='qiantai';
+        }else if(currole==1){
+            lastactivemapspot='zhenshi';
+        }else if(currole==2){
+            lastactivemapspot='zhusheshi';
         }else{
-            console.log('action_setCurrentMapLocation() 传参有误');
+            console.log('action_setcurrentmaplocation() 传参有误');
         }
     }
     var str = 'layer[spot_location_'+lastActiveMapSpot+'].loadStyle('+mapSpotStyle_active+');';
@@ -174,8 +176,8 @@ function action_flyin(layerName){
 function loadRoleData(callback){
     roles = [
         {id: 0, name: '前台', room: [0, 3]},
-        {id: 1, name: '兽医', room: [4, 5, 6, 7, 8, 9, 10, 11]},
-        {id: 2, name: '助理', room: [1, 2, 5, 6, 7, 9]}
+        {id: 1, name: '兽医', room: [1, 2, 4, 5, 6, 7, 8, 9,10,11,12,13]},
+        {id: 2, name: '助理', room: [4, 5, 7, 8, 9, 10,11,12]}
     ];
     callback();
 }
@@ -186,8 +188,8 @@ function callback_walkthrough(){
 }
 function callback_roleplay() {
     action_setInitScene(currentRoleId);
-    action_updateMapsWithRole(currentRoleId);
+    action_updateMapsWithRole();
     action_updateSceneHotspotWithRole(currentRoleId);
-    action_setCurrentMapLocation(currentRoleId);
+    action_setCurrentMapLocation();
     action_updateSceneAndMapName();
 }

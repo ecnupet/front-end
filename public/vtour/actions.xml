@@ -25,29 +25,31 @@
         copy(startview_fov, view.fov);
 
         <!-- look at the given position and wait for blending -->
-        lookat(%3, %4, %5);
-        wait(LOAD);
+      lookat(%3, %4, %5);
+      wait(LOAD);
 
-        set(plugin[loading].visible,false);
+      set(plugin[loading].visible,false);
 
-        wait(BLEND);
+      wait(BLEND);
 
-        if(((scene[%2].title == "前台")), set(layer[current_desc].html, "包括接待挂号、导医咨询、收费等"));
-        if(((scene[%2].title == "手术室")), set(layer[current_desc].html, "包括手术室的布局介绍，手术室消毒流程等"));
-        if(((scene[%2].title == "档案室")), set(layer[current_desc].html, "包括病例档案的合理保存与数据统计等"));
-        if(((scene[%2].title == "诊室")), set(layer[current_desc].html, "对宠物进行临床基本检查、疾病诊断"));
-        if(((scene[%2].title == "住院部")), set(layer[current_desc].html, "包括住院部的工作流程，住院部的消毒流程等"));
-        if(((scene[%2].title == "影像室")), set(layer[current_desc].html, "包括X线检查、B超检查以及CT、MRI检查。"));
-        if(((scene[%2].title == "检查室")), set(layer[current_desc].html, "包括对眼科、骨科、神经科、心脏科等专科疾病的检查"));
-        if(((scene[%2].title == "手术准备室")), set(layer[current_desc].html, "包括术前对宠物进行麻前给药、注射麻醉、吸入麻醉的流程等"));
-        if(((scene[%2].title == "注射室")), set(layer[current_desc].html, "包括静脉注射、皮下注射、肌肉注射、局部封闭注射的操作流程"));
-        if(((scene[%2].title == "处置室")), set(layer[current_desc].html, "包括口服投药、换药、清洗耳道、挤肛门腺、等基本处置操作流程"));
-        if(((scene[%2].title == "化验室")), set(layer[current_desc].html, "包括对送检样本的预处理，对相应样本进行检查操作"));
-        if(((scene[%2].title == "免疫室")), set(layer[current_desc].html, "包括为健康宠物接种疫苗的流程，对常见并发症的处理流程等"));
+      if(((scene[%2].title == "前台")), set(layer[current_desc].html, "包括接待挂号、导医咨询、收费等"));
+      if(((scene[%2].title == "手术室")), set(layer[current_desc].html, "包括手术室的布局介绍，手术室消毒流程等"));
+      if(((scene[%2].title == "档案室")), set(layer[current_desc].html, "包括病例档案的合理保存与数据统计等"));
+      if(((scene[%2].title == "诊室")), set(layer[current_desc].html, "对宠物进行临床基本检查、疾病诊断"));
+      if(((scene[%2].title == "住院部")), set(layer[current_desc].html, "包括住院部的工作流程，住院部的消毒流程等"));
+      if(((scene[%2].title == "影像室")), set(layer[current_desc].html, "包括X线检查、B超检查以及CT、MRI检查。"));
+      if(((scene[%2].title == "检查室")), set(layer[current_desc].html, "包括对眼科、骨科、神经科、心脏科等专科疾病的检查"));
+      if(((scene[%2].title == "手术准备室")), set(layer[current_desc].html, "包括术前对宠物进行麻前给药、注射麻醉、吸入麻醉的流程等"));
+      if(((scene[%2].title == "注射室")), set(layer[current_desc].html, "包括静脉注射、皮下注射、肌肉注射、局部封闭注射的操作流程"));
+      if(((scene[%2].title == "处置室")), set(layer[current_desc].html, "包括口服投药、换药、清洗耳道、挤肛门腺、等基本处置操作流程"));
+      if(((scene[%2].title == "化验室")), set(layer[current_desc].html, "包括对送检样本的预处理，对相应样本进行检查操作"));
+      if(((scene[%2].title == "免疫室")), set(layer[current_desc].html, "包括为健康宠物接种疫苗的流程，对常见并发症的处理流程等"));
+      if(((scene[%2].title == "药房")), set(layer[current_desc].html, "我是药房"));
+      if(((scene[%2].title == "解剖室")), set(layer[current_desc].html, "我是解剖室"));
 
-        
-        set(layer[current_location].html,get(scene[%2].title));
-        <!-- return to startup position -->
+
+      set(layer[current_location].html,get(scene[%2].title));
+      <!-- return to startup position -->
         oninterrupt(break);
         lookto(get(startview_hlookat), get(startview_vlookat), get(startview_fov), smooth(60,-60,180));
 
@@ -158,5 +160,6 @@
            set(layer[device_video].visible,true);
            set(layer[device_title].html,'视频介绍'));
     </action>
+
 
 </krpano>
