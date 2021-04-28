@@ -30,7 +30,7 @@ export interface DrugPostForm {
 
 export interface Case {
   id: number;
-  diseaseId: number;
+  diseaseID: number;
   caseStage: CaseStages;
   description: string;
   image: string;

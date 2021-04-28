@@ -12,6 +12,7 @@ import {
 import { CRUDManager } from "../../../components/crud-manager";
 import { CRUD, CRUDModal } from "../../../components/crud-modal";
 import { createDescriber } from "../../../models/describer-factory";
+import { KeyOf } from "../../../models/model-describer";
 import { BackendServiceFactory, InteractFactory } from "../../../services";
 import { ObjectEntries, uncapitalize } from "../../../utils/common";
 import { globalErrorHandle } from "../../../utils/services/global-error-handler";
@@ -59,20 +60,19 @@ export const DiseaseManage: React.FC = () => {
     "Check"
   );
   const [type, setType] = useState<CRUD>("create");
-  const caseFieldDisplayNames = {
+  const caseFieldDisplayNames: Record<KeyOf<Case>, string> = {
     id: "ID",
     video: "视频",
     caseStage: "资源类型",
     description: "文字描述",
     image: "图片",
-    diseaseId: "疾病ID",
-    caseType: "caseType",
+    diseaseID: "疾病ID",
   };
   const currentCase: Case = caseInfo?.[uncapitalize(resourceType)] ?? {
     id: -1,
     caseStage: CaseStages[resourceType],
     description: "",
-    diseaseId: disease?.id ?? -1,
+    diseaseID: disease?.id ?? -1,
     image: "",
     video: "",
   };
@@ -86,8 +86,8 @@ export const DiseaseManage: React.FC = () => {
         valueDescriber: { type: "number", defaultValue: -1 },
         disabled: true,
       },
-      diseaseId: {
-        propertyKey: "diseaseId",
+      diseaseID: {
+        propertyKey: "diseaseID",
         valueDescriber: { type: "number", defaultValue: -1 },
         disabled: true,
       },
@@ -200,6 +200,7 @@ export const DiseaseManage: React.FC = () => {
                 let result: ResponseResultModel<any>;
                 switch (type) {
                   case "create":
+                    // @ts-expect-error
                     result = await apiCaller.post("/api/im/caseadd", caseobj);
                     break;
                   case "update":
