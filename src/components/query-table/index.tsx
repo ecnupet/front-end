@@ -25,12 +25,17 @@ export const QueryTable = <T extends object>({
   });
   const [keyword, setKeyword] = useState("");
   const [records, state] = useRequest(
-    async (page: number, pageSize: number, keyword: string) => {
+    async (
+      page: number,
+      pageSize: number,
+      keyword: string,
+      query: IQueryTableProp<T>["query"]
+    ) => {
       const result = await query({ page, pageSize, keyword });
       setPageInfo({ page, pageSize, count: result.count });
       return result.records;
     },
-    [page, pageSize, keyword]
+    [page, pageSize, keyword, query]
   );
   return (
     <Spin spinning={state === "pending"}>
