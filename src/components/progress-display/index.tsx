@@ -1,6 +1,7 @@
 import { Row, Typography } from "antd";
 import React from "react";
 import { RoomProcess } from "../../api/info-manage";
+import { ImageDisplay } from "../image-display";
 import styles from "./style.module.css";
 
 export interface IProgressDisplayProp {
@@ -16,7 +17,7 @@ export const ProgressDisplay: React.FC<IProgressDisplayProp> = ({
       <Typography.Title level={4}>介绍</Typography.Title>
       <div className={styles.introduce}>
         <pre>{process}</pre>
-        <img className={styles.image} src={image} alt="introduction" />
+        <ImageDisplay url={image} width={256} height={256}></ImageDisplay>
       </div>
       {!!video && (
         <>

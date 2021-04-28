@@ -20,7 +20,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { CaseStagesNames } from "../../admin/disease";
-import { PictureOutlined } from "@ant-design/icons";
+import { ImageDisplay } from "../../../components/image-display";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -186,19 +186,11 @@ export const DiseaseStage: React.FC = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs={5} className={classes.imageWrapper}>
-                      {!!case_.image ? (
-                        <img
-                          alt="disease-resource"
-                          src={case_.image}
-                          className={classes.image}
-                        />
-                      ) : (
-                        <div className={classes.iconWrapper}>
-                          <PictureOutlined
-                            className={classes.placeholderIcon}
-                          />
-                        </div>
-                      )}
+                      <ImageDisplay
+                        url={case_.image}
+                        width={400}
+                        height={400}
+                      ></ImageDisplay>
                     </Grid>
                   </Grid>
                   {!!case_.video && (
